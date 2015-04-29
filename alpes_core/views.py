@@ -14,11 +14,11 @@ def home(request):
 	
 	return render(request, 'inicio.html', context)
 
-def index(request):
-    return render(request,'index.html', {})
-
-def charts(request):
-    return render(request,'charts.html', {})
-
-def pages(request):
-    return render(request,'{{request}}.html', {})
+# def index(request):
+#     return render(request,'index.html', {})
+# 
+# def charts(request):
+#     return render(request,'charts.html', {})
+# 
+# def pages(request):
+#     return render(request,'{{request}}.html', {})

@@ -23,13 +23,37 @@
 			 <div class="row">
 				<!-- Alimentar com todos os nomes de "teses" no banco  -->
 				<select class="form-control"> 
-					<option>DOTA > LOL</option>
+					<option>Escolha a Tese</option>
 					{% for tese in teses %}
 						<option>{{ tese.idtese }} - {{ tese.tese }}</option>
 					{% endfor %}
 				</select>
 			</div>
 		</div>
+
+<!--select
+        `arg`.`posicionamentoinicial` AS `posicionamentoinicial`,
+        `arg`.`argumento` AS `argumento`,
+        `rev`.`revisao` AS `revisao`,
+        `rep`.`replica` AS `replica`,
+        `pos`.`posicionamentofinal` AS `posicionamentofinal`
+    from
+        (((`argumento` `arg`
+        join `revisao` `rev`)
+        join `replica` `rep`)
+        join `posicionamento` `pos`)
+    where
+        ((`arg`.`tese_idtese` = 1472)
+            and (`rev`.`argumento_idargumento` = `arg`.`idargumento`)
+            and (`rep`.`revisao_idrevisao` = `rev`.`idrevisao`)
+            and (`arg`.`argumentador_idargumentador` = `pos`.`argumentador_idargumentador`)
+            and (`arg`.`tese_idtese` = `pos`.`tese_idtese`)
+            and (`arg`.`posicionamentoinicial` is not null)
+            and (`arg`.`argumento` is not null)
+            and (`rev`.`revisao` is not null)
+            and (`rep`.`replica` is not null)
+            and (`pos`.`posicionamentofinal` is not null))
+ -->
 
 		<!-- <div class="table-responsive"> -->
 			<table class="table table-bordered table-hover">
