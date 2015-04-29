@@ -19,7 +19,7 @@
 <body>
 <div class="container">
 	<div class="row clearfix">
-		<div class="col-md-12 column">
+		<div class="col-md-12">
 			 <div class="row">
 				<!-- Alimentar com todos os nomes de "teses" no banco  -->
 				<select class="form-control"> 
@@ -30,38 +30,12 @@
 				</select>
 			</div>
 		</div>
-
-<!--select
-        `arg`.`posicionamentoinicial` AS `posicionamentoinicial`,
-        `arg`.`argumento` AS `argumento`,
-        `rev`.`revisao` AS `revisao`,
-        `rep`.`replica` AS `replica`,
-        `pos`.`posicionamentofinal` AS `posicionamentofinal`
-    from
-        (((`argumento` `arg`
-        join `revisao` `rev`)
-        join `replica` `rep`)
-        join `posicionamento` `pos`)
-    where
-        ((`arg`.`tese_idtese` = 1472)
-            and (`rev`.`argumento_idargumento` = `arg`.`idargumento`)
-            and (`rep`.`revisao_idrevisao` = `rev`.`idrevisao`)
-            and (`arg`.`argumentador_idargumentador` = `pos`.`argumentador_idargumentador`)
-            and (`arg`.`tese_idtese` = `pos`.`tese_idtese`)
-            and (`arg`.`posicionamentoinicial` is not null)
-            and (`arg`.`argumento` is not null)
-            and (`rev`.`revisao` is not null)
-            and (`rep`.`replica` is not null)
-            and (`pos`.`posicionamentofinal` is not null))
- -->
-
-		<!-- <div class="table-responsive"> -->
-			<table class="table table-bordered table-hover">
+	</div>
+	 <div class="col-lg-12">
+             <div class="table-responsive">
+             <table>
 				<thead>
 					<tr>
-						<th>
-							Aluno
-						</th>
 						<th>
 							Posicionamento Inicial
 						</th>
@@ -79,72 +53,43 @@
 						</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody> 
+				{% for tabela in dados %}
 					<tr>
-						<td>
-							Fulano
-						</td>
-						<td>
-							Concordo
-						</td>
-						<td>
-							Argumento isso..
-						</td>
-						<td>
-							Revisão (são duas!)
-						</td>
-						<td>
-							Réplicas (são duas!)
-						</td>
-						<td>
-							Argumento aquilo..
-						</td>
+						<td> {{ tabela.0 }} </td> 
+						<td> {{ tabela.1}} </td>
+						<td> {{ tabela.2}} </td>
+						<td> {{ tabela.3}} </td>
+						<td> {{ tabela.4}} </td>
 					</tr>
-					<tr>
-						<td>
-							Alimentada por requisição ao BD
-						</td>
-						<td>
-							Alimentada por requisição ao BD
-						</td>
-						<td>
-							Alimentada por requisição ao BD
-						</td>
-						<td>
-							Alimentada por requisição ao BD
-						</td>
-						<td>
-							Alimentada por requisição ao BD
-						</td>
-						<td>
-							Alimentada por requisição ao BD
-						</td>
-					</tr>
+				{% endfor %}
 				</tbody>
 			</table>
 		</div>
+	</div>
+</div>
 
 		<!-- Colocar aqui uma forma para exibir  -->
-		<h1 class="page-header">
+<!-- 		<h1 class="page-header">
 		    Alunos com argumentações finais semelhantes
 		</h1>
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="box">
-					<!-- Alguma coisa tipo isso aqui embaixo -->
+					Alguma coisa tipo isso aqui embaixo
 					<div class="list-group">
 		            <a href="#" class="list-group-item active"> Argumentação Final </a>
 		            {% for posF in posicionamento.grupoArgumentacao %}
-		            <div class="list-group-item">{{posF.argumentacaoFinal}}
-		            	
-		            </div>
+			            <div class="list-group-item">{{posF.argumentacaoFinal}}
+			            	
+			            </div>
 		            {% endfor %}
-		            <!-- <a class="list-group-item active"></a> -->
+		            <a class="list-group-item active"></a>
 		          </div>
 				</div>
 			</div>
 		</div>
-	</div>
-<!-- </div> -->
+	</div> -->
+</div>
 </body>
 </html>
