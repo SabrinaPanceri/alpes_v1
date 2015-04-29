@@ -68,7 +68,7 @@ DATABASES = {
        'ENGINE': 'django.db.backends.mysql', #Engine do banco de dados escolhido para o projeto
         'NAME': 'debateteses', #Nome do Banco de Dados
         'USER': 'root', #Usuário do Banco de Dados
-        'PASSWORD': '120horas', #Senha do Banco de Dados
+        'PASSWORD': '123456', #Senha do Banco de Dados
         'HOST': '', #Endereço, vazio para localhost
         'PORT': '', #Porta, vazio para padrão (MySQL 3306)
         

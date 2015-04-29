@@ -23,10 +23,10 @@
 			 <div class="row">
 				<!-- Alimentar com todos os nomes de "teses" no banco  -->
 				<select class="form-control"> 
-				  <option>Alimentada por requisição ao BD</option>
-				  <option>Tese A</option>
-				  <option>Tese B</option>
-				  <option>Tese C</option>
+					<option>DOTA > LOL</option>
+					{% for tese in teses %}
+						<option>{{ tese.idtese }} - {{ tese.tese }}</option>
+					{% endfor %}
 				</select>
 			</div>
 		</div>
