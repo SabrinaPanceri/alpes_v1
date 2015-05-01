@@ -71,7 +71,7 @@ arg = []
 pI = []
 rev = []
 rep = []
-pF = []
+posFinal = []
 
 for i in dados:
     x = 0
@@ -79,7 +79,7 @@ for i in dados:
     pI.append(i[x+1])
     rev.append(i[x+2])
     rep.append(i[x+3])
-    pF.append(i[x+4])
+    posFinal.append(i[x+4])
     x = x + 1
     
 

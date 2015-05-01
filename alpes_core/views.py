@@ -10,7 +10,7 @@ import HTMLParser
 import re
 # Create your views here.
 def home(request):
-	cursor = connection.cursor()
+# 	cursor = connection.cursor()
 	
 	dados = []		
 	context = RequestContext(request,{'teses' : Tese.objects.filter(grupo_idgrupo=1064), 'dados': dados})
