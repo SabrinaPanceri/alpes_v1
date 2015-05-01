@@ -15,6 +15,8 @@ urlpatterns = patterns('',
     
     #abre o projeto com a página index.html
     url(r'^$', 'alpes_core.views.home', name='home'),
+    url(r'^(?P<tese_id>\d+)/$', 'alpes_core.views.teses', name='teses'),
+    url(r'^debate/(?P<debate_id>\d+)/$', 'alpes_core.views.debate', name='debate'),
     
     #navegação entre as páginas
     url(r'^index', 'alpes_core.views.index', name='index'),
