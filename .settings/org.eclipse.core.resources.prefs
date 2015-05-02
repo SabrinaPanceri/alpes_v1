@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
+encoding//alpes_core/clusterArgFinal.py=utf-8
 encoding//alpes_core/models.py=utf-8
 encoding//alpes_core/similarity.py=utf-8
+encoding//alpes_core/tfidf.py=utf-8
 encoding//alpes_core/views.py=utf-8
 encoding//alpes_v1/settings.py=utf-8
 encoding//alpes_v1/urls.py=utf-8

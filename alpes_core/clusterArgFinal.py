@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 from sklearn.feature_extraction.text import CountVectorizer
 from django.db import connection
 import HTMLParser
 import re
+
+from alpes_core.similarity import similaridade, vetores, asciize
 
 vectorizer = CountVectorizer()
 h = HTMLParser.HTMLParser()
@@ -24,24 +28,28 @@ posFinal = []
 dados = []
 aux_tese = []
 
-for d in dadosSql:
-    dados.append([re.sub('<[^>]*>', '', h.unescape(d[0])),
-                  re.sub('<[^>]*>', '', h.unescape(d[1]))])
+similares = []
 
+#Aplicacao de Case Folding
+for d in dadosSql:
+    dados.append([re.sub('<[^>]*>', '', h.unescape(d[0])).lower(),
+                  re.sub('<[^>]*>', '', h.unescape(d[1])).lower()])
+
+for t in textotese:
+    aux_tese.append(re.sub('<[^>]*>', '', h.unescape(t[0])).lower())
+
+#Colocando os textos de posicionamento final em numa lista separada
 for i in dados:
     x = 0
     usu.append(i[x])
-    posFinal.append(i[x+1])
+    posFinal.append(i[x+1].lower()) #lista com o posicionamento Final
 
-aux_posFinal = []
 
-for t in textotese:
-    aux_tese.append(re.sub('<[^>]*>', '', h.unescape(t[0])))
+aux1 = asciize(aux_tese[0])
 
-# for i in range(len(aux_tese)):
-#     print i, aux_tese[i]
+aux1 = vetores(aux_tese[0])
 
-# exemplos do livro NLTK
-
+# for i in range(len(posFinal)):
+    
 
 
