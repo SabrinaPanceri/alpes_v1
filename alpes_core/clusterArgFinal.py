@@ -62,6 +62,7 @@ for i in usu:
 for i in aux_tese:
     sw_aux_tese.append(removeStopWords(i))
 
+
 for i in posFinal:
     sw_posFinal.append(removeStopWords(i))
 
@@ -77,10 +78,10 @@ for i in posFinal:
 #         print "j", j
 #         aux1 = vetores(sw_posFinal[i])
 #         aux2 = vetores(sw_posFinal[j])
-# 
+#  
 #         if j < len(sw_posFinal):
 #             print similaridade(aux1, aux2)
-#                       
+#                        
 #             if (similaridade(aux1, aux2)) >= 0 and (similaridade(aux1, aux2)) <= 0.4: 
 #                 grupo1.append(aux_usu[i])
 #             elif (similaridade(aux1, aux2)) > 0.4 and (similaridade(aux1, aux2)) <= 0.7:

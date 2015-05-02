@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-# calculo do TF-IDF das palavras que estão no posicionamento final
 
-from nltk import RegexpTokenizer, bigrams, trigrams
+from nltk import RegexpTokenizer
 import re, math
-from alpes_core.clusterArgFinal import sw_posFinal, sw_aux_tese, aux_tese
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.feature_extraction.text import TfidfVectorizer
-from alpes_core.similarity import similaridade, simple_cosine_sim
-from nltk.stem import RSLPStemmer 
+from alpes_core.clusterArgFinal import sw_aux_tese
+# from sklearn.metrics.pairwise import cosine_similarity
+# from sklearn.feature_extraction.text import TfidfVectorizer
+# from alpes_core.similarity import similaridade, simple_cosine_sim
+# from nltk.stem import RSLPStemmer 
 
 
 palavras = RegexpTokenizer("[\w’]+", flags=re.UNICODE)
@@ -33,29 +32,24 @@ def num_docs_containing(word, list_of_docs):
     for document in list_of_docs:
         if freq(word, document) > 0:
             count += 1
-#     print "num_docs_containing",1 + count 
     return 1 + count
  
  
 def idf(word, list_of_docs):
-#     print "IDF", math.log(len(list_of_docs) /
-#             float(num_docs_containing(word, list_of_docs)))
     return math.log(len(list_of_docs) /
             float(num_docs_containing(word, list_of_docs)))
  
  
-def tf_idf(word, doc, list_of_docs):
-#     print "tf_idf",(tf(word, doc) * idf(word, list_of_docs)) 
-    return (tf(word, doc) * idf(word, list_of_docs))
+def tf_idf(word, doc, list_of_docs): 
+    return (tf(word, doc) * idf(word, list_of_docs) + 1)
+#soma +1 para aumentar a importância dessas palavras
  
 #Compute the frequency for each term.
 vocabulary = []
 docs = {}
 
-for pos in (sw_posFinal):
-   
+for pos in (sw_aux_tese):
     tokens = palavras.tokenize(pos)
-    
     tokens = [token.lower() for token in tokens if len(token) > 2]
  
     final_tokens = []
@@ -80,14 +74,14 @@ for doc in docs:
         docs[doc]['tf-idf'][token] = tf_idf(token, docs[doc]['tokens'], vocabulary)
 
 #Now let's find out the most relevant words by tf-idf.
-words = {}
+words_tese = {}
 for doc in docs:
     for token in docs[doc]['tf-idf']:
-        if token not in words:
-            words[token] = docs[doc]['tf-idf'][token]
+        if token not in words_tese:
+            words_tese[token] = docs[doc]['tf-idf'][token]
         else:
-            if docs[doc]['tf-idf'][token] > words[token]:
-                words[token] = docs[doc]['tf-idf'][token]
+            if docs[doc]['tf-idf'][token] > words_tese[token]:
+                words_tese[token] = docs[doc]['tf-idf'][token]
 
-# for item in sorted(words.items(), key=lambda x: x[1], reverse=True):
+# for item in sorted(words_tese.items(), key=lambda x: x[1], reverse=True):
 #     print "%f <= %s" % (item[1], item[0])

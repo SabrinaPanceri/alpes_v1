@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
  
-
+from scipy.linalg import norm
 import re, math
 from collections import Counter
 from unicodedata import normalize
@@ -60,3 +60,20 @@ def vetores(texto):
     words = palavras.tokenize(texto)
     print words
     return Counter(words)
+
+
+def simple_cosine_sim(a, b):
+    if len(b) < len(a):
+        a, b = b, a
+
+    res = 0
+    for key, a_value in a.iteritems():
+        res += a_value * b.get(key, 0)
+    if res == 0:
+        return 0
+
+    try:
+        res = res / norm(a.values()) / norm(b.values())
+    except ZeroDivisionError:
+        res = 0
+    return res 
