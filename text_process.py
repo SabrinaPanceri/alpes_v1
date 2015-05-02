@@ -5,7 +5,7 @@ from nltk import RegexpTokenizer, re
 stemmer = RSLPStemmer()
 
 auxStopwords = stopwords.words('portuguese')
-tokenizer = RegexpTokenizer("[\w’]+", flags=re.UNICODE)
+palavras = RegexpTokenizer("[\w’]+", flags=re.UNICODE)
 
 def freq(word, tokens):
     return tokens.count(word)

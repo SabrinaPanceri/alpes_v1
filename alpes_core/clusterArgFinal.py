@@ -5,9 +5,7 @@ from django.db import connection
 import HTMLParser
 import re
 
-from alpes_core.similarity import similaridade, vetores
-
-
+from alpes_core.similarity import similaridade, vetores, removeStopWords
 
 vectorizer = CountVectorizer()
 h = HTMLParser.HTMLParser()
@@ -29,7 +27,14 @@ posFinal = []
 dados = []
 aux_tese = []
 
-similares = []
+sw_aux_tese = []
+sw_posFinal = []
+aux_usu = []
+
+grupo1 = []
+grupo2 = []
+grupo3 = []
+grupo4 = []
 
 #Aplicacao de Case Folding
 for d in dadosSql:
@@ -43,13 +48,48 @@ for t in textotese:
 #Colocando os textos de posicionamento final em numa lista separada
 for i in dados:
     x = 0
-    usu.append(i[x])
+    usu.append(i[x].upper())
     posFinal.append(i[x+1].lower()) #lista com o posicionamento Final
 
- 
-aux1 = vetores(aux_tese[0])
 
-# for i in range(len(posFinal)):
+#Fases de pré-processamento linguistico
+# - Remoção de stopwords
+# - Troca de caracteres acentuados por caracteres não acentuados
+# - Remoção pontuações
+for i in usu:
+    aux_usu.append(removeStopWords(i))
+
+for i in aux_tese:
+    sw_aux_tese.append(removeStopWords(i))
+
+for i in posFinal:
+    sw_posFinal.append(removeStopWords(i))
+
+# vetores() -> Retorna a quantidade de palavras por posição
+
+# aux = ""
+# for i in sw_aux_tese:
+#     aux = vetores(i)
+#     
+# for i in range(0, len(sw_posFinal)):
+#     print "i", i
+#     for j in range(i+1, len(sw_posFinal)):
+#         print "j", j
+#         aux1 = vetores(sw_posFinal[i])
+#         aux2 = vetores(sw_posFinal[j])
+# 
+#         if j < len(sw_posFinal):
+#             print similaridade(aux1, aux2)
+#                       
+#             if (similaridade(aux1, aux2)) >= 0 and (similaridade(aux1, aux2)) <= 0.4: 
+#                 grupo1.append(aux_usu[i])
+#             elif (similaridade(aux1, aux2)) > 0.4 and (similaridade(aux1, aux2)) <= 0.7:
+#                 grupo2.append(aux_usu[i])
+#             elif (similaridade(aux1, aux2)) > 0.7 and (similaridade(aux1, aux2)) <= 1:
+#                 grupo3.append(aux_usu[i])
+#             else: 
+#                 grupo4.append(aux_usu[i])
+                
     
 
 
