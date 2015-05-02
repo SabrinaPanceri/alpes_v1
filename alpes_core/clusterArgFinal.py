@@ -5,11 +5,12 @@ from django.db import connection
 import HTMLParser
 import re
 
-from alpes_core.similarity import similaridade, vetores, asciize
+from alpes_core.similarity import similaridade, vetores
+
+
 
 vectorizer = CountVectorizer()
 h = HTMLParser.HTMLParser()
-h1 = HTMLParser.HTMLParser()
 
 cursor = connection.cursor()
 cursor2 = connection.cursor()
@@ -37,6 +38,7 @@ for d in dadosSql:
 
 for t in textotese:
     aux_tese.append(re.sub('<[^>]*>', '', h.unescape(t[0])).lower())
+        
 
 #Colocando os textos de posicionamento final em numa lista separada
 for i in dados:
@@ -44,9 +46,7 @@ for i in dados:
     usu.append(i[x])
     posFinal.append(i[x+1].lower()) #lista com o posicionamento Final
 
-
-aux1 = asciize(aux_tese[0])
-
+ 
 aux1 = vetores(aux_tese[0])
 
 # for i in range(len(posFinal)):
