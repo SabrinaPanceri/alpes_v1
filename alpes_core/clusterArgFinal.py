@@ -24,11 +24,9 @@ posFinal = []
 dados = []
 aux_tese = []
 
-
 for d in dadosSql:
     dados.append([re.sub('<[^>]*>', '', h.unescape(d[0])),
                   re.sub('<[^>]*>', '', h.unescape(d[1]))])
-
 
 for i in dados:
     x = 0
@@ -37,26 +35,13 @@ for i in dados:
 
 aux_posFinal = []
 
-print textotese[0]
+for t in textotese:
+    aux_tese.append(re.sub('<[^>]*>', '', h.unescape(t[0])))
 
-for i in range(len(textotese)):
-    aux = textotese[i]
-    type(aux)
-    aux_tese.append(re.sub('<[^>]*>', '', h.unescape(aux)))
+# for i in range(len(aux_tese)):
+#     print i, aux_tese[i]
+
+# exemplos do livro NLTK
 
 
-    
-
-# for i in range(len(posFinal)):
-#     print i, posFinal[i]
-
-# 
-# 
-# for i in range(len(aux_posFinal)):
-#     print i, aux_posFinal[i]
-    
-#     vectorizer.fit_transform(i)
-#     smatrix = vectorizer.transform(i)
-# 
-# print smatrix
 

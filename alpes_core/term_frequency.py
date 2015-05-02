@@ -1,5 +1,7 @@
 from nltk.corpus import stopwords
-from nltk import RegexpTokenizer, re
+from nltk import RegexpTokenizer, re, bigrams, trigrams
+import clusterArgFinal
+
 
 stopwords = stopwords.words('portuguese')
 tokenizer = RegexpTokenizer("[\w']+", flags=re.UNICODE)
@@ -14,8 +16,9 @@ docs = {}
 all_tips = []
 
 
-for tip in (venue.tips()):
-    tokens = tokenizer.tokenize(tip.text)
+for tip in clusterArgFinal.textotese:
+    print tip
+    tokens = tokenizer.tokenize(tip)
 
     bi_tokens = bigrams(tokens)
     tri_tokens = trigrams(tokens)
@@ -32,9 +35,9 @@ for tip in (venue.tips()):
     final_tokens.extend(tokens)
     final_tokens.extend(bi_tokens)
     final_tokens.extend(tri_tokens)
-    docs[tip.text] = {'freq': {}}
+    docs[tip] = {'freq': {}}
 
     for token in final_tokens:
-        docs[tip.text]['freq'][token] = freq(token, final_tokens)
+        docs[tip]['freq'][token] = freq(token, final_tokens)
 
 print docs
