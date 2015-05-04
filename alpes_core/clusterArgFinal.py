@@ -4,8 +4,9 @@ from sklearn.feature_extraction.text import CountVectorizer
 from django.db import connection
 import HTMLParser
 import re
+from alpes_core.similarity import removeStopWords
+from nltk.stem import RSLPStemmer
 
-from alpes_core.similarity import similaridade, vetores, removeStopWords
 
 vectorizer = CountVectorizer()
 h = HTMLParser.HTMLParser()
@@ -30,11 +31,6 @@ aux_tese = []
 sw_aux_tese = []
 sw_posFinal = []
 aux_usu = []
-
-grupo1 = []
-grupo2 = []
-grupo3 = []
-grupo4 = []
 
 #Aplicacao de Case Folding
 for d in dadosSql:
@@ -66,31 +62,5 @@ for i in aux_tese:
 for i in posFinal:
     sw_posFinal.append(removeStopWords(i))
 
-# vetores() -> Retorna a quantidade de palavras por posição
 
-# aux = ""
-# for i in sw_aux_tese:
-#     aux = vetores(i)
-#     
-# for i in range(0, len(sw_posFinal)):
-#     print "i", i
-#     for j in range(i+1, len(sw_posFinal)):
-#         print "j", j
-#         aux1 = vetores(sw_posFinal[i])
-#         aux2 = vetores(sw_posFinal[j])
-#  
-#         if j < len(sw_posFinal):
-#             print similaridade(aux1, aux2)
-#                        
-#             if (similaridade(aux1, aux2)) >= 0 and (similaridade(aux1, aux2)) <= 0.4: 
-#                 grupo1.append(aux_usu[i])
-#             elif (similaridade(aux1, aux2)) > 0.4 and (similaridade(aux1, aux2)) <= 0.7:
-#                 grupo2.append(aux_usu[i])
-#             elif (similaridade(aux1, aux2)) > 0.7 and (similaridade(aux1, aux2)) <= 1:
-#                 grupo3.append(aux_usu[i])
-#             else: 
-#                 grupo4.append(aux_usu[i])
-                
-    
-
-
+stemmer

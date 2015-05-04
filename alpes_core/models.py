@@ -11,7 +11,7 @@ import re
 #Import's necessarios
 from nltk.corpus import stopwords
 from nltk import FreqDist
-from alpes_core.similarity import similarity, vetores
+# from alpes_core.similarity import similarity, vetores
 
 class Tese(models.Model):
     idtese = models.AutoField(primary_key=True)
@@ -60,80 +60,80 @@ class Replica(models.Model):
 
 
 # #Execução do SQL
-cursor = connection.cursor()
- 
-idtese = "1472"
- 
-cursor.execute("select `arg`.`posicionamentoinicial` AS `posicionamentoinicial`, `arg`.`argumento` AS `argumento`, `rev`.`revisao` AS `revisao`, `rep`.`replica` AS `replica`, `pos`.`posicionamentofinal` AS `posicionamentofinal` from (((`argumento` `arg` join `revisao` `rev`) join `replica` `rep`) join `posicionamento` `pos`) where ((`arg`.`tese_idtese` = " + idtese + " ) and (`rev`.`argumento_idargumento` = `arg`.`idargumento`) and (`rep`.`revisao_idrevisao` = `rev`.`idrevisao`) and (`arg`.`argumentador_idargumentador` = `pos`.`argumentador_idargumentador`) and (`arg`.`tese_idtese` = `pos`.`tese_idtese`) and (`arg`.`posicionamentoinicial` is not null) and (`arg`.`argumento` is not null) and (`rev`.`revisao` is not null) and (`rep`.`replica` is not null) and (`pos`.`posicionamentofinal` is not null))")
-dados = cursor.fetchall()
-
-arg = []
-pI = []
-rev = []
-rep = []
-posFinal = []
-
-for i in dados:
-    x = 0
-    arg.append(i[x])
-    pI.append(i[x+1])
-    rev.append(i[x+2])
-    rep.append(i[x+3])
-    posFinal.append(i[x+4])
-    x = x + 1
+# cursor = connection.cursor()
+#  
+# idtese = "1472"
+#  
+# cursor.execute("select `arg`.`posicionamentoinicial` AS `posicionamentoinicial`, `arg`.`argumento` AS `argumento`, `rev`.`revisao` AS `revisao`, `rep`.`replica` AS `replica`, `pos`.`posicionamentofinal` AS `posicionamentofinal` from (((`argumento` `arg` join `revisao` `rev`) join `replica` `rep`) join `posicionamento` `pos`) where ((`arg`.`tese_idtese` = " + idtese + " ) and (`rev`.`argumento_idargumento` = `arg`.`idargumento`) and (`rep`.`revisao_idrevisao` = `rev`.`idrevisao`) and (`arg`.`argumentador_idargumentador` = `pos`.`argumentador_idargumentador`) and (`arg`.`tese_idtese` = `pos`.`tese_idtese`) and (`arg`.`posicionamentoinicial` is not null) and (`arg`.`argumento` is not null) and (`rev`.`revisao` is not null) and (`rep`.`replica` is not null) and (`pos`.`posicionamentofinal` is not null))")
+# dados = cursor.fetchall()
+# 
+# arg = []
+# pI = []
+# rev = []
+# rep = []
+# posFinal = []
+# 
+# for i in dados:
+#     x = 0
+#     arg.append(i[x])
+#     pI.append(i[x+1])
+#     rev.append(i[x+2])
+#     rep.append(i[x+3])
+#     posFinal.append(i[x+4])
+#     x = x + 1
     
-
-
-def getTitulosSemelhantes(self):
-        artigosSim = []
-        
-        titulo1 = self.dados.lower()
-        
-        aux1 = vetores(titulo1)
-
-        for  i in range(0,len(dados)):            
-            titulo2 = dados[i].titulo_artigo.lower()
-            aux2 = vetores(titulo2)
-            
-            if self.id != dados[i].id and similarity(aux1, aux2):
-                artigosSim.append(dados[i])
-                
-        return artigosSim
-
-def palavrasChaves(self):
-        # função da NLTK que retorna as stopwords na lingua inglesa
-        stopE = stopwords.words('english')
-
-        # função da NLTK que retorna as stopwords na lingua portuguesa
-        stop = stopwords.words('portuguese')  
-              
-        stopS = stopwords.words('spanish')
-        
-        palavrasChaves = [] 
-        textoArtigo = []
-        
-        #retira pontuações do texto e divide o texto em palavras
-        for i in self.texto_artigo.lower().replace(',','').replace('.','').replace('-','').replace('(','').replace(')','').split():
-            #retira as stopwords da lingua portuguesa do texto do artigo que está sendo apresentado
-            if i not in stop:
-                #retira as stopwords da lingua inglesa do texto do artigo que está sendo apresentado
-                if i not in stopE:
-                    #ignora palavras com menos de 3 caracteres. Isso é para tratar palavras, como por exemplo o verbo "É"
-                    if i not in stopS:
-                            if len(i) > 2:
-                                textoArtigo.append(i)
-        
-        # apresenta a frequencia de repeticoes das palavras no corpo do artigo
-        freq = FreqDist(textoArtigo)
-        
-        # separa as quatro palavras mais frequentes
-        items = freq.items()[:4]
-        
-        # coloca as palavras mais frequentes do texto na variavel palavrasChaves
-        for i in range(0,len(items)):
-            palavrasChaves.append(items[i][0].upper())
-            
-        return palavrasChaves       
+# 
+# 
+# def getTitulosSemelhantes(self):
+#         artigosSim = []
+#         
+#         titulo1 = self.dados.lower()
+#         
+#         aux1 = vetores(titulo1)
+# 
+#         for  i in range(0,len(dados)):            
+#             titulo2 = dados[i].titulo_artigo.lower()
+#             aux2 = vetores(titulo2)
+#             
+#             if self.id != dados[i].id and similarity(aux1, aux2):
+#                 artigosSim.append(dados[i])
+#                 
+#         return artigosSim
+# 
+# def palavrasChaves(self):
+#         # função da NLTK que retorna as stopwords na lingua inglesa
+#         stopE = stopwords.words('english')
+# 
+#         # função da NLTK que retorna as stopwords na lingua portuguesa
+#         stop = stopwords.words('portuguese')  
+#               
+#         stopS = stopwords.words('spanish')
+#         
+#         palavrasChaves = [] 
+#         textoArtigo = []
+#         
+#         #retira pontuações do texto e divide o texto em palavras
+#         for i in self.texto_artigo.lower().replace(',','').replace('.','').replace('-','').replace('(','').replace(')','').split():
+#             #retira as stopwords da lingua portuguesa do texto do artigo que está sendo apresentado
+#             if i not in stop:
+#                 #retira as stopwords da lingua inglesa do texto do artigo que está sendo apresentado
+#                 if i not in stopE:
+#                     #ignora palavras com menos de 3 caracteres. Isso é para tratar palavras, como por exemplo o verbo "É"
+#                     if i not in stopS:
+#                             if len(i) > 2:
+#                                 textoArtigo.append(i)
+#         
+#         # apresenta a frequencia de repeticoes das palavras no corpo do artigo
+#         freq = FreqDist(textoArtigo)
+#         
+#         # separa as quatro palavras mais frequentes
+#         items = freq.items()[:4]
+#         
+#         # coloca as palavras mais frequentes do texto na variavel palavrasChaves
+#         for i in range(0,len(items)):
+#             palavrasChaves.append(items[i][0].upper())
+#             
+#         return palavrasChaves       
 
 
 
