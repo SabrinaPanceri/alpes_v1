@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
-
-from clusterArgFinal import sw_posFinal, sw_aux_tese, aux_usu
+from alpes_core.clusterArgFinal import st_tese, sw_posFinal, sw_tese, aux_usu, st_posFinal
 
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
+from nltk.cluster.util import cosine_distance
 
 
-train_set =sw_aux_tese 
-test_set = sw_posFinal
+
+# train_set =sw_tese 
+# test_set = sw_posFinal
+test_set = st_posFinal
+train_set = st_tese
 # print len(aux_usu)
 
 # for i in range(len(aux_usu)):
@@ -49,34 +52,35 @@ tfidf.fit(freq_term_matrix)
 tf_idf_matrix = tfidf.transform(freq_term_matrix)
 # print len(tf_idf_matrix.todense())
 
+#Tratamento das matrizes geradas pelo algoritmo de TF-IDF com a aplicação do cálculo do 
+#coseno entre os vetores - Cosine Similaridade
 for i in range(0, len(test_set)):
     for j in range(i+1, len(test_set)):
-#         print tf_idf_matrix[i], tf_idf_matrix[j]
         cos = cosine_similarity(tf_idf_matrix[i], tf_idf_matrix[j])
-#         print "cos",cos
-                        
-        if cosine_similarity(tf_idf_matrix[i], tf_idf_matrix[j]) >= 0.7 and cosine_similarity(tf_idf_matrix[i], tf_idf_matrix[j]) <= 1: 
-            if (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and  (aux_usu[j]+" com "+aux_usu[i]) not in grupo1:
-                if (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and (aux_usu[j]+" com "+aux_usu[i]) not in grupo2:
-                    if (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 and (aux_usu[j]+" com "+aux_usu[i]) not in grupo3:
-                        grupo1.append(aux_usu[i]+" com "+aux_usu[j]+str(cos))
-        elif cosine_similarity(tf_idf_matrix[i], tf_idf_matrix[j]) > 0.4 and cosine_similarity(tf_idf_matrix[i], tf_idf_matrix[j]) <= 0.7:
-            if (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and (aux_usu[j]+" com "+aux_usu[i]) not in grupo2:
-                if (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 and (aux_usu[j]+" com "+aux_usu[i]) not in grupo3:
-                    if (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and  (aux_usu[j]+" com "+aux_usu[i]) not in grupo1:
-                        grupo2.append(aux_usu[i]+" com "+aux_usu[j]+str(cos))
-        elif cosine_similarity(tf_idf_matrix[i], tf_idf_matrix[j]) >= 0.2 and cosine_similarity(tf_idf_matrix[i], tf_idf_matrix[j]) <= 0.4:
-            if (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 and (aux_usu[j]+" com "+aux_usu[i]) not in grupo3:
-                if (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and  (aux_usu[j]+" com "+aux_usu[i]) not in grupo1:
-                    if (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and (aux_usu[j]+" com "+aux_usu[i]) not in grupo2:
-                        grupo3.append(aux_usu[i]+" com "+aux_usu[j]+str(cos))
-        elif cosine_similarity(tf_idf_matrix[i], tf_idf_matrix[j]) >= 0.1 and cosine_similarity(tf_idf_matrix[i], tf_idf_matrix[j]) < 0.2:
-            if (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 and (aux_usu[j]+" com "+aux_usu[i]) not in grupo3:
-                if (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and  (aux_usu[j]+" com "+aux_usu[i]) not in grupo1:
-                    if (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and (aux_usu[j]+" com "+aux_usu[i]) not in grupo2:
-                        grupo4.append(aux_usu[i]+" com "+aux_usu[j]+str(cos))
-        else: 
-            nao_sim.append(aux_usu[i]+" com "+aux_usu[j]+str(cos))
+        
+        if cos >= 0.7 and cos <= 1 and \
+            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
+            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
+            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3:
+            grupo1.append(aux_usu[i]+" com "+aux_usu[j]+ " - sim = " +str(cos))
+        elif cos >= 0.4 and cos < 0.7 and \
+            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
+            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
+            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3:
+            grupo2.append(aux_usu[i]+" com "+aux_usu[j]+ " - sim = " +str(cos))
+        elif cos >= 0.2 and cos < 0.4 and \
+            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
+            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
+            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 :
+            grupo3.append(aux_usu[i]+" com "+aux_usu[j]+ " - sim = " +str(cos))
+        elif cos >= 0.1 and cos < 0.2 and \
+            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
+            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
+            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 :
+            grupo4.append(aux_usu[i]+" com "+aux_usu[j]+ " - sim = " +str(cos))
+        else:
+            nao_sim.append(aux_usu[i]+" com "+aux_usu[j]+ " - sim = " +str(cos))
+
 
 print len(grupo1)
 print "grup1:", grupo1, "\n"
@@ -84,11 +88,7 @@ print len(grupo2)
 print "grup2:",grupo2, "\n"
 print len(grupo3)
 print "grup3:",grupo3, "\n"
+print len(grupo4)
 print "grup4:",grupo4, "\n"
-print "nao_sim:",nao_sim, "\n"          
-
-# This was already calculated on the previous step, so we just use the value
-# cos_sim = 0.52305744
-# angle_in_radians = math.acos(cos_sim)
-# print math.degrees(angle_in_radians)
-# print pairwise_distances(tf_idf_matrix[0:], tf_idf_matrix[0:], metric='euclidean')
+print len(nao_sim)
+print "nao_sim:",nao_sim, "\n"   

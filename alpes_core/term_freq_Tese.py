@@ -2,7 +2,7 @@
 
 from nltk import RegexpTokenizer
 import re, math
-from alpes_core.clusterArgFinal import sw_aux_tese
+from alpes_core.clusterArgFinal import sw_tese
 # from sklearn.metrics.pairwise import cosine_similarity
 # from sklearn.feature_extraction.text import TfidfVectorizer
 # from alpes_core.similarity import similaridade, simple_cosine_sim
@@ -48,7 +48,7 @@ def tf_idf(word, doc, list_of_docs):
 vocabulary = []
 docs = {}
 
-for pos in (sw_aux_tese):
+for pos in (sw_tese):
     tokens = palavras.tokenize(pos)
     tokens = [token.lower() for token in tokens if len(token) > 2]
  

@@ -26,9 +26,9 @@ usu = []
 posFinal = []
 
 dados = []
-aux_tese = []
+tese = []
 
-sw_aux_tese = []
+sw_tese = []
 sw_posFinal = []
 aux_usu = []
 
@@ -38,7 +38,7 @@ for d in dadosSql:
                   re.sub('<[^>]*>', '', h.unescape(d[1])).lower()])
 
 for t in textotese:
-    aux_tese.append(re.sub('<[^>]*>', '', h.unescape(t[0])).lower())
+    tese.append(re.sub('<[^>]*>', '', h.unescape(t[0])).lower())
         
 
 #Colocando os textos de posicionamento final em numa lista separada
@@ -55,12 +55,37 @@ for i in dados:
 for i in usu:
     aux_usu.append(removeStopWords(i))
 
-for i in aux_tese:
-    sw_aux_tese.append(removeStopWords(i))
+for i in tese:
+    sw_tese.append(removeStopWords(i))
 
 
 for i in posFinal:
     sw_posFinal.append(removeStopWords(i))
 
+#Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
+#retirando afixos dos textos do posFinal e tese
+stemmer = RSLPStemmer()
 
-stemmer
+st_posFinal = []
+st_tese = []
+
+for i in range(len(sw_posFinal)):
+    st_aux = sw_posFinal[i]
+    string_aux = ""
+    for sufixo in st_aux.split():
+        string_aux = string_aux + " " + stemmer.stem(sufixo)
+    
+    st_posFinal.append(string_aux)
+
+
+for i in range(len(sw_tese)):
+    st_aux = sw_tese[i]
+    string_aux = ""
+    for sufixo in st_aux.split():
+        string_aux = string_aux + " " + stemmer.stem(sufixo)
+    
+    st_tese.append(string_aux)
+
+
+
+

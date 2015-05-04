@@ -3,7 +3,7 @@
 
 from nltk import RegexpTokenizer, bigrams, trigrams
 import re, math
-from alpes_core.clusterArgFinal import sw_posFinal, sw_aux_tese, aux_tese
+from alpes_core.clusterArgFinal import sw_posFinal, sw_tese, tese
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 from alpes_core.similarity import similaridade, simple_cosine_sim
