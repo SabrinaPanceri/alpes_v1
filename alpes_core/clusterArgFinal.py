@@ -10,6 +10,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from nltk.cluster.util import cosine_distance
 from alpes_core.similarity import removeStopWords
 from nltk.stem import RSLPStemmer
+from nltk.corpus import floresta
 
 def clusterArgFinal(idtese):
     vectorizer = CountVectorizer()
@@ -80,6 +81,7 @@ def clusterArgFinal(idtese):
         st_posFinal.append(string_aux)
 
 
+
     for i in range(len(sw_tese)):
         st_aux = sw_tese[i]
         string_aux = ""
@@ -88,6 +90,27 @@ def clusterArgFinal(idtese):
         
         st_tese.append(string_aux)
 
+    
+    twords = floresta.tagged_words()
+    twords = [(w.lower(), simplify_tag(t)) for (w,t) in twords]
+    print twords[:10]
+
+    print(' '.join(word + '/' + tag for (word, tag) in twords[:10]))
+
+    psents = floresta.parsed_sents()
+    print floresta.tagged_sents()
+    # psents[5].draw()
+
+
     return [st_tese, sw_posFinal, sw_tese, aux_usu, st_posFinal]
 
+#Experimentos com o Floresta Treeban
 
+def simplify_tag(t):
+    if "+" in t:
+        return t[t.index("+")+1:]
+    else:
+        return t
+
+
+    
