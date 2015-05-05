@@ -5,7 +5,7 @@ import re, math
 from collections import Counter
 from unicodedata import normalize
 from nltk.corpus import stopwords
-from nltk import RegexpTokenizer, bigrams, trigrams
+from nltk import RegexpTokenizer
 
 palavras = RegexpTokenizer("[\w']+", flags=re.UNICODE)
 

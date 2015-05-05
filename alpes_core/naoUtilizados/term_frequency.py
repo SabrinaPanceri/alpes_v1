@@ -6,7 +6,7 @@ import re, math
 from alpes_core.clusterArgFinal import sw_posFinal, sw_tese, tese
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
-from alpes_core.similarity import similaridade, simple_cosine_sim
+from alpes_core.naoUtilizados.similarity import similaridade, simple_cosine_sim
 from nltk.stem import RSLPStemmer 
 
 
