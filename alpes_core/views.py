@@ -15,7 +15,8 @@ import re
 # Create your views here.
 def home(request):
 	
-	dados = []		
+	dados = []	
+	
 	context = RequestContext(request,{'teses' : Tese.objects.filter(grupo_idgrupo=1064), 'dados': dados})
 	
 	return render(request, 'inicio1.html', context)
