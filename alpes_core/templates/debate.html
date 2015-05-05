@@ -47,51 +47,95 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
-                <div class="row">
-                	<div class="col-lg-12">
-                        {{idteseIndex}}
-                        {% if idteseIndex > -1 %}
-                            {{tese}}
-                        {%else%}
-		                <select class="form-control"> 
-							<option>Escolha a Tese</option>
-							{% for tese in teses %}
-								<option>{{ tese.idtese }} - {{ tese.tese }}</option>
-							{% endfor %}
-						</select>
-                        {% endif %}
-					</div>
-				</div>
 				 <div class="row">
                     <div class="col-lg-12">
-                        <h2>Debates concluídos</h2>
+                        <h2>Grupo 1</h2>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Usuario</th>
-                                        <th>Posicionamento Inicial</th>
-                                        <th>Argumentação Inicial</th>
-                                        <th>Revisão</th>
-                                        <th>Réplica</th>
-                                        <th>Argumentação e Posicionamento Final</th>
+                                        <th>Grupo 1</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                   {% for tabela in dados %}
+                                <tbody>       
+                                        {% for data in results.0 %}
 										<tr onclick="console.log('oi')">
-                                            <td> {{ tabela.0 }} </td> 
-											<td> {{ tabela.1 }} </td> 
-											<td> {{ tabela.2 }} </td>
-											<td> {{ tabela.3 }} </td>
-											<td> {{ tabela.4 }} </td>
-											<td> {{ tabela.5 }} </td>
+                                            <td> {{ data }} </td> 
 										</tr>
-									{% endfor %}
+                                        {% endfor %}
                                 </tbody>
                             </table>
                         </div>
+                        <h2>Grupo 2</h2>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Grupo 2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>       
+                                        {% for data in results.1 %}
+                                        <tr onclick="console.log('oi')">
+                                            <td> {{ data }} </td> 
+                                        </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <h2>Grupo 3</h2>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Grupo 3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>       
+                                        {% for data in results.2 %}
+                                        <tr onclick="console.log('oi')">
+                                            <td> {{ data }} </td> 
+                                        </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <h2>Grupo 4</h2>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Grupo 4</th>
+                                    </tr>
+                                </thead>
+                                <tbody>       
+                                        {% for data in results.3 %}
+                                        <tr onclick="console.log('oi')">
+                                            <td> {{ data }} </td> 
+                                        </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h2>Grupo 5</h2>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sim Não</th>
+                                    </tr>
+                                </thead>
+                                <tbody>       
+                                        {% for data in results.4 %}
+                                        <tr onclick="console.log('oi')">
+                                            <td> {{ data }} </td> 
+                                        </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
                 <!-- /.row -->
