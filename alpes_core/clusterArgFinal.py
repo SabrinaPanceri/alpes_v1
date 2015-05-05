@@ -6,6 +6,7 @@ import HTMLParser
 import re
 from alpes_core.similarity import removeStopWords
 from nltk.stem import RSLPStemmer
+from nltk.corpus import floresta
 
 
 vectorizer = CountVectorizer()
@@ -86,6 +87,20 @@ for i in range(len(sw_tese)):
     
     st_tese.append(string_aux)
 
+#Experimentos com o Floresta Treeban
 
+def simplify_tag(t):
+    if "+" in t:
+        return t[t.index("+")+1:]
+    else:
+        return t
 
+twords = floresta.tagged_words()
+twords = [(w.lower(), simplify_tag(t)) for (w,t) in twords]
+print twords[:10]
 
+print(' '.join(word + '/' + tag for (word, tag) in twords[:10]))
+
+psents = floresta.parsed_sents()
+print floresta.tagged_sents()
+# psents[5].draw()
