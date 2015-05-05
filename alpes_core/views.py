@@ -51,7 +51,7 @@ def teses(request, tese_id):
 		i=i+1
 
 
-	context = RequestContext(request,{'teses' : teses, 'dados': dados, 'idteseIndex':index})
+	context = RequestContext(request,{'teses' : teses, 'dados': dados, 'idteseIndex':index, 'idtese':tese_id})
 	
 	return render(request, 'inicio1.html', context)
 
@@ -65,6 +65,7 @@ def debate(request, debate_id):
 	sw_tese = auxResult[2]
 	aux_usu = auxResult[3]
 	st_posFinal = auxResult[4]
+
 	# train_set =sw_tese 
 	# test_set = sw_posFinal
 	test_set = st_posFinal
