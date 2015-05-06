@@ -61,7 +61,7 @@ def debate(request, debate_id):
 	auxResult = clusterArgFinal(debate_id)
 
 	st_tese = auxResult[0]
-	sw_posFinal = auxResult[1]
+	posFinal = auxResult[1]
 	sw_tese = auxResult[2]
 	aux_usu = auxResult[3]
 	st_posFinal = auxResult[4]
@@ -74,6 +74,7 @@ def debate(request, debate_id):
 	grupo3 = []
 	grupo4 = []
 	nao_sim = []
+	test = []
 
 	#Utilização das funções para calculo do TF-IDF sob a tese e o posFinal
 	vectorizer = CountVectorizer()
@@ -96,26 +97,27 @@ def debate(request, debate_id):
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3:
-				grupo1.append(aux_usu[i]+" com "+aux_usu[j]+ " - sim = " +str(cos))
+				grupo1.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
+				
 			elif cos >= 0.4 and cos < 0.7 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3:
-				grupo2.append(aux_usu[i]+" com "+aux_usu[j]+ " - sim = " +str(cos))
+				grupo2.append(aux_usu[i]+":" + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
 			elif cos >= 0.2 and cos < 0.4 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 :
-				grupo3.append(aux_usu[i]+" com "+aux_usu[j]+ " - sim = " +str(cos))
+				grupo3.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
 			elif cos >= 0.1 and cos < 0.2 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 :
-				grupo4.append(aux_usu[i]+" com "+aux_usu[j]+ " - sim = " +str(cos))
+				grupo4.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
 			else:
-				nao_sim.append(aux_usu[i]+" com "+aux_usu[j]+ " - sim = " +str(cos))
+				nao_sim.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
 
-	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,grupo4,nao_sim]})
+	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,grupo4,nao_sim, test]})
 	return render(request, 'debate.html',context)
 
 

@@ -8,28 +8,56 @@ from nltk.stem import RSLPStemmer
 from nltk.corpus import floresta
 
 def clusterArgFinal(idtese):
-    h = HTMLParser.HTMLParser()
-
+    #Variaveis e funçoes para conexação com o banco de dados do Debate de Teses
     cursor = connection.cursor()
     cursor2 = connection.cursor()
 
     cursor.execute("select distinct `usr`.`primeironome` as `name`, `pos`.`posicionamentofinal` AS `posicionamentofinal` from ((((`argumento` `arg` join `revisao` `rev`) join `replica` `rep`) join `posicionamento` `pos`) join `argumentador` `urg`)join `usuario` `usr`  where ((`arg`.`tese_idtese` = " + idtese + "  ) and (`rev`.`argumento_idargumento` = `arg`.`idargumento`) and (`rep`.`revisao_idrevisao` = `rev`.`idrevisao`) and (`arg`.`argumentador_idargumentador` = `pos`.`argumentador_idargumentador`) and (`arg`.`tese_idtese` = `pos`.`tese_idtese`) and (`arg`.`posicionamentoinicial` is not null) and (`arg`.`argumentador_idargumentador` = `urg`.`idargumentador`) and(`urg`.`usuario_idusuario` = `usr`.`idusuario`) and (`pos`.`posicionamentofinal` is not null))")
     cursor2.execute("select tese from tese where grupo_idgrupo = 1064 ")
-
+    
+    #Variavel e função para tratar tags html e acentos com codificação ISO
+    h = HTMLParser.HTMLParser()
+    
+    #dados retirados da consulta ao banco
     dadosSql = cursor.fetchall()
     textotese = cursor2.fetchall()
-
+    
+    #listas para tratar os dados iniciais
     usu = []
     posFinal = []
-
     dados = []
     tese = []
-
+    
+    #lista com dados após a remoção das stopwords
     sw_tese = []
     sw_posFinal = []
     aux_usu = []
 
-    #Aplicacao de Case Folding
+    #lista com dados após a aplicação de Stemming
+    st_posFinal = []
+    st_tese = []
+    
+#############################################################################################################
+## Desenvolvimento da lógica de execução do Núcleo de processamento do Alpes                                #
+## Aplicação das técnicas de pré-processamento textual a fim de ajudar no processo de comparação e busca    #
+## de textos similares                                                                                      #
+## Técnicas desenvolvidas                                                                                   #
+## 1 - Case folding                                                                                         #
+## 2 - Troca de caracteres acentuados por caracteres não acentuados                                         #
+## 3 - Remoção pontuações                                                                                   #
+## 4 - Remoção de stopwords                                                                                 #
+## 5 - Stemming                                                                                             #
+## 6 - Normalização (falta desenv)                                                                          #
+#############################################################################################################
+
+##############################################################################################################
+## DESENVOLVIMENTO DA FERRAMENTA "GRUPOS DE ARGUMENTAÇÃO" - ARTIGO SBIE 2014
+## UTILIZAÇÃO DO POSICIONAMENTO FINAL PARA CRIAR GRUPOS DE ALUNOS QUE CHEGARAM A CONCLUSÕES SIMILARES
+## AO FINAL DAS INTERAÇÕES DA APDT 
+##############################################################################################################    
+
+#############################################################################################################    
+#Aplicacao de Case Folding
     for d in dadosSql:
         dados.append([re.sub('<[^>]*>', '', h.unescape(d[0])).lower(),
                       re.sub('<[^>]*>', '', h.unescape(d[1])).lower()])
@@ -44,11 +72,11 @@ def clusterArgFinal(idtese):
         usu.append(i[x].upper())
         posFinal.append(i[x+1].lower()) #lista com o posicionamento Final
 
-
-    #Fases de pré-processamento linguistico
-    # - Remoção de stopwords
-    # - Troca de caracteres acentuados por caracteres não acentuados
-    # - Remoção pontuações
+#############################################################################################################
+#Fases de pré-processamento linguistico
+# - Remoção de stopwords
+# - Troca de caracteres acentuados por caracteres não acentuados
+# - Remoção pontuações
     for i in usu:
         aux_usu.append(removeStopWords(i))
 
@@ -59,12 +87,10 @@ def clusterArgFinal(idtese):
     for i in posFinal:
         sw_posFinal.append(removeStopWords(i))
 
-    #Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
-    #retirando afixos dos textos do posFinal e tese
+#############################################################################################################
+#Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
+#retirando afixos dos textos do posFinal e tese
     stemmer = RSLPStemmer()
-
-    st_posFinal = []
-    st_tese = []
 
     for i in range(len(sw_posFinal)):
         st_aux = sw_posFinal[i]
@@ -83,7 +109,10 @@ def clusterArgFinal(idtese):
         st_tese.append(string_aux)
 
 
-    return [st_tese, sw_posFinal, sw_tese, aux_usu, st_posFinal]
+#############################################################################################################
+#retorno da função - usado na views.py para alimentar o template debate.html
+#passar parametros que devem ser apresentados na templates debate.html
+    return [st_tese, posFinal, sw_tese, aux_usu, st_posFinal]
 
 
 #Experimentos com o Floresta Treebank
