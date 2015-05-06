@@ -6,11 +6,13 @@ from alpes_core.models import Tese
 from django.template import RequestContext
 from django.db import connection
 from alpes_core.clusterArgFinal import clusterArgFinal
+from alpes_core.clusterArgInicial import clusterArgInicial
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 import HTMLParser
 import re
+
 
 # Create your views here.
 def home(request):
@@ -119,6 +121,70 @@ def debate(request, debate_id):
 
 	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,grupo4,nao_sim, test]})
 	return render(request, 'debate.html',context)
+
+def posInicial(request, debate_id):
+	
+	auxResult = clusterArgInicial(debate_id)
+
+	st_tese = auxResult[0]
+	posFinal = auxResult[1]
+	sw_tese = auxResult[2]
+	aux_usu = auxResult[3]
+	st_posFinal = auxResult[4]
+
+	test_set = st_posFinal
+	train_set = st_tese
+
+	grupo1 = []
+	grupo2 = []
+	grupo3 = []
+	grupo4 = []
+	nao_sim = []
+	test = []
+
+	#Utilização das funções para calculo do TF-IDF sob a tese e o posFinal
+	vectorizer = CountVectorizer()
+	vectorizer.fit_transform(train_set)
+	count_vectorizer = CountVectorizer()
+	count_vectorizer.fit_transform(train_set) 
+	count_vectorizer.vocabulary_
+	freq_term_matrix = count_vectorizer.transform(test_set)
+	tfidf = TfidfTransformer(norm="l2")
+	tfidf.fit(freq_term_matrix)
+	tf_idf_matrix = tfidf.transform(freq_term_matrix)
+
+	#Tratamento das matrizes geradas pelo algoritmo de TF-IDF com a aplicação do cálculo do 
+	#coseno entre os vetores - Cosine Similaridade
+	for i in range(0, len(test_set)):
+		for j in range(i+1, len(test_set)):
+			#Calculo da similaridade de cossenos 
+			cos = cosine_similarity(tf_idf_matrix[i], tf_idf_matrix[j])
+			if cos >= 0.7 and cos <= 1 and \
+	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
+	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
+	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3:
+				grupo1.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
+				
+			elif cos >= 0.4 and cos < 0.7 and \
+	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
+	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
+	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3:
+				grupo2.append(aux_usu[i]+":" + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
+			elif cos >= 0.2 and cos < 0.4 and \
+	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
+	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
+	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 :
+				grupo3.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
+			elif cos >= 0.1 and cos < 0.2 and \
+	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
+	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
+	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 :
+				grupo4.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
+			else:
+				nao_sim.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
+
+	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,grupo4,nao_sim, test]})
+	return render(request, 'posInicial.html',context)
 
 
 # def index(request):

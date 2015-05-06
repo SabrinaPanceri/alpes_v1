@@ -30,12 +30,12 @@ from nltk.probability import FreqDist
 ## AO FINAL DAS INTERAÇÕES DA APDT 
 ##############################################################################################################  
 
-def clusterArgFinal(idtese):
+def clusterArgInicial(idtese):
     #Variaveis e funçoes para conexação com o banco de dados do Debate de Teses
     cursor = connection.cursor()
     cursor2 = connection.cursor()
 
-    cursor.execute("select distinct `usr`.`primeironome` as `name`, `pos`.`posicionamentofinal` AS `posicionamentofinal` from ((((`argumento` `arg` join `revisao` `rev`) join `replica` `rep`) join `posicionamento` `pos`) join `argumentador` `urg`)join `usuario` `usr`  where ((`arg`.`tese_idtese` = " + idtese + "  ) and (`rev`.`argumento_idargumento` = `arg`.`idargumento`) and (`rep`.`revisao_idrevisao` = `rev`.`idrevisao`) and (`arg`.`argumentador_idargumentador` = `pos`.`argumentador_idargumentador`) and (`arg`.`tese_idtese` = `pos`.`tese_idtese`) and (`arg`.`posicionamentoinicial` is not null) and (`arg`.`argumentador_idargumentador` = `urg`.`idargumentador`) and(`urg`.`usuario_idusuario` = `usr`.`idusuario`) and (`pos`.`posicionamentofinal` is not null))")
+    cursor.execute("select distinct `usr`.`primeironome` as `name`, `arg`.`argumento` AS `posicionamentoinicial` from ((((`argumento` `arg` join `revisao` `rev`) join `replica` `rep`) join `posicionamento` `pos`) join `argumentador` `urg`)join `usuario` `usr`  where ((`arg`.`tese_idtese` = " + idtese + "  ) and (`rev`.`argumento_idargumento` = `arg`.`idargumento`) and (`rep`.`revisao_idrevisao` = `rev`.`idrevisao`) and (`arg`.`argumentador_idargumentador` = `pos`.`argumentador_idargumentador`) and (`arg`.`tese_idtese` = `pos`.`tese_idtese`) and (`arg`.`posicionamentoinicial` is not null) and (`arg`.`argumentador_idargumentador` = `urg`.`idargumentador`) and(`urg`.`usuario_idusuario` = `usr`.`idusuario`) and (`pos`.`posicionamentofinal` is not null))")
     cursor2.execute("select tese from tese where grupo_idgrupo = 1064 ")
     
     #Variavel e função para tratar tags html e acentos com codificação ISO
@@ -47,17 +47,17 @@ def clusterArgFinal(idtese):
     
     #listas para tratar os dados iniciais
     usu = []
-    posFinal = []
+    posInicial = []
     dados = []
     tese = []
     
     #lista com dados após a remoção das stopwords
     sw_tese = []
-    sw_posFinal = []
+    sw_posInicial = []
     aux_usu = []
 
     #lista com dados após a aplicação de Stemming
-    st_posFinal = []
+    st_posInicial = []
     st_tese = []
       
 
@@ -75,7 +75,7 @@ def clusterArgFinal(idtese):
     for i in dados:
         x = 0
         usu.append(i[x].upper())
-        posFinal.append(i[x+1].lower()) #lista com o posicionamento Final
+        posInicial.append(i[x+1].lower()) #lista com o posicionamento Final
 
 #############################################################################################################
 #Fases de pré-processamento linguistico
@@ -89,21 +89,21 @@ def clusterArgFinal(idtese):
         sw_tese.append(removeStopWords(i))
 
 
-    for i in posFinal:
-        sw_posFinal.append(removeStopWords(i))
+    for i in posInicial:
+        sw_posInicial.append(removeStopWords(i))
 
 #############################################################################################################
 #Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
 #retirando afixos dos textos do posFinal e tese
     stemmer = RSLPStemmer()
 
-    for i in range(len(sw_posFinal)):
-        st_aux = sw_posFinal[i]
+    for i in range(len(sw_posInicial)):
+        st_aux = sw_posInicial[i]
         string_aux = ""
         for sufixo in st_aux.split():
             string_aux = string_aux + " " + stemmer.stem(sufixo)
         
-        st_posFinal.append(string_aux)
+        st_posInicial.append(string_aux)
 
     for i in range(len(sw_tese)):
         st_aux = sw_tese[i]
@@ -122,7 +122,7 @@ def clusterArgFinal(idtese):
 #############################################################################################################
 #retorno da função - usado na views.py para alimentar o template debate.html
 #passar parametros que devem ser apresentados na templates debate.html
-    return [st_tese, posFinal, sw_tese, aux_usu, st_posFinal]
+    return [st_tese, posInicial, sw_tese, aux_usu, st_posInicial]
 
 
 #############################################################################################################
