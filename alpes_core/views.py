@@ -8,11 +8,17 @@ from django.db import connection
 from alpes_core.clusterArgFinal import clusterArgFinal
 from alpes_core.clusterArgInicial import clusterArgInicial
 from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.cluster.k_means_ import KMeans
+from nltk.cluster import KMeansClusterer
+from alpes_core import ex_kmeans
+
 import HTMLParser
 import re
+from alpes_core.ex_kmeans import cluster_texts
 
+# from nltk.cluster import KMeansClusterer, euclidean_distance
 
 # Create your views here.
 def home(request):
@@ -58,7 +64,7 @@ def teses(request, tese_id):
 	return render(request, 'inicio1.html', context)
 
 
-def debate(request, debate_id):
+def debate(request, debate_id): #Cluster pela argumentação FINAL
 	
 	auxResult = clusterArgFinal(debate_id)
 
@@ -95,95 +101,75 @@ def debate(request, debate_id):
 		for j in range(i+1, len(test_set)):
 			#Calculo da similaridade de cossenos 
 			cos = cosine_similarity(tf_idf_matrix[i], tf_idf_matrix[j])
-			if cos >= 0.7 and cos <= 1 and \
+			
+			if cos >= 0.9 and cos <= 1 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3:
 				grupo1.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
-				
-			elif cos >= 0.4 and cos < 0.7 and \
+			elif cos >= 0.7 and cos < 0.8 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3:
 				grupo2.append(aux_usu[i]+":" + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
-			elif cos >= 0.2 and cos < 0.4 and \
+			elif cos >= 0.6 and cos < 0.7 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 :
 				grupo3.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
-			elif cos >= 0.1 and cos < 0.2 and \
+			elif cos >= 0.5 and cos < 0.6 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
 	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 :
 				grupo4.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
 			else:
+			# o corte para considerar não similares é 50% de semelhança entre os textos
 				nao_sim.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
 
 	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,grupo4,nao_sim, test]})
 	return render(request, 'debate.html',context)
 
-def posInicial(request, debate_id):
+def posInicial(request, debate_id):#Cluster usado no artigo SBIE/2015 - Agrupamento pelo Posicionamento Inicial
 	
 	auxResult = clusterArgInicial(debate_id)
 
 	st_tese = auxResult[0]
-	posFinal = auxResult[1]
+	posInicial = auxResult[1]
 	sw_tese = auxResult[2]
 	aux_usu = auxResult[3]
-	st_posFinal = auxResult[4]
-
-	test_set = st_posFinal
-	train_set = st_tese
+	st_posInicial = auxResult[4]
+	
+	#Clusterização utilizando Tf-IDF e K-Means
+	grupos = cluster_texts(st_posInicial, 3)
 
 	grupo1 = []
 	grupo2 = []
 	grupo3 = []
-	grupo4 = []
-	nao_sim = []
-	test = []
-
-	#Utilização das funções para calculo do TF-IDF sob a tese e o posFinal
-	vectorizer = CountVectorizer()
-	vectorizer.fit_transform(train_set)
-	count_vectorizer = CountVectorizer()
-	count_vectorizer.fit_transform(train_set) 
-	count_vectorizer.vocabulary_
-	freq_term_matrix = count_vectorizer.transform(test_set)
-	tfidf = TfidfTransformer(norm="l2")
-	tfidf.fit(freq_term_matrix)
-	tf_idf_matrix = tfidf.transform(freq_term_matrix)
-
-	#Tratamento das matrizes geradas pelo algoritmo de TF-IDF com a aplicação do cálculo do 
-	#coseno entre os vetores - Cosine Similaridade
-	for i in range(0, len(test_set)):
-		for j in range(i+1, len(test_set)):
-			#Calculo da similaridade de cossenos 
-			cos = cosine_similarity(tf_idf_matrix[i], tf_idf_matrix[j])
-			if cos >= 0.7 and cos <= 1 and \
-	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
-	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
-	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3:
-				grupo1.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
+	
+	
+	
+	for i in range(len(grupos)):
+		for j in range(len(grupos[i])):
+			if i == 0:
+				aux = grupos[i][j]
+				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posInicial[aux]
+				grupo1.append(texto)
 				
-			elif cos >= 0.4 and cos < 0.7 and \
-	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
-	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
-	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3:
-				grupo2.append(aux_usu[i]+":" + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
-			elif cos >= 0.2 and cos < 0.4 and \
-	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
-	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
-	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 :
-				grupo3.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
-			elif cos >= 0.1 and cos < 0.2 and \
-	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo1 and \
-	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo2 and \
-	            (aux_usu[i]+" com "+aux_usu[j]) not in grupo3 :
-				grupo4.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
-			else:
-				nao_sim.append(aux_usu[i]+": " + posFinal[i] + "\n COM \n"+aux_usu[j]+": "+ posFinal[j] + " Sim = " +str(cos) + "\n")
-
-	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,grupo4,nao_sim, test]})
+			if i == 1:
+				aux = grupos[i][j]
+				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posInicial[aux]
+				grupo2.append(texto)
+			if i == 2:
+				aux = grupos[i][j]
+				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posInicial[aux]
+				grupo3.append(texto)
+	
+	
+	tam_grupo1 = len(grupo1)
+	tam_grupo2 = len(grupo2)
+	tam_grupo3 = len(grupo3)
+	
+	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,tam_grupo1,tam_grupo2,tam_grupo3]})
 	return render(request, 'posInicial.html',context)
 
 
