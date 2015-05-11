@@ -10,13 +10,14 @@ from alpes_core.clusterArgInicial import clusterArgInicial
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.cluster.k_means_ import KMeans
-from nltk.cluster import KMeansClusterer
-from alpes_core import ex_kmeans
+# from sklearn.cluster.k_means_ import KMeans
+# from nltk.cluster import KMeansClusterer
+# from alpes_core import ex_kmeans
 
 import HTMLParser
 import re
 from alpes_core.ex_kmeans import cluster_texts
+
 
 # from nltk.cluster import KMeansClusterer, euclidean_distance
 
@@ -62,7 +63,6 @@ def teses(request, tese_id):
 	context = RequestContext(request,{'teses' : teses, 'dados': dados, 'idteseIndex':index, 'idtese':tese_id})
 	
 	return render(request, 'inicio1.html', context)
-
 
 def debate(request, debate_id): #Cluster pela argumentação FINAL
 	
@@ -129,7 +129,12 @@ def debate(request, debate_id): #Cluster pela argumentação FINAL
 	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,grupo4,nao_sim, test]})
 	return render(request, 'debate.html',context)
 
-def posInicial(request, debate_id):#Cluster usado no artigo SBIE/2015 - Agrupamento pelo Posicionamento Inicial
+
+
+# Cluster usado no artigo SBIE/2015 - Agrupamento pelo Posicionamento Inicial
+# Técnica para agrupamento KMeans
+
+def posInicial(request, debate_id):
 	
 	auxResult = clusterArgInicial(debate_id)
 
@@ -138,15 +143,30 @@ def posInicial(request, debate_id):#Cluster usado no artigo SBIE/2015 - Agrupame
 	sw_tese = auxResult[2]
 	aux_usu = auxResult[3]
 	st_posInicial = auxResult[4]
+	tese = auxResult[5]
+	
+	test_set = st_posInicial
+	train_set = st_tese
+	
+	#Utilização das funções para calculo do TF-IDF sob a tese e o posFinal
+	vectorizer = CountVectorizer()
+	vectorizer.fit_transform(train_set)
+	count_vectorizer = CountVectorizer()
+	count_vectorizer.fit_transform(train_set) 
+	count_vectorizer.vocabulary_
+	freq_term_matrix = count_vectorizer.transform(test_set)
+	tfidf = TfidfTransformer(norm="l2")
+	tfidf.fit(freq_term_matrix)
+	tf_idf_matrix = tfidf.transform(freq_term_matrix)
 	
 	#Clusterização utilizando Tf-IDF e K-Means
+	#Argumento que será clusterizado, e quandidade de clusters
 	grupos = cluster_texts(st_posInicial, 3)
 
 	grupo1 = []
 	grupo2 = []
 	grupo3 = []
-	
-	
+	indices = []
 	
 	for i in range(len(grupos)):
 		for j in range(len(grupos[i])):
@@ -154,22 +174,57 @@ def posInicial(request, debate_id):#Cluster usado no artigo SBIE/2015 - Agrupame
 				aux = grupos[i][j]
 				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posInicial[aux]
 				grupo1.append(texto)
-				
-			if i == 1:
+				indices.append(grupos[i][j])
+			elif i == 1:
 				aux = grupos[i][j]
 				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posInicial[aux]
-				grupo2.append(texto)
-			if i == 2:
+				grupo2.append(texto)		
+				indices.append(grupos[i][j])	
+			elif i == 2:
 				aux = grupos[i][j]
 				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posInicial[aux]
 				grupo3.append(texto)
+				indices.append(grupos[i][j])
+			
+	ind_aux = indices[:len(grupo1)]
+	ind_aux2 = indices[len(ind_aux):len(ind_aux)+len(grupo2)]
+	ind_aux3 = indices[len(ind_aux)+len(grupo2):]
 	
+	print "grupo 1"
+	for y in range(len(ind_aux)):
+		for x in range(y+1, len(ind_aux)):
+			num1 = ind_aux[y]
+			num2 = ind_aux[x]
+			cos = cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+			print aux_usu[num1],aux_usu[num2]
+			print "cos",cos
+			print "euc", euc
+
+	print "grupo 2"
+	for y in range(len(ind_aux2)):
+		for x in range(y+1, len(ind_aux2)):
+			num1 = ind_aux2[y]
+			num2 = ind_aux2[x]
+			cos = cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2])
+			print aux_usu[num1],aux_usu[num2]
+			print "cos",cos
+			print "euc", euc
+			
+	print "grupo 3"
+	for y in range(len(ind_aux3)):
+		for x in range(y+1, len(ind_aux3)):
+			num1 = ind_aux3[y]
+			num2 = ind_aux3[x]
+			cos = cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2])
+			print aux_usu[num1],aux_usu[num2]
+			print "cos",cos
+			print "euc", euc
+		
 	
-	tam_grupo1 = len(grupo1)
-	tam_grupo2 = len(grupo2)
-	tam_grupo3 = len(grupo3)
-	
-	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,tam_grupo1,tam_grupo2,tam_grupo3]})
+	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,len(grupo1),len(grupo2),len(grupo3), tese]})
 	return render(request, 'posInicial.html',context)
 
 

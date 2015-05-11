@@ -44,7 +44,15 @@
                             <li><a href="/">Início</a> </li>
                             <li class="active"> Debates Analisados </li>
                         </ol>
-                        <h3>Grupos de Similaridade - Análise do Posicionamento Inicial</h3>
+                        <div class="alert alert-info">
+                        	<strong>Grupos de Similaridade - Análise do Posicionamento Inicial</strong>
+                         </div>
+                          <div class="alert alert-success">
+                         {% for tese in results.6 %}
+							<strong>Tese: {{tese}}</strong>
+                         {% endfor %}
+                        </div>
+                        
                     </div>
                 </div>
                 <!-- /.row -->
@@ -54,7 +62,7 @@
                             <table class="table table-bordered table-hover  ">
                                 <thead>
                                     <tr>
-                                        <th class="info">Grupo 1 - Tamanho: {{results.3}} </th>
+                                        <th class="alert-info">Grupo 1 - Tamanho: {{results.3}} </th>
                                     </tr>
                                 </thead>
                                 <tbody>       
@@ -72,7 +80,7 @@
                             <table class="table table-bordered table-hover ">
                                 <thead>
                                     <tr>
-                                        <th class="info">Grupo 2 - Tamanho: {{results.4}}</th>
+                                        <th class="alert-info">Grupo 2 - Tamanho: {{results.4}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>       
@@ -90,7 +98,7 @@
                             <table class="table table-bordered table-hover ">
                                 <thead>
                                     <tr>
-                                        <th class="info">Grupo 3 - Tamanho: {{results.5}}</th>
+                                        <th class="alert-info">Grupo 3 - Tamanho: {{results.5}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>       

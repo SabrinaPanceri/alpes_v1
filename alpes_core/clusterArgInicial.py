@@ -36,7 +36,7 @@ def clusterArgInicial(idtese):
     cursor2 = connection.cursor()
 
     cursor.execute("select distinct `usr`.`primeironome` as `name`, `arg`.`argumento` AS `posicionamentoinicial` from ((((`argumento` `arg` join `revisao` `rev`) join `replica` `rep`) join `posicionamento` `pos`) join `argumentador` `urg`)join `usuario` `usr`  where ((`arg`.`tese_idtese` = " + idtese + "  ) and (`rev`.`argumento_idargumento` = `arg`.`idargumento`) and (`rep`.`revisao_idrevisao` = `rev`.`idrevisao`) and (`arg`.`argumentador_idargumentador` = `pos`.`argumentador_idargumentador`) and (`arg`.`tese_idtese` = `pos`.`tese_idtese`) and (`arg`.`posicionamentoinicial` is not null) and (`arg`.`argumentador_idargumentador` = `urg`.`idargumentador`) and(`urg`.`usuario_idusuario` = `usr`.`idusuario`) and (`pos`.`posicionamentofinal` is not null))")
-    cursor2.execute("select tese from tese where grupo_idgrupo = 1064 ")
+    cursor2.execute("select tese from tese where idtese="+ idtese)
     
     #Variavel e função para tratar tags html e acentos com codificação ISO
     h = HTMLParser.HTMLParser()
@@ -122,7 +122,7 @@ def clusterArgInicial(idtese):
 #############################################################################################################
 #retorno da função - usado na views.py para alimentar o template debate.html
 #passar parametros que devem ser apresentados na templates debate.html
-    return [st_tese, posInicial, sw_tese, aux_usu, st_posInicial]
+    return [st_tese, posInicial, sw_tese, aux_usu, st_posInicial, tese]
 
 
 #############################################################################################################
