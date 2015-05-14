@@ -57,7 +57,7 @@
                 </div>
                 <!-- /.row -->
 				 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                                 <thead>
@@ -75,7 +75,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-lg-3">    
+                    <div class="col-lg-4">    
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover ">
                                 <thead>
@@ -93,7 +93,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-lg-3">                    
+                    <div class="col-lg-4">                    
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover ">
                                 <thead>
@@ -111,7 +111,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-lg-3">                    
+                    <div class="col-lg-4">                    
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover ">
                                 <thead>
@@ -121,6 +121,42 @@
                                 </thead>
                                 <tbody>       
                                         {% for data in results.3 %}
+                                        <tr onclick="console.log('oi')">
+                                            <td> {{ data }} </td> 
+                                        </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">                    
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover ">
+                                <thead>
+                                    <tr>
+                                        <th class="alert-info">Grupo 5 - Tamanho: {{results.10}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>       
+                                        {% for data in results.9 %}
+                                        <tr onclick="console.log('oi')">
+                                            <td> {{ data }} </td> 
+                                        </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">                    
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover ">
+                                <thead>
+                                    <tr>
+                                        <th class="alert-info">Grupo 6 - Tamanho: {{results.12}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>       
+                                        {% for data in results.11 %}
                                         <tr onclick="console.log('oi')">
                                             <td> {{ data }} </td> 
                                         </tr>

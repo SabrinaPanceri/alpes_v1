@@ -14,7 +14,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 import HTMLParser
 import re
 from alpes_core.ex_kmeans import cluster_texts
-from alpes_core.naoUtilizados.ex_lsa import lsi_app
 
 
 # from nltk.cluster import KMeansClusterer, euclidean_distance
@@ -158,16 +157,27 @@ def posInicial(request, debate_id):
 	tfidf.fit(freq_term_matrix)
 	tf_idf_matrix = tfidf.transform(freq_term_matrix)
 	
-	#Clusterização utilizando Tf-IDF e K-Means
-	#Argumento que será clusterizado, e quandidade de clusters
-	grupos = cluster_texts(st_posInicial, 4)
+#Clusterização utilizando Tf-IDF e K-Means
+
+#Argumento que será clusterizado, e quandidade de clusters
+# Para n_cluster = 3
+# 	grupos = cluster_texts(st_posInicial, 3)
 	
+# Para n_cluster = 4
+# 	grupos = cluster_texts(st_posInicial, 4)
 	
+# Para n_cluster = 5
+# 	grupos = cluster_texts(st_posInicial, 5)
+
+# Para n_cluster = 6
+	grupos = cluster_texts(st_posInicial, 6)
 
 	grupo1 = []
 	grupo2 = []
 	grupo3 = []
 	grupo4 = []
+	grupo5 = []
+	grupo6 = []
 	indices = []
 	
 	for i in range(len(grupos)):
@@ -187,64 +197,222 @@ def posInicial(request, debate_id):
 				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posIni[aux]
 				grupo3.append(texto)
 				indices.append(grupos[i][j])
+			#para n_clusters = 4
 			elif i == 3:
 				aux = grupos[i][j]
 				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posIni[aux]
 				grupo4.append(texto)
 				indices.append(grupos[i][j])
-			
-	ind_aux = indices[:len(grupo1)]
-	ind_aux2 = indices[len(ind_aux):len(ind_aux)+len(grupo2)]
-	ind_aux3 = indices[len(ind_aux2):len(ind_aux2)+len(grupo3):]
-	ind_aux4 = indices[len(ind_aux3)+len(grupo4):]
+			#para n_clusters = 5
+			elif i == 4:
+				aux = grupos[i][j]
+				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posIni[aux]
+				grupo5.append(texto)
+				indices.append(grupos[i][j])
+			#para n_clusters = 6
+			elif i == 5:
+				aux = grupos[i][j]
+				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posIni[aux]
+				grupo6.append(texto)
+				indices.append(grupos[i][j])
 	
-	print "grupo 1"
+	#PARA 3 CLUSTERS
+# 	ind_aux = indices[:len(grupo1)]
+# 	ind_aux2 = indices[len(ind_aux):len(ind_aux)+len(grupo2)]
+# 	ind_aux3 = indices[len(ind_aux)+len(grupo2):]
+	
+	
+	#PARA 4 CLUSTERS		
+# 	ind_aux = indices[:len(grupo1)]
+# 	ind_aux2 = indices[len(grupo1):len(grupo1)+len(grupo2)]
+# 	ind_aux3 = indices[len(grupo1)+len(grupo2):(len(grupo1)+len(grupo2))+len(grupo3)]
+# 	ind_aux4 = indices[(len(grupo1)+len(grupo2))+len(grupo3):]
+
+	print "GRUPOS", grupos
+	print "INDICES", indices
+
+#PARA 5 CLUSTERS		
+# 	ind_aux = indices[:len(grupo1)]
+# 	print "ind_aux", ind_aux
+# 	print "len_g1", len(grupo1)
+# 	ind_aux2 = indices[len(grupo1):len(grupo1)+len(grupo2)]
+# 	print "ind_aux", ind_aux2
+# 	print "len_g2", len(grupo2)
+# 	ind_aux3 = indices[len(grupo1)+len(grupo2):(len(grupo1)+len(grupo2))+len(grupo3)]
+# 	print "ind_aux", ind_aux3
+# 	print "len_g3", len(grupo3)
+# 	ind_aux4 = indices[(len(grupo1)+len(grupo2)+len(grupo3)):(len(grupo1)+len(grupo2)+len(grupo3))+len(grupo4)]
+# 	print "ind_aux", ind_aux4
+# 	print "len_g4", len(grupo4)
+# 	ind_aux5 = indices[(len(grupo1)+len(grupo2)+len(grupo3))+len(grupo4):]
+# 	print "ind_aux", ind_aux5
+# 	print "len_g5", len(grupo5)
+
+
+#PARA 6 CLUSTERS		
+	ind_aux = indices[:len(grupo1)]
+	print "ind_aux", ind_aux
+	print "len_g1", len(grupo1)
+	ind_aux2 = indices[len(grupo1):len(grupo1)+len(grupo2)]
+	print "ind_aux", ind_aux2
+	print "len_g2", len(grupo2)
+	ind_aux3 = indices[len(grupo1)+len(grupo2):(len(grupo1)+len(grupo2))+len(grupo3)]
+	print "ind_aux", ind_aux3
+	print "len_g3", len(grupo3)
+	ind_aux4 = indices[(len(grupo1)+len(grupo2)+len(grupo3)):(len(grupo1)+len(grupo2)+len(grupo3))+len(grupo4)]
+	print "ind_aux", ind_aux4
+	print "len_g4", len(grupo4)
+	ind_aux5 = indices[(len(grupo1)+len(grupo2)+len(grupo3))+len(grupo4):(len(grupo1)+len(grupo2)+len(grupo3)+len(grupo4))+len(grupo5)]
+	print "ind_aux", ind_aux5
+	print "len_g5", len(grupo5)
+	ind_aux6 = indices[(len(grupo1)+len(grupo2)+len(grupo3)+len(grupo4))+len(grupo5):]
+	print "ind_aux", ind_aux6
+	print "len_g6", len(grupo6)
+	
+	
+	
+	cos = []
+	print "grupo 1", len(grupo1)
 	for y in range(len(ind_aux)):
 		for x in range(y+1, len(ind_aux)):
 			num1 = ind_aux[y]
 			num2 = ind_aux[x]
-			cos = cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+			cos.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
+			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+# 			print aux_usu[num1],aux_usu[num2]
+# 			print "sim", similares
+# 			print "euc", euc
+	
+# 	print "cos",cos
+# 	print "len_cos",len(cos)
+	sum_cos = 0
+	
+	if len(cos) != 0:
+		for i in cos:
+			sum_cos = i + sum_cos
+		
+		print "media = ", sum_cos / len(cos)
+	else:
+		print "sem média"
+
+	print "grupo 2", len(grupo2)
+	cos2 = []
+	for y in range(len(ind_aux2)):
+		for x in range(y+1, len(ind_aux2)):
+			num1 = ind_aux2[y]
+			num2 = ind_aux2[x]
+			cos2.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
+			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+# 			print aux_usu[num1],aux_usu[num2]
+# 			print "cos",cos
+# 			print "euc", euc
+# 	print "cos",cos2
+# 	print "len_cos",len(cos2)
+	sum_cos = 0
+	if len(cos2) != 0:
+		for i in cos2:
+			sum_cos = i + sum_cos
+		print "media = ", sum_cos / len(cos2)
+	else:
+		print "sem média"
+	
+	cos3 = []	
+	print "grupo 3", len(grupo3)
+	for y in range(len(ind_aux3)):
+		for x in range(y+1, len(ind_aux3)):
+			num1 = ind_aux3[y]
+			num2 = ind_aux3[x]
+			cos3.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
+			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+# 			print aux_usu[num1],aux_usu[num2]
+# 			print "cos",cos
+# 			print "euc", euc
+	
+# 	print "cos",cos3
+# 	print "len_cos",len(cos3)
+	sum_cos = 0
+	if len(cos3) != 0:
+		for i in cos3:
+			sum_cos = i + sum_cos
+		print "media = ", sum_cos / len(cos3)
+	else:
+		print "sem média"
+	
+	
+	
+	
+	cos4 = []
+	print "grupo 4", len(grupo4)
+	for y in range(len(ind_aux4)):
+		for x in range(y+1, len(ind_aux4)):
+			num1 = ind_aux4[y]
+			num2 = ind_aux4[x]
+			cos4.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
 # 			print aux_usu[num1],aux_usu[num2]
 # 			print "cos",cos
 # 			print "euc", euc
 
-	print "grupo 2"
-	for y in range(len(ind_aux2)):
-		for x in range(y+1, len(ind_aux2)):
-			num1 = ind_aux2[y]
-			num2 = ind_aux2[x]
-			cos = cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2])
-# 			print aux_usu[num1],aux_usu[num2]
-# 			print "cos",cos
-# 			print "euc", euc
-			
-	print "grupo 3"
-	for y in range(len(ind_aux3)):
-		for x in range(y+1, len(ind_aux3)):
-			num1 = ind_aux3[y]
-			num2 = ind_aux3[x]
-			cos = cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2])
-# 			print aux_usu[num1],aux_usu[num2]
-# 			print "cos",cos
-# 			print "euc", euc
-	
-	print "grupo 4"
-	for y in range(len(ind_aux3)):
-		for x in range(y+1, len(ind_aux3)):
-			num1 = ind_aux3[y]
-			num2 = ind_aux3[x]
-			cos = cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2])
-# 			print aux_usu[num1],aux_usu[num2]
-# 			print "cos",cos
-# 			print "euc", euc
+# 	print "cos",cos4
+# 	print "len_cos",len(cos4)
+	sum_cos = 0
+	if len(cos4) != 0:
+		for i in cos4:
+			sum_cos = i + sum_cos
+
+		print "media = ", sum_cos / len(cos4)
+	else:
+		print "sem média"
 		
+
+	cos5 = []
+	print "grupo 5", len(grupo5)
+	for y in range(len(ind_aux5)):
+		for x in range(y+1, len(ind_aux5)):
+			num1 = ind_aux5[y]
+			num2 = ind_aux5[x]
+			cos5.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
+			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+# 			print aux_usu[num1],aux_usu[num2]
+# 			print "cos",cos
+# 			print "euc", euc
+ 
+# 	print "cos",cos5
+	sum_cos = 0
+	if len(cos5) != 0:
+		for i in cos5:
+			sum_cos = i + sum_cos
+		print "media = ", sum_cos / len(cos5)
+	else:
+		print "sem média"
+		
+	#GRUPO 6
+	cos6 = []
+	print "grupo 6", len(grupo6)
+	for y in range(len(ind_aux6)):
+		for x in range(y+1, len(ind_aux6)):
+			num1 = ind_aux6[y]
+			num2 = ind_aux6[x]
+			cos6.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
+			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+# 			print aux_usu[num1],aux_usu[num2]
+# 			print "cos",cos
+# 			print "euc", euc
+ 
+# 	print "cos",cos5
+	sum_cos = 0
+	if len(cos6) != 0:
+		for i in cos6:
+			sum_cos = i + sum_cos
+		print "media = ", sum_cos / len(cos6)
+	else:
+		print "sem média"
 	
 	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,grupo4,\
-										len(grupo1),len(grupo2),len(grupo3),len(grupo4), tese]})
+										len(grupo1),len(grupo2),len(grupo3),len(grupo4), tese, \
+										grupo5, len(grupo5), grupo6, len(grupo6)]})
+	
+	
 	return render(request, 'posInicial.html',context)
 
 

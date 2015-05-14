@@ -10,12 +10,20 @@ def cluster_texts(texts, clusters):
 #                                  max_df=0.5,
 #                                  min_df=0.1,
 #                                  lowercase=True)
-    vectorizer = TfidfVectorizer(max_df=0.6,
-                                 min_df=0.3)
+    #experimento 1
+    vectorizer = TfidfVectorizer()
+    
+    #experimento 2
+#     vectorizer = TfidfVectorizer(max_df=0.6,
+#                                  min_df=0.3)
+    
+    #experimento 3
+#     vectorizer = TfidfVectorizer(max_df=0.6,
+#                                  min_df=0.3)
  
     tfidf_model = vectorizer.fit_transform(texts)
 #     km_model = MiniBatchKMeans(n_clusters=clusters)    
-    km_model = KMeans(n_clusters=clusters, n_init=100)
+    km_model = KMeans(n_clusters=clusters, n_init=100000)
     km_model.fit_transform(tfidf_model)
     
     clustering = collections.defaultdict(list)
