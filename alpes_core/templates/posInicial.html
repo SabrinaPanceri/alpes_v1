@@ -48,7 +48,7 @@
                         	<strong>Grupos de Similaridade - Análise do Posicionamento Inicial</strong>
                          </div>
                           <div class="alert alert-success">
-                         {% for tese in results.6 %}
+                         {% for tese in results.8 %}
 							<strong>Tese: {{tese}}</strong>
                          {% endfor %}
                         </div>
@@ -57,12 +57,12 @@
                 </div>
                 <!-- /.row -->
 				 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover  ">
+                            <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th class="alert-info">Grupo 1 - Tamanho: {{results.3}} </th>
+                                        <th class="alert-info">Grupo 1 - Tamanho: {{results.4}} </th>
                                     </tr>
                                 </thead>
                                 <tbody>       
@@ -75,12 +75,12 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-lg-4">    
+                    <div class="col-lg-3">    
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover ">
                                 <thead>
                                     <tr>
-                                        <th class="alert-info">Grupo 2 - Tamanho: {{results.4}}</th>
+                                        <th class="alert-info">Grupo 2 - Tamanho: {{results.5}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>       
@@ -93,16 +93,34 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-lg-4">                    
+                    <div class="col-lg-3">                    
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover ">
                                 <thead>
                                     <tr>
-                                        <th class="alert-info">Grupo 3 - Tamanho: {{results.5}}</th>
+                                        <th class="alert-info">Grupo 3 - Tamanho: {{results.6}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>       
                                         {% for data in results.2 %}
+                                        <tr onclick="console.log('oi')">
+                                            <td> {{ data }} </td> 
+                                        </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">                    
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover ">
+                                <thead>
+                                    <tr>
+                                        <th class="alert-info">Grupo 4 - Tamanho: {{results.7}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>       
+                                        {% for data in results.3 %}
                                         <tr onclick="console.log('oi')">
                                             <td> {{ data }} </td> 
                                         </tr>

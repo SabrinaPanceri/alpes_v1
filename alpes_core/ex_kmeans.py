@@ -2,7 +2,6 @@ import collections
  
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.cluster.k_means_ import MiniBatchKMeans
 
 def cluster_texts(texts, clusters):
     """ Transform texts to Tf-Idf coordinates and cluster texts using K-Means """
@@ -16,8 +15,9 @@ def cluster_texts(texts, clusters):
  
     tfidf_model = vectorizer.fit_transform(texts)
 #     km_model = MiniBatchKMeans(n_clusters=clusters)    
-    km_model = KMeans(n_clusters=clusters)
+    km_model = KMeans(n_clusters=clusters, n_init=100)
     km_model.fit_transform(tfidf_model)
+    
     clustering = collections.defaultdict(list)
  
     for idx, label in enumerate(km_model.labels_):

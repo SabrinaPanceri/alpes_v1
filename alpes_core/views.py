@@ -10,13 +10,11 @@ from alpes_core.clusterArgInicial import clusterArgInicial
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 from sklearn.feature_extraction.text import CountVectorizer
-# from sklearn.cluster.k_means_ import KMeans
-# from nltk.cluster import KMeansClusterer
-# from alpes_core import ex_kmeans
 
 import HTMLParser
 import re
 from alpes_core.ex_kmeans import cluster_texts
+from alpes_core.naoUtilizados.ex_lsa import lsi_app
 
 
 # from nltk.cluster import KMeansClusterer, euclidean_distance
@@ -139,7 +137,7 @@ def posInicial(request, debate_id):
 	auxResult = clusterArgInicial(debate_id)
 
 	st_tese = auxResult[0]
-	posInicial = auxResult[1]
+	posIni = auxResult[1]
 	sw_tese = auxResult[2]
 	aux_usu = auxResult[3]
 	st_posInicial = auxResult[4]
@@ -147,6 +145,7 @@ def posInicial(request, debate_id):
 	
 	test_set = st_posInicial
 	train_set = st_tese
+	
 	
 	#Utilização das funções para calculo do TF-IDF sob a tese e o posFinal
 	vectorizer = CountVectorizer()
@@ -161,34 +160,43 @@ def posInicial(request, debate_id):
 	
 	#Clusterização utilizando Tf-IDF e K-Means
 	#Argumento que será clusterizado, e quandidade de clusters
-	grupos = cluster_texts(st_posInicial, 3)
+	grupos = cluster_texts(st_posInicial, 4)
+	
+	
 
 	grupo1 = []
 	grupo2 = []
 	grupo3 = []
+	grupo4 = []
 	indices = []
 	
 	for i in range(len(grupos)):
 		for j in range(len(grupos[i])):
 			if i == 0:
 				aux = grupos[i][j]
-				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posInicial[aux]
+				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posIni[aux]
 				grupo1.append(texto)
 				indices.append(grupos[i][j])
 			elif i == 1:
 				aux = grupos[i][j]
-				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posInicial[aux]
+				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posIni[aux]
 				grupo2.append(texto)		
 				indices.append(grupos[i][j])	
 			elif i == 2:
 				aux = grupos[i][j]
-				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posInicial[aux]
+				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posIni[aux]
 				grupo3.append(texto)
+				indices.append(grupos[i][j])
+			elif i == 3:
+				aux = grupos[i][j]
+				texto = "Aluno:"+ aux_usu[aux] + " => Posicionamento Inicial: " +  posIni[aux]
+				grupo4.append(texto)
 				indices.append(grupos[i][j])
 			
 	ind_aux = indices[:len(grupo1)]
 	ind_aux2 = indices[len(ind_aux):len(ind_aux)+len(grupo2)]
-	ind_aux3 = indices[len(ind_aux)+len(grupo2):]
+	ind_aux3 = indices[len(ind_aux2):len(ind_aux2)+len(grupo3):]
+	ind_aux4 = indices[len(ind_aux3)+len(grupo4):]
 	
 	print "grupo 1"
 	for y in range(len(ind_aux)):
@@ -197,9 +205,9 @@ def posInicial(request, debate_id):
 			num2 = ind_aux[x]
 			cos = cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-			print aux_usu[num1],aux_usu[num2]
-			print "cos",cos
-			print "euc", euc
+# 			print aux_usu[num1],aux_usu[num2]
+# 			print "cos",cos
+# 			print "euc", euc
 
 	print "grupo 2"
 	for y in range(len(ind_aux2)):
@@ -208,9 +216,9 @@ def posInicial(request, debate_id):
 			num2 = ind_aux2[x]
 			cos = cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			print aux_usu[num1],aux_usu[num2]
-			print "cos",cos
-			print "euc", euc
+# 			print aux_usu[num1],aux_usu[num2]
+# 			print "cos",cos
+# 			print "euc", euc
 			
 	print "grupo 3"
 	for y in range(len(ind_aux3)):
@@ -219,12 +227,24 @@ def posInicial(request, debate_id):
 			num2 = ind_aux3[x]
 			cos = cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			print aux_usu[num1],aux_usu[num2]
-			print "cos",cos
-			print "euc", euc
+# 			print aux_usu[num1],aux_usu[num2]
+# 			print "cos",cos
+# 			print "euc", euc
+	
+	print "grupo 4"
+	for y in range(len(ind_aux3)):
+		for x in range(y+1, len(ind_aux3)):
+			num1 = ind_aux3[y]
+			num2 = ind_aux3[x]
+			cos = cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2])
+# 			print aux_usu[num1],aux_usu[num2]
+# 			print "cos",cos
+# 			print "euc", euc
 		
 	
-	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,len(grupo1),len(grupo2),len(grupo3), tese]})
+	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,grupo4,\
+										len(grupo1),len(grupo2),len(grupo3),len(grupo4), tese]})
 	return render(request, 'posInicial.html',context)
 
 

@@ -9,6 +9,7 @@ from nltk.stem import RSLPStemmer
 from nltk.corpus import floresta
 from nltk.probability import FreqDist
 
+
 #############################################################################################################
 
 #############################################################################################################
@@ -25,9 +26,9 @@ from nltk.probability import FreqDist
 #############################################################################################################
 
 ##############################################################################################################
-## DESENVOLVIMENTO DA FERRAMENTA "GRUPOS DE ARGUMENTAÇÃO" - ARTIGO SBIE 2014
-## UTILIZAÇÃO DO POSICIONAMENTO FINAL PARA CRIAR GRUPOS DE ALUNOS QUE CHEGARAM A CONCLUSÕES SIMILARES
-## AO FINAL DAS INTERAÇÕES DA APDT 
+## DESENVOLVIMENTO DA FERRAMENTA "GRUPOS DE ARGUMENTAÇÃO" - ARTIGO SBIE 2015
+## UTILIZAÇÃO DO POSICIONAMENTO INICIAL PARA CRIAR GRUPOS DE ALUNOS QUE INICIARAM O DEBATE COM CONHECIMENTOS 
+## SIMILARES SOBRE A TESE 
 ##############################################################################################################  
 
 def clusterArgInicial(idtese):
@@ -94,7 +95,7 @@ def clusterArgInicial(idtese):
 
 #############################################################################################################
 #Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
-#retirando afixos dos textos do posFinal e tese
+#retirando afixos dos textos do posInicial e tese
     stemmer = RSLPStemmer()
 
     for i in range(len(sw_posInicial)):
@@ -114,7 +115,16 @@ def clusterArgInicial(idtese):
         st_tese.append(string_aux)
 
 #############################################################################################################
-#TESTES!!!!!!!
+# #LSI
+#     lsi_posInicial = []
+#     for i in range(len(sw_posInicial)):
+#         aux = "posIni(%d): %s" %(i, sw_posInicial[i])
+#         lsi_posInicial.append(aux)
+# 
+# 
+#     lsi = gensim.models.lsimodel.LsiModel(lsi_posInicial)
+# # #     print sw_posInicial
+#     lsi.print_topics(10)
 
 
 
