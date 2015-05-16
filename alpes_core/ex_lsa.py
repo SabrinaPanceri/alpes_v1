@@ -24,7 +24,7 @@ from pprint import pprint
 from datetime import datetime
 
 
-def lsa_cluster(posIni, alunos):
+def similaridade_lsa(posIni, alunos):
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
     
     

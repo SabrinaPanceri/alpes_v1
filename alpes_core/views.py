@@ -14,6 +14,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 import HTMLParser
 import re
 from alpes_core.ex_kmeans import cluster_texts
+from alpes_core.ex_lsa import similaridade_lsa
 
 
 # from nltk.cluster import KMeansClusterer, euclidean_distance
@@ -145,8 +146,11 @@ def posInicial(request, debate_id):#Agrupamento pela argumentação Inicial com 
 	test_set = st_posInicial
 	train_set = st_tese
 	
+	#calculo da similaridade com base no posInicial
+	#
+	similaridade_lsa(posIni, aux_usu)
 	
-	#Utilização das funções para calculo do TF-IDF sob a tese e o posFinal
+	#Utilização das funções para calculo do TF-IDF sob a tese e o posInicial
 	vectorizer = CountVectorizer()
 	vectorizer.fit_transform(train_set)
 	count_vectorizer = CountVectorizer()
@@ -279,9 +283,9 @@ def posInicial(request, debate_id):#Agrupamento pela argumentação Inicial com 
 			num2 = ind_aux[x]
 			cos.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-			print aux_usu[num1],aux_usu[num2]
-			print "cos", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			print "euc", euc
+# 			print aux_usu[num1],aux_usu[num2]
+# 			print "cos", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+# 			print "euc", euc
 	
 # 	print "cos",cos
 # 	print "len_cos",len(cos)
@@ -303,9 +307,9 @@ def posInicial(request, debate_id):#Agrupamento pela argumentação Inicial com 
 			num2 = ind_aux2[x]
 			cos2.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-			print aux_usu[num1],aux_usu[num2]
-			print "cos", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			print "euc", euc
+# 			print aux_usu[num1],aux_usu[num2]
+# 			print "cos", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+# 			print "euc", euc
 # 	print "cos",cos2
 # 	print "len_cos",len(cos2)
 	sum_cos = 0
@@ -324,9 +328,9 @@ def posInicial(request, debate_id):#Agrupamento pela argumentação Inicial com 
 			num2 = ind_aux3[x]
 			cos3.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-			print aux_usu[num1],aux_usu[num2]
-			print "cos", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			print "euc", euc
+# 			print aux_usu[num1],aux_usu[num2]
+# 			print "cos", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+# 			print "euc", euc
 	
 # 	print "cos",cos3
 # 	print "len_cos",len(cos3)

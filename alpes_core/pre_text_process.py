@@ -24,6 +24,11 @@ def similaridade(text1, text2):
 
 # palavras = re.compile(r'\w+')
 
+
+def removePontuacao(texto):
+    aux = texto.lower().replace(',',' ').replace('.',' ').replace('-',' ').replace('(',' ').replace(')',' ').replace('?',' ').replace('!',' ').replace('[',' ').replace(']',' ').replace(':',' ').replace('/',' ').replace('\r',' ').replace('\n',' ').replace('\t',' ').replace('=',' ')
+    return aux
+
 def removeA(texto):
     aux = normalize('NFKD', texto).encode('ASCII','ignore').decode('ASCII')
     return aux
