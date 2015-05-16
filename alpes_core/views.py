@@ -131,7 +131,7 @@ def debate(request, debate_id): #Cluster pela argumentação FINAL
 # Cluster usado no artigo SBIE/2015 - Agrupamento pelo Posicionamento Inicial
 # Técnica para agrupamento KMeans
 
-def posInicial(request, debate_id):
+def posInicial(request, debate_id):#Agrupamento pela argumentação Inicial com K-Means
 	
 	auxResult = clusterArgInicial(debate_id)
 
