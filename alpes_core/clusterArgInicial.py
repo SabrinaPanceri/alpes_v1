@@ -76,7 +76,7 @@ def clusterArgInicial(idtese):
     for i in dados:
         x = 0
         usu.append(i[x].upper())
-        posInicial.append(i[x+1].lower()) #lista com o posicionamento Final
+        posInicial.append(i[x+1].lower()) #lista com o posicionamento Inicial
 
 #############################################################################################################
 #Fases de pré-processamento linguistico
