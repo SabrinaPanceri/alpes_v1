@@ -26,7 +26,7 @@ def similaridade(text1, text2):
 
 
 def removePontuacao(texto):
-    aux = texto.lower().replace(',',' ').replace('.',' ').replace('-',' ').replace('(',' ').replace(')',' ').replace('?',' ').replace('!',' ').replace('[',' ').replace(']',' ').replace(':',' ').replace('/',' ').replace('\r',' ').replace('\n',' ').replace('\t',' ').replace('=',' ')
+    aux = texto.lower().replace(',',' ').replace('.',' ').replace('-',' ').replace('(',' ').replace(')',' ').replace('?',' ').replace('!',' ').replace('[',' ').replace(']',' ').replace(':',' ').replace('/',' ').replace('\r',' ').replace('\n',' ').replace('\t',' ').replace('=',' ').replace('"',' ')
     return aux
 
 def removeA(texto):
@@ -43,7 +43,7 @@ def removeStopWords(texto):
 #     print stopP
 
     #remove acentuação
-    textoaux = removeA(texto)
+    textoaux = removeA(removePontuacao(texto))
 
     # divide o texto em palavras    
 #     words = palavras.findall(textoaux)

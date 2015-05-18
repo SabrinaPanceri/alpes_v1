@@ -15,6 +15,9 @@ import HTMLParser
 import re
 from alpes_core.ex_kmeans import cluster_texts
 from alpes_core.ex_lsa import similaridade_lsa
+from alpes_core.pre_text_process import removeA, removePontuacao
+import codecs
+
 
 
 # from nltk.cluster import KMeansClusterer, euclidean_distance
@@ -146,9 +149,15 @@ def posInicial(request, debate_id):#Agrupamento pela argumentação Inicial com 
 	test_set = st_posInicial
 	train_set = st_tese
 	
-	#calculo da similaridade com base no posInicial
-	#
-	similaridade_lsa(posIni, aux_usu)
+	#Utilizando LSA
+	
+	base_treinamento = codecs.open('/home/panceri/git/alpes_v1/arquivos/baseTreinamento.txt', 'r', 'UTF8')
+	
+	treinamento = [removeA(removePontuacao(i)) for i in base_treinamento]
+	base_treinamento.close()
+# 	print len(treinamento)
+	
+	similaridade_lsa(treinamento, aux_usu, posIni)
 	
 	#Utilização das funções para calculo do TF-IDF sob a tese e o posInicial
 	vectorizer = CountVectorizer()
