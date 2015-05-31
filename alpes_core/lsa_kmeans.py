@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
-##########################################################################################
-#                     LATENTIC SEMANTIC ANALASYS - WITH GENSIN BIB                       #
-##########################################################################################
+
+#Kmeans
+import collections
+from sklearn.cluster import KMeans
+
+#LSA
 from gensim import corpora, models, similarities
 from collections import defaultdict
 import logging
 from pprint import pprint
-from datetime import datetime
 from alpes_core.pre_text_process import removeA, removePontuacao
 from nltk.corpus import stopwords
-from gensim.models import lsimodel
-from gensim.models.rpmodel import RpModel
 
 
-def similaridade_lsa(textoTreinamento, nomeUsuarios, textoComparacao=None):
-    
+def LSA_Kmeans(clusters, textoTreinamento, nomeUsuarios, textoComparacao=None):
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
     ##########################################################################################
@@ -106,12 +105,6 @@ def similaridade_lsa(textoTreinamento, nomeUsuarios, textoComparacao=None):
     #TRANSFORMA A MATRIZ TF-IDF 
     modelo_lsa = models.LsiModel(corpus_tfidf_TextoTrein, id2word=dicionario,num_topics=len(dicionario))
     
-    #TRANSFORMA OS DADOS DE TREINAMENTO EM LSA
-#     corpus_lsi = modelo_lsa[corpus_tfidf_TextoTrein] 
-    
-#     for doc in corpus_lsi:
-#         pprint(doc)
-    
     query = []
 
     for q in textoComparacao:
@@ -127,34 +120,38 @@ def similaridade_lsa(textoTreinamento, nomeUsuarios, textoComparacao=None):
 #     pprint(list(indexComp))
 
 
-    # To obtain similarities of our query document against the nine indexed documents:
+    # To obtain similarities of our query document against the indexed documents:
     # perform a similarity query against the corpus
     sims = indexComp[query]
-#     pprint(list(enumerate(sims)))
-
     
-    now = datetime.now()
-    resultado = open("/home/panceri/git/alpes_v1/arquivos/resultado"+now.__str__()+".txt", "w")
-    resultados = []
-    
-    for i in range(0, len(sims)):
-        aux = sims[i]
-#         print "sorted",sorted(sims[i], reverse=True)
-#         print i, aux 
-        for y in range(i+1, len(aux)):
-            str_aux = [nomeUsuarios[i] +" " + aux[y].__str__() + "% similar" + nomeUsuarios[y]]
-#             print str_aux
-#             resultados.append(str_aux)
-            resultados.append([aux[y],nomeUsuarios[i],nomeUsuarios[y]])
-            resultado.write(nomeUsuarios[i] +" " + aux[y].__str__() + "% similar" + nomeUsuarios[y] + "\n")
-# #     
-    resultado.close()
-#     print "resultados"
-#     pprint(resultados)
+#     pprint(sims)   
+        
 
-    return resultados   
+    ##########################################################################################
+    # JUNÇÃO COM K-MEANS PARA REALIZAR AGRUPAMENTOS                                          #
+    ##########################################################################################
+
+    ##Valor ideal, após experimentos = 100000
+    km_model = KMeans(n_clusters=clusters, n_init=100000)
+
+    km_model.fit_transform(sims)
+    
+    clustering = collections.defaultdict(list)
+ 
+    for idx, label in enumerate(km_model.labels_):
+        clustering[label].append(idx)
+ 
+    print "clustering _LSA_KMEANS"
+    pprint(clustering)
+    
+    print len(clustering)
+    
+    for i in range(len(clustering)):
+        for j in clustering[i]:
+            print "grupo", i
+            print j, nomeUsuarios[j]
+            print textoComparacao[j]
             
     
-
-
-##########################################################################################
+    return clustering    
+    
