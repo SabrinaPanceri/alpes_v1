@@ -1,0 +1,28 @@
+ carlos pedro 0.362665% similar garson
+ carlos pedro 0.476374% similar loren
+ carlos pedro 0.483392% similar barbara
+ carlos pedro 0.327978% similar cauaa
+ carlos pedro 0.491581% similar ellen
+ carlos pedro 0.299459% similar fatima
+ carlos pedro 0.51064% similar carolina
+ garson 0.147931% similar loren
+ garson 0.389418% similar barbara
+ garson 0.306119% similar cauaa
+ garson 0.308935% similar ellen
+ garson 0.288241% similar fatima
+ garson 0.212135% similar carolina
+ loren 0.279674% similar barbara
+ loren 0.332138% similar cauaa
+ loren 0.293654% similar ellen
+ loren 0.141355% similar fatima
+ loren 0.138631% similar carolina
+ barbara 0.224062% similar cauaa
+ barbara 0.289144% similar ellen
+ barbara 0.140604% similar fatima
+ barbara 0.384788% similar carolina
+ cauaa 0.376417% similar ellen
+ cauaa 0.281524% similar fatima
+ cauaa 0.11145% similar carolina
+ ellen 0.420024% similar fatima
+ ellen 0.308504% similar carolina
+ fatima 0.156132% similar carolina

@@ -1,0 +1,6 @@
+ carlos pedro 0.124633% similar graziella
+ carlos pedro 0.0733114% similar guilherme
+ carlos pedro 0.308932% similar karen
+ graziella 0.175259% similar guilherme
+ graziella 0.296764% similar karen
+ guilherme 0.230062% similar karen

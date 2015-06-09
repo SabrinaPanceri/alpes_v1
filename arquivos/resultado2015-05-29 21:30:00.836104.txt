@@ -1,0 +1,6 @@
+ graziella 0.166631% similar rita
+ graziella 0.187477% similar bruno
+ graziella 0.35943% similar karen
+ rita 0.104735% similar bruno
+ rita 0.292327% similar karen
+ bruno 0.207397% similar karen

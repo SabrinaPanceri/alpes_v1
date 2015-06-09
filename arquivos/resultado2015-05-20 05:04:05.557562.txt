@@ -1,0 +1,210 @@
+ gabriel 0.266021% similar carlos pedro
+ gabriel 0.0306358% similar caroline
+ gabriel 0.12046% similar garson
+ gabriel 0.0354681% similar graziella
+ gabriel 0.110727% similar leonardo
+ gabriel 0.0216121% similar loren
+ gabriel 0.409697% similar luis
+ gabriel 0.285911% similar rita
+ gabriel 0.10083% similar adriano
+ gabriel 0.278767% similar ariane
+ gabriel 0.146159% similar barbara
+ gabriel 0.00660795% similar bruno
+ gabriel 0.288211% similar cauaa
+ gabriel 0.0994067% similar ellen
+ gabriel 0.224942% similar fatima
+ gabriel 0.266853% similar guilherme
+ gabriel 0.15845% similar karen
+ gabriel 0.232018% similar natalia
+ gabriel 0.18744% similar sheila
+ gabriel 0.467612% similar carolina
+ carlos pedro 0.285621% similar caroline
+ carlos pedro 0.317252% similar garson
+ carlos pedro 0.317687% similar graziella
+ carlos pedro 0.283442% similar leonardo
+ carlos pedro 0.534081% similar loren
+ carlos pedro 0.301613% similar luis
+ carlos pedro 0.498113% similar rita
+ carlos pedro 0.458239% similar adriano
+ carlos pedro 0.624611% similar ariane
+ carlos pedro 0.258307% similar barbara
+ carlos pedro 0.166201% similar bruno
+ carlos pedro 0.436228% similar cauaa
+ carlos pedro 0.529294% similar ellen
+ carlos pedro 0.624793% similar fatima
+ carlos pedro 0.474707% similar guilherme
+ carlos pedro 0.516652% similar karen
+ carlos pedro 0.434349% similar natalia
+ carlos pedro 0.285197% similar sheila
+ carlos pedro 0.314041% similar carolina
+ caroline 0.217137% similar garson
+ caroline 0.432467% similar graziella
+ caroline 0.114605% similar leonardo
+ caroline 0.242456% similar loren
+ caroline 0.174096% similar luis
+ caroline 0.24635% similar rita
+ caroline 0.250075% similar adriano
+ caroline 0.0641209% similar ariane
+ caroline 0.00192481% similar barbara
+ caroline 0.180787% similar bruno
+ caroline 0.192677% similar cauaa
+ caroline 0.267896% similar ellen
+ caroline 0.343541% similar fatima
+ caroline 0.318363% similar guilherme
+ caroline 0.20049% similar karen
+ caroline 0.264424% similar natalia
+ caroline 0.22888% similar sheila
+ caroline 0.23687% similar carolina
+ garson 0.349248% similar graziella
+ garson 0.157944% similar leonardo
+ garson 0.347735% similar loren
+ garson 0.27347% similar luis
+ garson 0.240865% similar rita
+ garson 0.252661% similar adriano
+ garson 0.288515% similar ariane
+ garson 0.274374% similar barbara
+ garson 0.0279919% similar bruno
+ garson 0.260037% similar cauaa
+ garson 0.0973169% similar ellen
+ garson 0.166451% similar fatima
+ garson 0.203191% similar guilherme
+ garson 0.339346% similar karen
+ garson 0.0203587% similar natalia
+ garson 0.0294883% similar sheila
+ garson 0.133707% similar carolina
+ graziella 0.14343% similar leonardo
+ graziella 0.235786% similar loren
+ graziella 0.113721% similar luis
+ graziella 0.241734% similar rita
+ graziella 0.363328% similar adriano
+ graziella 0.173251% similar ariane
+ graziella 0.157754% similar barbara
+ graziella 0.0758511% similar bruno
+ graziella 0.242431% similar cauaa
+ graziella 0.19364% similar ellen
+ graziella 0.091133% similar fatima
+ graziella 0.132177% similar guilherme
+ graziella 0.330273% similar karen
+ graziella 0.0865183% similar natalia
+ graziella 0.281049% similar sheila
+ graziella 0.0869135% similar carolina
+ leonardo 0.248924% similar loren
+ leonardo 0.034447% similar luis
+ leonardo 0.0882884% similar rita
+ leonardo 0.209431% similar adriano
+ leonardo 0.0375186% similar ariane
+ leonardo 0.110622% similar barbara
+ leonardo 0.00559438% similar bruno
+ leonardo 0.0984398% similar cauaa
+ leonardo 0.0385426% similar ellen
+ leonardo 0.0128953% similar fatima
+ leonardo 0.146764% similar guilherme
+ leonardo 0.0951171% similar karen
+ leonardo 0.00155605% similar natalia
+ leonardo 0.087424% similar sheila
+ leonardo 0.00368359% similar carolina
+ loren 0.0121381% similar luis
+ loren 0.36689% similar rita
+ loren 0.316224% similar adriano
+ loren 0.244974% similar ariane
+ loren 0.174831% similar barbara
+ loren 0.139845% similar bruno
+ loren 0.17567% similar cauaa
+ loren 0.314263% similar ellen
+ loren 0.387701% similar fatima
+ loren 0.26646% similar guilherme
+ loren 0.302431% similar karen
+ loren 0.232577% similar natalia
+ loren 0.226958% similar sheila
+ loren 0.0727829% similar carolina
+ luis 0.205576% similar rita
+ luis 0.153619% similar adriano
+ luis 0.233912% similar ariane
+ luis 0.22141% similar barbara
+ luis 0.101704% similar bruno
+ luis 0.372871% similar cauaa
+ luis 0.132555% similar ellen
+ luis 0.128208% similar fatima
+ luis 0.240224% similar guilherme
+ luis 0.00800766% similar karen
+ luis 0.316164% similar natalia
+ luis 0.365664% similar sheila
+ luis 0.234315% similar carolina
+ rita 0.288534% similar adriano
+ rita 0.407223% similar ariane
+ rita 0.344759% similar barbara
+ rita 0.274069% similar bruno
+ rita 0.290856% similar cauaa
+ rita 0.279364% similar ellen
+ rita 0.312744% similar fatima
+ rita 0.357074% similar guilherme
+ rita 0.450054% similar karen
+ rita 0.344156% similar natalia
+ rita 0.286397% similar sheila
+ rita 0.415084% similar carolina
+ adriano 0.282488% similar ariane
+ adriano 0.0621282% similar barbara
+ adriano 0.309537% similar bruno
+ adriano 0.212003% similar cauaa
+ adriano 0.430862% similar ellen
+ adriano 0.29254% similar fatima
+ adriano 0.364053% similar guilherme
+ adriano 0.369664% similar karen
+ adriano 0.256258% similar natalia
+ adriano 0.0793586% similar sheila
+ adriano 0.263958% similar carolina
+ ariane 0.165541% similar barbara
+ ariane 0.0876139% similar bruno
+ ariane 0.292897% similar cauaa
+ ariane 0.306181% similar ellen
+ ariane 0.305363% similar fatima
+ ariane 0.2857% similar guilherme
+ ariane 0.470973% similar karen
+ ariane 0.221635% similar natalia
+ ariane 0.105461% similar sheila
+ ariane 0.205476% similar carolina
+ barbara 0.000436558% similar bruno
+ barbara 0.170717% similar cauaa
+ barbara 0.130911% similar ellen
+ barbara 0.0785504% similar fatima
+ barbara 0.0905856% similar guilherme
+ barbara 0.13003% similar karen
+ barbara 0.124148% similar natalia
+ barbara 0.0924671% similar sheila
+ barbara 0.102863% similar carolina
+ bruno 0.0255768% similar cauaa
+ bruno 0.19945% similar ellen
+ bruno 0.0975151% similar fatima
+ bruno 0.0983679% similar guilherme
+ bruno 0.0887431% similar karen
+ bruno 0.131932% similar natalia
+ bruno 0.00400446% similar sheila
+ bruno 0.102932% similar carolina
+ cauaa 0.261954% similar ellen
+ cauaa 0.210092% similar fatima
+ cauaa 0.269342% similar guilherme
+ cauaa 0.191943% similar karen
+ cauaa 0.220824% similar natalia
+ cauaa 0.188584% similar sheila
+ cauaa 0.209191% similar carolina
+ ellen 0.467149% similar fatima
+ ellen 0.385342% similar guilherme
+ ellen 0.411296% similar karen
+ ellen 0.419134% similar natalia
+ ellen 0.179909% similar sheila
+ ellen 0.294554% similar carolina
+ fatima 0.499076% similar guilherme
+ fatima 0.341401% similar karen
+ fatima 0.533343% similar natalia
+ fatima 0.309986% similar sheila
+ fatima 0.36362% similar carolina
+ guilherme 0.18159% similar karen
+ guilherme 0.38026% similar natalia
+ guilherme 0.201849% similar sheila
+ guilherme 0.419866% similar carolina
+ karen 0.109096% similar natalia
+ karen 0.0132769% similar sheila
+ karen 0.188197% similar carolina
+ natalia 0.346592% similar sheila
+ natalia 0.49511% similar carolina
+ sheila 0.305012% similar carolina

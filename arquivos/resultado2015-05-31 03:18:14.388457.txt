@@ -1,0 +1,10 @@
+ gabriel 0.410043% similar luis
+ gabriel 0.393032% similar natalia
+ gabriel 0.207096% similar sheila
+ gabriel 0.448117% similar carolina
+ luis 0.296755% similar natalia
+ luis 0.418452% similar sheila
+ luis 0.316666% similar carolina
+ natalia 0.290535% similar sheila
+ natalia 0.666545% similar carolina
+ sheila 0.334112% similar carolina

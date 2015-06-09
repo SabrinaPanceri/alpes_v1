@@ -1,0 +1,3 @@
+ luis 0.304601% similar ariane
+ luis 0.359096% similar guilherme
+ ariane 0.319145% similar guilherme

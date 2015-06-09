@@ -1,0 +1,15 @@
+ caroline 0.383545% similar garson
+ caroline 0.572371% similar graziella
+ caroline 0.16121% similar loren
+ caroline 0.163845% similar adriano
+ caroline 0.248472% similar karen
+ garson 0.417213% similar graziella
+ garson 0.435306% similar loren
+ garson 0.321187% similar adriano
+ garson 0.330911% similar karen
+ graziella 0.243589% similar loren
+ graziella 0.350435% similar adriano
+ graziella 0.409433% similar karen
+ loren 0.295634% similar adriano
+ loren 0.426443% similar karen
+ adriano 0.354786% similar karen

@@ -1,0 +1,6 @@
+ caroline 0.247363% similar garson
+ caroline 0.470935% similar graziella
+ caroline 0.221944% similar cauaa
+ garson 0.375786% similar graziella
+ garson 0.295049% similar cauaa
+ graziella 0.252948% similar cauaa

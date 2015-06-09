@@ -1,0 +1,3 @@
+ graziella 0.244562% similar guilherme
+ graziella 0.509385% similar karen
+ guilherme 0.285132% similar karen

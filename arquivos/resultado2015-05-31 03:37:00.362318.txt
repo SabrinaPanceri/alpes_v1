@@ -1,0 +1,45 @@
+ gabriel 0.294386% similar carlos pedro
+ gabriel 0.213744% similar garson
+ gabriel 0.248337% similar graziella
+ gabriel 0.149812% similar leonardo
+ gabriel 0.409409% similar ariane
+ gabriel 0.113708% similar barbara
+ gabriel 0.31039% similar fatima
+ gabriel 0.203877% similar guilherme
+ gabriel 0.195444% similar karen
+ carlos pedro 0.157858% similar garson
+ carlos pedro 0.131321% similar graziella
+ carlos pedro 0.0976334% similar leonardo
+ carlos pedro 0.235726% similar ariane
+ carlos pedro 0.0162021% similar barbara
+ carlos pedro 0.215869% similar fatima
+ carlos pedro 0.12317% similar guilherme
+ carlos pedro 0.268108% similar karen
+ garson 0.160026% similar graziella
+ garson 0.291715% similar leonardo
+ garson 0.238477% similar ariane
+ garson 0.0154263% similar barbara
+ garson 0.345347% similar fatima
+ garson 0.0994565% similar guilherme
+ garson 0.0827147% similar karen
+ graziella 0.242735% similar leonardo
+ graziella 0.394617% similar ariane
+ graziella 0.142993% similar barbara
+ graziella 0.287413% similar fatima
+ graziella 0.238515% similar guilherme
+ graziella 0.502171% similar karen
+ leonardo 0.109686% similar ariane
+ leonardo 0.20306% similar barbara
+ leonardo 0.111001% similar fatima
+ leonardo 0.118294% similar guilherme
+ leonardo 0.265792% similar karen
+ ariane 0.0436654% similar barbara
+ ariane 0.189613% similar fatima
+ ariane 0.18062% similar guilherme
+ ariane 0.267271% similar karen
+ barbara 0.0818193% similar fatima
+ barbara 0.0407585% similar guilherme
+ barbara 0.110746% similar karen
+ fatima 0.435103% similar guilherme
+ fatima 0.241094% similar karen
+ guilherme 0.286069% similar karen

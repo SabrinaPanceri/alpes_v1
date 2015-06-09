@@ -1,0 +1,3 @@
+ gabriel 0.0548986% similar rita
+ gabriel 0.288585% similar karen
+ rita 0.351783% similar karen

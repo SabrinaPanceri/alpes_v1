@@ -1,0 +1,3 @@
+ rita 0.0867453% similar bruno
+ rita 0.349508% similar karen
+ bruno 0.511021% similar karen

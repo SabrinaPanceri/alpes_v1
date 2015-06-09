@@ -1,0 +1,15 @@
+ leonardo 0.350433% similar loren
+ leonardo 0.331425% similar bruno
+ leonardo 0.209771% similar cauaa
+ leonardo 0.32468% similar ellen
+ leonardo 0.151668% similar fatima
+ loren 0.154427% similar bruno
+ loren 0.316989% similar cauaa
+ loren 0.273169% similar ellen
+ loren 0.128504% similar fatima
+ bruno 0.238501% similar cauaa
+ bruno 0.138292% similar ellen
+ bruno 0.137341% similar fatima
+ cauaa 0.367937% similar ellen
+ cauaa 0.274651% similar fatima
+ ellen 0.411943% similar fatima

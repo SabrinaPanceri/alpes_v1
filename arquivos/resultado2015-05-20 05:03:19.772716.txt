@@ -1,0 +1,10 @@
+ leonardo 0.223879% similar adriano
+ leonardo 0.114855% similar barbara
+ leonardo 0.0114953% similar bruno
+ leonardo 0.0520499% similar ellen
+ adriano 0.0600979% similar barbara
+ adriano 0.314036% similar bruno
+ adriano 0.439985% similar ellen
+ barbara 0.000994383% similar bruno
+ barbara 0.126382% similar ellen
+ bruno 0.199009% similar ellen

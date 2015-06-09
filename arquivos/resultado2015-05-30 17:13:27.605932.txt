@@ -1,0 +1,6 @@
+ graziella 0.167112% similar rita
+ graziella 0.360154% similar karen
+ graziella 0.296505% similar sheila
+ rita 0.291223% similar karen
+ rita 0.123665% similar sheila
+ karen 0.206465% similar sheila

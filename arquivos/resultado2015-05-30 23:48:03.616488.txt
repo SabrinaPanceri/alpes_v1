@@ -1,0 +1,28 @@
+ gabriel 0.15505% similar carlos pedro
+ gabriel 0.170061% similar garson
+ gabriel 0.259792% similar luis
+ gabriel 0.128853% similar rita
+ gabriel 0.242695% similar ariane
+ gabriel 0.305474% similar natalia
+ gabriel 0.112198% similar sheila
+ carlos pedro 0.157753% similar garson
+ carlos pedro 0.152235% similar luis
+ carlos pedro 0.348615% similar rita
+ carlos pedro 0.189828% similar ariane
+ carlos pedro 0.36495% similar natalia
+ carlos pedro 0.176076% similar sheila
+ garson 0.327904% similar luis
+ garson 0.244722% similar rita
+ garson 0.254944% similar ariane
+ garson 0.267153% similar natalia
+ garson 0.225799% similar sheila
+ luis 0.140035% similar rita
+ luis 0.243109% similar ariane
+ luis 0.32959% similar natalia
+ luis 0.139929% similar sheila
+ rita 0.170995% similar ariane
+ rita 0.234672% similar natalia
+ rita 0.426756% similar sheila
+ ariane 0.417822% similar natalia
+ ariane 0.386141% similar sheila
+ natalia 0.394311% similar sheila

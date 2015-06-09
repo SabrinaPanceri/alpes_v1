@@ -1,0 +1,6 @@
+ adriano 0.170696% similar barbara
+ adriano 0.0846221% similar ellen
+ adriano 0.0% similar carolina
+ barbara 0.00811391% similar ellen
+ barbara 0.0% similar carolina
+ ellen 0.0% similar carolina

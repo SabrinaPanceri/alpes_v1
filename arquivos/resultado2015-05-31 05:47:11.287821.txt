@@ -1,0 +1,15 @@
+ adriano 0.245696% similar barbara
+ adriano 0.0451582% similar bruno
+ adriano 0.126051% similar cauaa
+ adriano 0.0915198% similar ellen
+ adriano 0.0858001% similar carolina
+ barbara 0.0135074% similar bruno
+ barbara 0.00964889% similar cauaa
+ barbara 0.0113028% similar ellen
+ barbara -0.0012313% similar carolina
+ bruno 0.392068% similar cauaa
+ bruno 0.00820421% similar ellen
+ bruno 0.140691% similar carolina
+ cauaa 0.199592% similar ellen
+ cauaa 0.00142902% similar carolina
+ ellen 0.00018876% similar carolina

@@ -1,0 +1,15 @@
+ graziella 0.181424% similar loren
+ graziella 0.319574% similar ariane
+ graziella 0.270754% similar cauaa
+ graziella 0.382213% similar guilherme
+ graziella 0.291806% similar sheila
+ loren 0.080516% similar ariane
+ loren 0.309777% similar cauaa
+ loren 0.106512% similar guilherme
+ loren 0.0713618% similar sheila
+ ariane 0.2501% similar cauaa
+ ariane 0.340752% similar guilherme
+ ariane 0.063755% similar sheila
+ cauaa 0.163051% similar guilherme
+ cauaa 0.0478215% similar sheila
+ guilherme 0.105402% similar sheila

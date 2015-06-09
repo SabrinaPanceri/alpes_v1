@@ -1,0 +1,28 @@
+ carlos pedro 0.320885% similar caroline
+ carlos pedro 0.336089% similar graziella
+ carlos pedro 0.537425% similar rita
+ carlos pedro 0.681587% similar ariane
+ carlos pedro 0.667435% similar fatima
+ carlos pedro 0.549288% similar karen
+ carlos pedro 0.327341% similar sheila
+ caroline 0.439096% similar graziella
+ caroline 0.249286% similar rita
+ caroline 0.0638% similar ariane
+ caroline 0.34359% similar fatima
+ caroline 0.201538% similar karen
+ caroline 0.236491% similar sheila
+ graziella 0.243049% similar rita
+ graziella 0.174405% similar ariane
+ graziella 0.0895349% similar fatima
+ graziella 0.328302% similar karen
+ graziella 0.291352% similar sheila
+ rita 0.420638% similar ariane
+ rita 0.322265% similar fatima
+ rita 0.468832% similar karen
+ rita 0.293804% similar sheila
+ ariane 0.309558% similar fatima
+ ariane 0.479083% similar karen
+ ariane 0.113992% similar sheila
+ fatima 0.34533% similar karen
+ fatima 0.310885% similar sheila
+ karen 0.0295575% similar sheila

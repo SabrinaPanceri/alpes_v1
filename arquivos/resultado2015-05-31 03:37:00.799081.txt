@@ -1,0 +1,6 @@
+ adriano 0.0487607% similar bruno
+ adriano 0.128949% similar cauaa
+ adriano 0.134496% similar natalia
+ bruno 0.397603% similar cauaa
+ bruno 0.247213% similar natalia
+ cauaa 0.312447% similar natalia

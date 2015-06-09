@@ -1,0 +1,66 @@
+ gabriel 0.295423% similar carlos pedro
+ gabriel 0.209843% similar garson
+ gabriel 0.289221% similar luis
+ gabriel 0.161932% similar rita
+ gabriel 0.186915% similar adriano
+ gabriel 0.400034% similar ariane
+ gabriel 0.186209% similar bruno
+ gabriel 0.168888% similar cauaa
+ gabriel 0.306739% similar fatima
+ gabriel 0.247419% similar natalia
+ gabriel 0.105903% similar sheila
+ carlos pedro 0.164681% similar garson
+ carlos pedro 0.238536% similar luis
+ carlos pedro 0.362935% similar rita
+ carlos pedro 0.159871% similar adriano
+ carlos pedro 0.253586% similar ariane
+ carlos pedro 0.0879918% similar bruno
+ carlos pedro 0.0779546% similar cauaa
+ carlos pedro 0.227763% similar fatima
+ carlos pedro 0.361938% similar natalia
+ carlos pedro 0.11604% similar sheila
+ garson 0.333582% similar luis
+ garson 0.333573% similar rita
+ garson 0.185641% similar adriano
+ garson 0.2501% similar ariane
+ garson 0.262461% similar bruno
+ garson 0.129677% similar cauaa
+ garson 0.355264% similar fatima
+ garson 0.225865% similar natalia
+ garson 0.209451% similar sheila
+ luis 0.135856% similar rita
+ luis 0.177054% similar adriano
+ luis 0.304769% similar ariane
+ luis 0.290065% similar bruno
+ luis 0.172239% similar cauaa
+ luis 0.202709% similar fatima
+ luis 0.361674% similar natalia
+ luis 0.121021% similar sheila
+ rita 0.231541% similar adriano
+ rita 0.185299% similar ariane
+ rita 0.0961088% similar bruno
+ rita 0.193278% similar cauaa
+ rita 0.286128% similar fatima
+ rita 0.230737% similar natalia
+ rita 0.469726% similar sheila
+ adriano 0.165799% similar ariane
+ adriano 0.0527407% similar bruno
+ adriano 0.13094% similar cauaa
+ adriano 0.311566% similar fatima
+ adriano 0.136082% similar natalia
+ adriano 0.185781% similar sheila
+ ariane 0.229922% similar bruno
+ ariane 0.284695% similar cauaa
+ ariane 0.207975% similar fatima
+ ariane 0.46718% similar natalia
+ ariane 0.440711% similar sheila
+ bruno 0.389564% similar cauaa
+ bruno 0.113317% similar fatima
+ bruno 0.240626% similar natalia
+ bruno 0.157099% similar sheila
+ cauaa 0.18423% similar fatima
+ cauaa 0.299388% similar natalia
+ cauaa 0.375368% similar sheila
+ fatima 0.236322% similar natalia
+ fatima 0.151657% similar sheila
+ natalia 0.492414% similar sheila

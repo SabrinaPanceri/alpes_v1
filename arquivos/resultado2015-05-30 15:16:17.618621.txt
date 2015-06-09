@@ -1,0 +1,10 @@
+ gabriel 0.221546% similar graziella
+ gabriel 0.0550261% similar rita
+ gabriel 0.289281% similar karen
+ gabriel 0.250632% similar natalia
+ graziella 0.11167% similar rita
+ graziella 0.321454% similar karen
+ graziella 0.22889% similar natalia
+ rita 0.353075% similar karen
+ rita 0.367354% similar natalia
+ karen 0.238944% similar natalia

@@ -1,0 +1,91 @@
+ carlos pedro 0.295735% similar caroline
+ carlos pedro 0.328233% similar garson
+ carlos pedro 0.322737% similar graziella
+ carlos pedro 0.543343% similar loren
+ carlos pedro 0.30154% similar luis
+ carlos pedro 0.507209% similar rita
+ carlos pedro 0.649227% similar ariane
+ carlos pedro 0.449019% similar cauaa
+ carlos pedro 0.640438% similar fatima
+ carlos pedro 0.489947% similar guilherme
+ carlos pedro 0.529485% similar karen
+ carlos pedro 0.298864% similar sheila
+ carlos pedro 0.315152% similar carolina
+ caroline 0.220422% similar garson
+ caroline 0.434727% similar graziella
+ caroline 0.240531% similar loren
+ caroline 0.16821% similar luis
+ caroline 0.246298% similar rita
+ caroline 0.0633047% similar ariane
+ caroline 0.193482% similar cauaa
+ caroline 0.341507% similar fatima
+ caroline 0.317704% similar guilherme
+ caroline 0.199909% similar karen
+ caroline 0.231659% similar sheila
+ caroline 0.231477% similar carolina
+ garson 0.349579% similar graziella
+ garson 0.346437% similar loren
+ garson 0.277418% similar luis
+ garson 0.241778% similar rita
+ garson 0.292516% similar ariane
+ garson 0.259634% similar cauaa
+ garson 0.170814% similar fatima
+ garson 0.207901% similar guilherme
+ garson 0.341141% similar karen
+ garson 0.0313578% similar sheila
+ garson 0.140271% similar carolina
+ graziella 0.232474% similar loren
+ graziella 0.110703% similar luis
+ graziella 0.238984% similar rita
+ graziella 0.17371% similar ariane
+ graziella 0.241573% similar cauaa
+ graziella 0.0894768% similar fatima
+ graziella 0.131533% similar guilherme
+ graziella 0.329191% similar karen
+ graziella 0.282295% similar sheila
+ graziella 0.0847711% similar carolina
+ loren 0.0101054% similar luis
+ loren 0.36675% similar rita
+ loren 0.247438% similar ariane
+ loren 0.175156% similar cauaa
+ loren 0.388033% similar fatima
+ loren 0.266641% similar guilherme
+ loren 0.30121% similar karen
+ loren 0.229958% similar sheila
+ loren 0.0710932% similar carolina
+ luis 0.204671% similar rita
+ luis 0.236176% similar ariane
+ luis 0.377614% similar cauaa
+ luis 0.122332% similar fatima
+ luis 0.241872% similar guilherme
+ luis 0.00254846% similar karen
+ luis 0.37848% similar sheila
+ luis 0.230254% similar carolina
+ rita 0.411114% similar ariane
+ rita 0.291157% similar cauaa
+ rita 0.314616% similar fatima
+ rita 0.361271% similar guilherme
+ rita 0.453726% similar karen
+ rita 0.293608% similar sheila
+ rita 0.419066% similar carolina
+ ariane 0.292227% similar cauaa
+ ariane 0.303085% similar fatima
+ ariane 0.284499% similar guilherme
+ ariane 0.47084% similar karen
+ ariane 0.104688% similar sheila
+ ariane 0.200213% similar carolina
+ cauaa 0.205911% similar fatima
+ cauaa 0.269177% similar guilherme
+ cauaa 0.189248% similar karen
+ cauaa 0.192022% similar sheila
+ cauaa 0.203911% similar carolina
+ fatima 0.497795% similar guilherme
+ fatima 0.341794% similar karen
+ fatima 0.311297% similar sheila
+ fatima 0.353995% similar carolina
+ guilherme 0.183201% similar karen
+ guilherme 0.21586% similar sheila
+ guilherme 0.420883% similar carolina
+ karen 0.0182466% similar sheila
+ karen 0.185768% similar carolina
+ sheila 0.305849% similar carolina

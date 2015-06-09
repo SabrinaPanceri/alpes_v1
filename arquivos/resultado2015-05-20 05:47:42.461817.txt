@@ -1,0 +1,21 @@
+ carlos pedro 0.304785% similar luis
+ carlos pedro 0.388831% similar barbara
+ carlos pedro 0.569057% similar ellen
+ carlos pedro 0.297327% similar fatima
+ carlos pedro 0.0862508% similar natalia
+ carlos pedro 0.388574% similar carolina
+ luis 0.1781% similar barbara
+ luis 0.185315% similar ellen
+ luis 0.204716% similar fatima
+ luis 0.233024% similar natalia
+ luis 0.17781% similar carolina
+ barbara 0.333198% similar ellen
+ barbara 0.169827% similar fatima
+ barbara 0.41644% similar natalia
+ barbara 0.278678% similar carolina
+ ellen 0.422732% similar fatima
+ ellen 0.117333% similar natalia
+ ellen 0.380472% similar carolina
+ fatima 0.11637% similar natalia
+ fatima 0.185195% similar carolina
+ natalia 0.0453833% similar carolina

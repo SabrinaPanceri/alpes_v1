@@ -1,0 +1,6 @@
+ caroline 0.107466% similar garson
+ caroline 0.235935% similar leonardo
+ caroline 0.257487% similar adriano
+ garson 0.212119% similar leonardo
+ garson 0.238802% similar adriano
+ leonardo 0.219122% similar adriano

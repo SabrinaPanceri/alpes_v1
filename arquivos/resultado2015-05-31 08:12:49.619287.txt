@@ -1,0 +1,10 @@
+ caroline 0.262819% similar loren
+ caroline 0.0916529% similar ellen
+ caroline 0.171316% similar guilherme
+ caroline -0.000169662% similar carolina
+ loren 0.00406465% similar ellen
+ loren 0.183745% similar guilherme
+ loren 0.000325317% similar carolina
+ ellen 0.019945% similar guilherme
+ ellen -0.000563736% similar carolina
+ guilherme 0.13381% similar carolina

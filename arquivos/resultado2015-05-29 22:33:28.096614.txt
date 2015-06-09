@@ -1,0 +1,15 @@
+ gabriel 0.129876% similar loren
+ gabriel 0.0341113% similar ariane
+ gabriel 0.175392% similar cauaa
+ gabriel 0.249953% similar fatima
+ gabriel 0.357972% similar guilherme
+ loren 0.0785606% similar ariane
+ loren 0.310459% similar cauaa
+ loren 0.11824% similar fatima
+ loren 0.105621% similar guilherme
+ ariane 0.24755% similar cauaa
+ ariane 0.0675172% similar fatima
+ ariane 0.339024% similar guilherme
+ cauaa 0.265789% similar fatima
+ cauaa 0.165577% similar guilherme
+ fatima 0.218165% similar guilherme

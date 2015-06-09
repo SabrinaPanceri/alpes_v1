@@ -1,0 +1,6 @@
+ caroline 0.0657384% similar rita
+ caroline 0.182176% similar ellen
+ caroline 0.215255% similar sheila
+ rita 0.133721% similar ellen
+ rita 0.480441% similar sheila
+ ellen 0.116575% similar sheila

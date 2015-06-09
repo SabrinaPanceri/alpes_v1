@@ -1,0 +1,36 @@
+ carlos pedro 0.555112% similar loren
+ carlos pedro 0.530689% similar rita
+ carlos pedro 0.472056% similar adriano
+ carlos pedro 0.662049% similar ariane
+ carlos pedro 0.551114% similar ellen
+ carlos pedro 0.655347% similar fatima
+ carlos pedro 0.513584% similar guilherme
+ carlos pedro 0.537277% similar karen
+ loren 0.372435% similar rita
+ loren 0.317931% similar adriano
+ loren 0.24968% similar ariane
+ loren 0.31463% similar ellen
+ loren 0.39227% similar fatima
+ loren 0.270649% similar guilherme
+ loren 0.303416% similar karen
+ rita 0.304947% similar adriano
+ rita 0.428178% similar ariane
+ rita 0.292883% similar ellen
+ rita 0.33577% similar fatima
+ rita 0.390463% similar guilherme
+ rita 0.463767% similar karen
+ adriano 0.285137% similar ariane
+ adriano 0.432878% similar ellen
+ adriano 0.29428% similar fatima
+ adriano 0.373796% similar guilherme
+ adriano 0.37007% similar karen
+ ariane 0.307718% similar ellen
+ ariane 0.307716% similar fatima
+ ariane 0.296398% similar guilherme
+ ariane 0.474459% similar karen
+ ellen 0.472135% similar fatima
+ ellen 0.399008% similar guilherme
+ ellen 0.420181% similar karen
+ fatima 0.511952% similar guilherme
+ fatima 0.345206% similar karen
+ guilherme 0.191843% similar karen

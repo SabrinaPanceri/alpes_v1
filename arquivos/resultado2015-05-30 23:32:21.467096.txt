@@ -1,0 +1,6 @@
+ garson 0.415069% similar loren
+ garson 0.396562% similar cauaa
+ garson 0.281826% similar guilherme
+ loren 0.182342% similar cauaa
+ loren 0.30556% similar guilherme
+ cauaa 0.426465% similar guilherme

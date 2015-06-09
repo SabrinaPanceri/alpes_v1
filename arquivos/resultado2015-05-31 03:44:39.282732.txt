@@ -1,0 +1,6 @@
+ gabriel 0.419763% similar luis
+ gabriel 0.400071% similar natalia
+ gabriel 0.457699% similar carolina
+ luis 0.292272% similar natalia
+ luis 0.310799% similar carolina
+ natalia 0.664535% similar carolina

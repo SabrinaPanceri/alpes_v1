@@ -1,0 +1,15 @@
+ garson 0.341685% similar luis
+ garson 0.340103% similar rita
+ garson 0.25674% similar ariane
+ garson 0.232052% similar natalia
+ garson 0.211184% similar sheila
+ luis 0.130623% similar rita
+ luis 0.299317% similar ariane
+ luis 0.355707% similar natalia
+ luis 0.117867% similar sheila
+ rita 0.18418% similar ariane
+ rita 0.233063% similar natalia
+ rita 0.476368% similar sheila
+ ariane 0.46159% similar natalia
+ ariane 0.440577% similar sheila
+ natalia 0.49464% similar sheila

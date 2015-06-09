@@ -1,0 +1,66 @@
+ carlos pedro 0.36328% similar caroline
+ carlos pedro 0.401981% similar graziella
+ carlos pedro 0.393136% similar luis
+ carlos pedro 0.445525% similar rita
+ carlos pedro 0.680266% similar ariane
+ carlos pedro 0.545066% similar cauaa
+ carlos pedro 0.666455% similar fatima
+ carlos pedro 0.490607% similar guilherme
+ carlos pedro 0.600712% similar karen
+ carlos pedro 0.268976% similar sheila
+ carlos pedro 0.310455% similar carolina
+ caroline 0.555587% similar graziella
+ caroline 0.250263% similar luis
+ caroline 0.199308% similar rita
+ caroline 0.0920523% similar ariane
+ caroline 0.300313% similar cauaa
+ caroline 0.302028% similar fatima
+ caroline 0.272698% similar guilherme
+ caroline 0.24408% similar karen
+ caroline 0.227002% similar sheila
+ caroline 0.214579% similar carolina
+ graziella 0.157661% similar luis
+ graziella 0.223799% similar rita
+ graziella 0.204296% similar ariane
+ graziella 0.331332% similar cauaa
+ graziella 0.153806% similar fatima
+ graziella 0.189519% similar guilherme
+ graziella 0.397882% similar karen
+ graziella 0.379515% similar sheila
+ graziella 0.164337% similar carolina
+ luis 0.338232% similar rita
+ luis 0.298826% similar ariane
+ luis 0.537056% similar cauaa
+ luis 0.21986% similar fatima
+ luis 0.315431% similar guilherme
+ luis 0.107839% similar karen
+ luis 0.429695% similar sheila
+ luis 0.326098% similar carolina
+ rita 0.459324% similar ariane
+ rita 0.337648% similar cauaa
+ rita 0.447052% similar fatima
+ rita 0.438358% similar guilherme
+ rita 0.535456% similar karen
+ rita 0.397558% similar sheila
+ rita 0.381719% similar carolina
+ ariane 0.38833% similar cauaa
+ ariane 0.441744% similar fatima
+ ariane 0.357292% similar guilherme
+ ariane 0.569383% similar karen
+ ariane 0.159971% similar sheila
+ ariane 0.25007% similar carolina
+ cauaa 0.261738% similar fatima
+ cauaa 0.414418% similar guilherme
+ cauaa 0.296003% similar karen
+ cauaa 0.225305% similar sheila
+ cauaa 0.291496% similar carolina
+ fatima 0.543796% similar guilherme
+ fatima 0.454235% similar karen
+ fatima 0.325357% similar sheila
+ fatima 0.387648% similar carolina
+ guilherme 0.314578% similar karen
+ guilherme 0.288353% similar sheila
+ guilherme 0.397272% similar carolina
+ karen 0.0737745% similar sheila
+ karen 0.288768% similar carolina
+ sheila 0.348449% similar carolina

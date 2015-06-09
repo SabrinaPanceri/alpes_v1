@@ -1,0 +1,21 @@
+ carlos pedro 0.437819% similar rita
+ carlos pedro 0.675033% similar ariane
+ carlos pedro 0.480536% similar ellen
+ carlos pedro 0.673867% similar fatima
+ carlos pedro 0.346317% similar natalia
+ carlos pedro 0.270649% similar sheila
+ rita 0.442406% similar ariane
+ rita 0.267316% similar ellen
+ rita 0.449666% similar fatima
+ rita 0.325999% similar natalia
+ rita 0.407691% similar sheila
+ ariane 0.407532% similar ellen
+ ariane 0.444846% similar fatima
+ ariane 0.271759% similar natalia
+ ariane 0.156296% similar sheila
+ ellen 0.469166% similar fatima
+ ellen 0.2514% similar natalia
+ ellen 0.202379% similar sheila
+ fatima 0.5157% similar natalia
+ fatima 0.324262% similar sheila
+ natalia 0.291141% similar sheila

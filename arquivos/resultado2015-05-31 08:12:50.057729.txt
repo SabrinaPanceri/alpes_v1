@@ -1,0 +1,6 @@
+ graziella 0.241007% similar leonardo
+ graziella 0.145643% similar barbara
+ graziella 0.509035% similar karen
+ leonardo 0.205989% similar barbara
+ leonardo 0.266783% similar karen
+ barbara 0.108958% similar karen

@@ -1,0 +1,15 @@
+ ariane 0.221328% similar bruno
+ ariane 0.277188% similar cauaa
+ ariane 0.322024% similar ellen
+ ariane 0.463863% similar natalia
+ ariane 0.439389% similar sheila
+ bruno 0.399963% similar cauaa
+ bruno 0.0175142% similar ellen
+ bruno 0.25043% similar natalia
+ bruno 0.162052% similar sheila
+ cauaa 0.213754% similar ellen
+ cauaa 0.324353% similar natalia
+ cauaa 0.389922% similar sheila
+ ellen 0.226642% similar natalia
+ ellen 0.128985% similar sheila
+ natalia 0.494663% similar sheila

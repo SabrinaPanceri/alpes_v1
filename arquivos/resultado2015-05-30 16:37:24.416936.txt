@@ -1,0 +1,10 @@
+ gabriel 0.429912% similar luis
+ gabriel 0.346349% similar cauaa
+ gabriel 0.30898% similar guilherme
+ gabriel 0.463482% similar carolina
+ luis 0.533204% similar cauaa
+ luis 0.308636% similar guilherme
+ luis 0.317844% similar carolina
+ cauaa 0.430148% similar guilherme
+ cauaa 0.30007% similar carolina
+ guilherme 0.402552% similar carolina

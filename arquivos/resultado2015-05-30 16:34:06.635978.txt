@@ -1,0 +1,10 @@
+ gabriel 0.291139% similar carlos pedro
+ gabriel 0.239749% similar graziella
+ gabriel 0.147755% similar leonardo
+ gabriel 0.191835% similar karen
+ carlos pedro 0.130719% similar graziella
+ carlos pedro 0.0962555% similar leonardo
+ carlos pedro 0.267452% similar karen
+ graziella 0.235651% similar leonardo
+ graziella 0.504279% similar karen
+ leonardo 0.266394% similar karen

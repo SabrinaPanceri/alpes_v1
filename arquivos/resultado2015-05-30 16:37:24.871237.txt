@@ -1,0 +1,10 @@
+ loren 0.306009% similar adriano
+ loren 0.289499% similar ariane
+ loren 0.340424% similar ellen
+ loren 0.450739% similar karen
+ adriano 0.331911% similar ariane
+ adriano 0.430631% similar ellen
+ adriano 0.35319% similar karen
+ ariane 0.404654% similar ellen
+ ariane 0.558316% similar karen
+ ellen 0.446627% similar karen
