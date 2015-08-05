@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^(?P<tese_id>\d+)/$', 'alpes_core.views.teses', name='teses'),
     url(r'^debate/(?P<debate_id>\d+)/$', 'alpes_core.views.debate', name='debate'),
     url(r'^posInicial/(?P<debate_id>\d+)/$', 'alpes_core.views.posInicial', name='posInicial'),
+    url(r'^grupos/(?P<debate_id>\d+)/$', 'alpes_core.views.agrupamentos', name='grupos'),
     
     #navegação entre as páginas
 #     url(r'^index', 'alpes_core.views.index', name='index'),

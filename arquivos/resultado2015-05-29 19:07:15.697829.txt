@@ -1,6 +1,0 @@
- carlos pedro 0.458924% similar luis
- carlos pedro 0.488789% similar ellen
- carlos pedro 0.513114% similar carolina
- luis 0.190137% similar ellen
- luis 0.191947% similar carolina
- ellen 0.307589% similar carolina

@@ -9,7 +9,7 @@ from gensim import corpora, models, similarities
 from collections import defaultdict
 import logging
 from pprint import pprint
-from alpes_core.pre_text_process import removeA, removePontuacao
+from alpes_core.textProcess import removeA, removePontuacao
 from nltk.corpus import stopwords
 
 

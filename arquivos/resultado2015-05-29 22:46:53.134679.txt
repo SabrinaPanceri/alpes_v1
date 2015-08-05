@@ -1,3 +1,0 @@
- caroline 0.103271% similar garson
- caroline 0.256074% similar adriano
- garson 0.238895% similar adriano

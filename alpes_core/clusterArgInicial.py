@@ -4,7 +4,7 @@
 import HTMLParser
 import re, nltk
 from django.db import connection
-from alpes_core.pre_text_process import removeStopWords
+from alpes_core.textProcess import removeStopWords, stemming
 from nltk.stem import RSLPStemmer
 from nltk.corpus import floresta
 from nltk.probability import FreqDist
@@ -97,22 +97,23 @@ def clusterArgInicial(idtese):
 #Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
 #retirando afixos dos textos do posInicial e tese
     stemmer = RSLPStemmer()
-
+ 
     for i in range(len(sw_posInicial)):
         st_aux = sw_posInicial[i]
         string_aux = ""
         for sufixo in st_aux.split():
             string_aux = string_aux + " " + stemmer.stem(sufixo)
-        
+         
         st_posInicial.append(string_aux)
-
+ 
     for i in range(len(sw_tese)):
         st_aux = sw_tese[i]
         string_aux = ""
         for sufixo in st_aux.split():
             string_aux = string_aux + " " + stemmer.stem(sufixo)
-        
+         
         st_tese.append(string_aux)
+
 
 #############################################################################################################
 # #LSI

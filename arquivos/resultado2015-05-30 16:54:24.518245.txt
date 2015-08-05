@@ -1,3 +1,0 @@
- leonardo 0.204981% similar barbara
- leonardo 0.158619% similar ellen
- barbara 0.0119191% similar ellen

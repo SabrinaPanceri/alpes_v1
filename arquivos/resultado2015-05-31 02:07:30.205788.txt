@@ -1,6 +1,0 @@
- leonardo 0.223367% similar adriano
- leonardo 0.0115558% similar bruno
- leonardo 0.0497941% similar ellen
- adriano 0.314111% similar bruno
- adriano 0.439634% similar ellen
- bruno 0.199174% similar ellen

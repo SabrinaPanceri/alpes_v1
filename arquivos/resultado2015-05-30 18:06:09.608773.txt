@@ -1,6 +1,0 @@
- gabriel 0.245154% similar ariane
- gabriel 0.0630956% similar barbara
- gabriel 0.147379% similar carolina
- ariane 0.0317789% similar barbara
- ariane 0.00100186% similar carolina
- barbara 0.000351543% similar carolina

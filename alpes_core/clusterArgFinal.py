@@ -4,7 +4,7 @@
 import HTMLParser
 import re, nltk
 from django.db import connection
-from alpes_core.pre_text_process import removeStopWords
+from alpes_core.textProcess import removeStopWords
 from nltk.stem import RSLPStemmer
 from nltk.corpus import floresta
 from nltk.probability import FreqDist

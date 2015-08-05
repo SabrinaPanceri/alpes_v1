@@ -1,11 +1,12 @@
 #coding: utf-8
 
 from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 from sklearn.feature_extraction.text import CountVectorizer
-from alpes_core.ex_kmeans import cluster_texts
+from alpes_core.ex_kmeans import tfIdf_Kmeans
 from alpes_core.ex_lsa import similaridade_lsa
-from alpes_core.pre_text_process import removeA, removePontuacao
+from alpes_core.textProcess import removeA, removePontuacao, removeStopWords, similaridadeCossenos
 import codecs
 from pprint import pprint
 from alpes_core.lsa_kmeans import LSA_Kmeans
@@ -15,12 +16,14 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
 ##########################################################################################
 #                                    VARIÁVEIS                                           #
 ##########################################################################################
+    
     st_tese = auxResult[0]
-    posIni = auxResult[1]
+    posIni = [removeA(removePontuacao(i)) for i in auxResult[1]]
     sw_tese = auxResult[2]
     aux_usu = auxResult[3]
     st_posInicial = auxResult[4]
-    tese = auxResult[5]
+    tese = [removeA(removePontuacao(i)) for i in auxResult[5]]
+    sw_posIni = [removeStopWords(i) for i in auxResult[1]]
     
     grupos = []
     grupo1 = []
@@ -30,6 +33,10 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
     grupo5 = []
     grupo6 = []
     indices = []
+    
+    
+    
+     
     
 ##########################################################################################
     
@@ -66,56 +73,15 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
     #ABORDAGEM 2 -> Clusterização utilizando Tf-IDF e K-Means    
     if tfIdf_km == True:
         
-        if treino_externo == False:
-            #USA A TESE COMO BASE DE TREINAMENTO PARA CALCULO DO TF-IDF DO POSINI
-            test_set = st_posInicial
-            train_set = st_tese
-            
-            vectorizer = CountVectorizer()
-            vectorizer.fit_transform(train_set)
-            count_vectorizer = CountVectorizer()
-            count_vectorizer.fit_transform(train_set) 
-            count_vectorizer.vocabulary_
-            freq_term_matrix = count_vectorizer.transform(test_set)
-            tfidf = TfidfTransformer(norm="l2")
-            tfidf.fit(freq_term_matrix)
-            tf_idf_matrix = tfidf.transform(freq_term_matrix)
-            
-            if numCluster == 3:
-                grupos = cluster_texts(st_posInicial, 3)
-            if numCluster == 4:
-                grupos = cluster_texts(st_posInicial, 4)
-            if numCluster == 5:
-                grupos = cluster_texts(st_posInicial, 5)
-            if numCluster == 6:
-                grupos = cluster_texts(st_posInicial, 6)
-        else:
-            #USA TEXTOS EXTERNOS COMO BASE DE TREINAMENTO PARA CALCULO DO TF-IDF DO POSINI 
-            base_treinamento = codecs.open('/home/panceri/git/alpes_v1/arquivos/baseTreinamento.txt', 'r', 'UTF8')
-            treinamento = [removeA(removePontuacao(i)) for i in base_treinamento]
-            base_treinamento.close()
-            
-            train_set = treinamento
-            test_set = st_posInicial
-            
-            vectorizer = CountVectorizer()
-            vectorizer.fit_transform(train_set)
-            count_vectorizer = CountVectorizer()
-            count_vectorizer.fit_transform(train_set) 
-            count_vectorizer.vocabulary_
-            freq_term_matrix = count_vectorizer.transform(test_set)
-            tfidf = TfidfTransformer(norm="l2")
-            tfidf.fit(freq_term_matrix)
-            tf_idf_matrix = tfidf.transform(freq_term_matrix)
-            
-            if numCluster == 3:
-                grupos = cluster_texts(st_posInicial, 3)
-            if numCluster == 4:
-                grupos = cluster_texts(st_posInicial, 4)
-            if numCluster == 5:
-                grupos = cluster_texts(st_posInicial, 5)
-            if numCluster == 6:
-                grupos = cluster_texts(st_posInicial, 6)
+        if numCluster == 3:
+            grupos = tfIdf_Kmeans(st_posInicial, 3)
+        if numCluster == 4:
+            grupos = tfIdf_Kmeans(st_posInicial, 4)
+        if numCluster == 5:
+            grupos = tfIdf_Kmeans(st_posInicial, 5)
+        if numCluster == 6:
+            grupos = tfIdf_Kmeans(st_posInicial, 6)
+        
     
     ##########################################################################################
     #                            SEPARAÇÃO DOS AGRUPAMENTOS                                  #
@@ -154,11 +120,17 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
                 grupo6.append(texto)
                 indices.append(grupos[i][j])
     
-
-
     ##########################################################################################
     #                          IMPRESSÃO DOS AGRUPAMENTOS                                    #
     ##########################################################################################
+    transformer = TfidfTransformer()
+    tfIdf = transformer.fit_transform(posIni)
+    
+    
+    
+    
+    ##########################################################################################
+           
     if numCluster == 3:
     #PARA 3 CLUSTERS
         ind_aux = indices[:len(grupo1)]
@@ -167,30 +139,14 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             
         print "grupo 1", len(grupo1)
         cos = []
-        lsaPosIni = []
-        lsaUsu =[]
     
         for y in range(len(ind_aux)):
-#             print "posIni[y]", aux_usu[ind_aux[y]],posIni[ind_aux[y]]
-            lsaPosIni.append(posIni[ind_aux[y]])
-            lsaUsu.append(aux_usu[ind_aux[y]])
             for x in range(y+1, len(ind_aux)):
                 num1 = ind_aux[y]
                 num2 = ind_aux[x]
-                cos.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos.append(similaridadeCossenos(sw_posIni[num1].__str__(),sw_posIni[num2].__str__()))
+        print cos
     
-        simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
-        print "simLSA"
-        pprint(sorted(simLSA, reverse=True))
-    
-        simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
-        print "simLSA1"
-        pprint(sorted(simLSA1, reverse=True))
-        print "cos",cos
-        print "len_cos",len(cos)
         sum_cos = 0
     
         if len(cos) != 0:
@@ -215,11 +171,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux2)):
                 num1 = ind_aux2[y]
                 num2 = ind_aux2[x]
-                cos2.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos2.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
         print "cos",cos2
         print "len_cos",len(cos2)
         simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
@@ -253,11 +209,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux3)):
                 num1 = ind_aux3[y]
                 num2 = ind_aux3[x]
-                cos3.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos3.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
     
         print "cos",cos3
         print "len_cos",len(cos3)
@@ -300,10 +256,10 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux)):
                 num1 = ind_aux[y]
                 num2 = ind_aux[x]
-                cos.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
     
         simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
         print "simLSA"
@@ -338,11 +294,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux2)):
                 num1 = ind_aux2[y]
                 num2 = ind_aux2[x]
-                cos2.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos2.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
         print "cos",cos2
         print "len_cos",len(cos2)
         simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
@@ -376,11 +332,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux3)):
                 num1 = ind_aux3[y]
                 num2 = ind_aux3[x]
-                cos3.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos3.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
     
         print "cos",cos3
         print "len_cos",len(cos3)
@@ -414,11 +370,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux4)):
                 num1 = ind_aux4[y]
                 num2 = ind_aux4[x]
-                cos4.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos4.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
      
         print "cos",cos4
         print "len_cos",len(cos4)
@@ -462,10 +418,10 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux)):
                 num1 = ind_aux[y]
                 num2 = ind_aux[x]
-                cos.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
     
         simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
         print "simLSA"
@@ -500,11 +456,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux2)):
                 num1 = ind_aux2[y]
                 num2 = ind_aux2[x]
-                cos2.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos2.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
         print "cos",cos2
         print "len_cos",len(cos2)
         simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
@@ -538,11 +494,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux3)):
                 num1 = ind_aux3[y]
                 num2 = ind_aux3[x]
-                cos3.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos3.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
     
         print "cos",cos3
         print "len_cos",len(cos3)
@@ -576,11 +532,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux4)):
                 num1 = ind_aux4[y]
                 num2 = ind_aux4[x]
-                cos4.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos4.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
      
         print "cos",cos4
         print "len_cos",len(cos4)
@@ -614,11 +570,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux5)):
                 num1 = ind_aux5[y]
                 num2 = ind_aux5[x]
-                cos5.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+#                 cos5.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
      
         print "cos",cos5
         print "len_cos", len(cos5)
@@ -650,10 +606,6 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
         ind_aux5 = indices[(len(grupo1)+len(grupo2)+len(grupo3))+len(grupo4):(len(grupo1)+len(grupo2)+len(grupo3)+len(grupo4))+len(grupo5)]
         ind_aux6 = indices[(len(grupo1)+len(grupo2)+len(grupo3)+len(grupo4))+len(grupo5):]
     
-        ##########################################################################################
-        #                                AGRUPAMENTOS                                            #
-        ##########################################################################################
-
         print "grupo 1", len(grupo1)
         cos = []
         lsaPosIni = []
@@ -666,10 +618,10 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux)):
                 num1 = ind_aux[y]
                 num2 = ind_aux[x]
-                cos.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
     
         simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
         print "simLSA"
@@ -704,11 +656,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux2)):
                 num1 = ind_aux2[y]
                 num2 = ind_aux2[x]
-                cos2.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos2.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
         print "cos",cos2
         print "len_cos",len(cos2)
         simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
@@ -742,11 +694,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux3)):
                 num1 = ind_aux3[y]
                 num2 = ind_aux3[x]
-                cos3.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos3.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
     
         print "cos",cos3
         print "len_cos",len(cos3)
@@ -780,11 +732,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux4)):
                 num1 = ind_aux4[y]
                 num2 = ind_aux4[x]
-                cos4.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos4.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
      
         print "cos",cos4
         print "len_cos",len(cos4)
@@ -818,11 +770,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux5)):
                 num1 = ind_aux5[y]
                 num2 = ind_aux5[x]
-                cos5.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos5.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
      
         print "cos",cos5
         print "len_cos", len(cos5)
@@ -856,11 +808,11 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
             for x in range(y+1, len(ind_aux6)):
                 num1 = ind_aux6[y]
                 num2 = ind_aux6[x]
-                cos6.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-                euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-    #             print aux_usu[num1],aux_usu[num2]
-                print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-                print "euc", euc
+                cos6.append(cosine_similarity(vectorizer[num1], vectorizer[num2]))
+#                 euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#     #             print aux_usu[num1],aux_usu[num2]
+#                 print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#                 print "euc", euc
      
         print "cos",cos6
         print "len_cos",len(cos6)
@@ -882,3 +834,4 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
 
 
 ##########################################################################################
+    return grupo1, grupo2, grupo3, grupo4, grupo5, grupo6, tese

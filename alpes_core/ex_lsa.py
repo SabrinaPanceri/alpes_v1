@@ -7,7 +7,7 @@ from collections import defaultdict
 import logging
 from pprint import pprint
 from datetime import datetime
-from alpes_core.pre_text_process import removeA, removePontuacao
+from alpes_core.textProcess import removeA, removePontuacao
 from nltk.corpus import stopwords
 from gensim.models import lsimodel
 from gensim.models.rpmodel import RpModel

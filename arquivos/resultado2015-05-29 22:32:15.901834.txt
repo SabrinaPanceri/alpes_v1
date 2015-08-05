@@ -1,6 +1,0 @@
- loren 0.078277% similar ariane
- loren 0.307826% similar cauaa
- loren 0.104835% similar guilherme
- ariane 0.252966% similar cauaa
- ariane 0.34296% similar guilherme
- cauaa 0.164102% similar guilherme

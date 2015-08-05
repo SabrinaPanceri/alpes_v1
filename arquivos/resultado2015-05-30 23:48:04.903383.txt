@@ -1,6 +1,0 @@
- caroline 0.26299% similar loren
- caroline 0.185953% similar fatima
- caroline 0.172197% similar guilherme
- loren 0.118371% similar fatima
- loren 0.183907% similar guilherme
- fatima 0.35079% similar guilherme

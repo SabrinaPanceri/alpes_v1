@@ -1,6 +1,0 @@
- graziella 0.194596% similar luis
- graziella 0.312339% similar ariane
- graziella 0.244525% similar guilherme
- luis 0.304429% similar ariane
- luis 0.359386% similar guilherme
- ariane 0.311334% similar guilherme

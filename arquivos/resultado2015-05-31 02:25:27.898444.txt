@@ -1,3 +1,0 @@
- caroline 0.305864% similar adriano
- caroline 0.211551% similar sheila
- adriano 0.213463% similar sheila
