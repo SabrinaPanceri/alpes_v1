@@ -14,7 +14,6 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 from sklearn.feature_extraction.text import CountVectorizer
 
-
 from alpes_core.ex_kmeans import tfIdf_Kmeans
 from alpes_core.ex_lsa import similaridade_lsa
 from alpes_core.textProcess import removeA, removePontuacao
@@ -22,17 +21,68 @@ import codecs
 from pprint import pprint
 # 
 from alpes_core.lsa_kmeans import LSA_Kmeans
- 
 from nltk.cluster import KMeansClusterer, euclidean_distance
 
 # Create your views here.
 def home(request):
-	
+####################################################################################
+## 1) COLOCAR DE FORMA OPCIONAL PARA ESCOLHA DO USUÁRIO
+## 2) FAZER TELA QUE APRESENTE TODOS OS DEBATES E QUE O USUÁRIO POSSA ESCOLHER 
+####################################################################################	
 	dados = []	
 	
 	context = RequestContext(request,{'teses' : Tese.objects.filter(grupo_idgrupo=1064), 'dados': dados})
 	
+	
+	
 	return render(request, 'inicio1.html', context)
+
+def inicial(request):
+	
+	dados = []	
+	
+	context = RequestContext(request,{'teses' : Tese.objects.filter(), 'dados': dados})
+	
+	
+	return render(request, 'inicio.html', context)
+
+def indicacao(request, tese_id):
+##################################################################################################################
+## 1) FAZER TELA COM A OPÇÃO DE INDICAÇÃO DOS REVISORES DE ACORDO COM A ARG INICIAL
+## 2) O SELECT DEVE PEGAR TODAS AS ARGUMENTAÇÕES NÃO NULAS DE ACORDO COM O GRUPO E TESE ESCOLHIDAS 
+## 3) 
+##################################################################################################################	
+	if tese_id:
+		cursor = connection.cursor()
+		cursor.execute("select * from argumento where tese_idtese = " +tese_id+" and posicionamentoinicial is not null")
+		dadosSql = cursor.fetchall()	
+	
+		h = HTMLParser.HTMLParser()
+		dados = []
+
+		for d in dadosSql:
+		
+			dados.append([re.sub('<[^>]*>', '', h.unescape(d[0])),re.sub('<[^>]*>', '', h.unescape(d[1])),re.sub('<[^>]*>', '', h.unescape(d[2])),re.sub('<[^>]*>', '', h.unescape(d[3])),re.sub('<[^>]*>', '', h.unescape(d[4])),re.sub('<[^>]*>', '', h.unescape(d[5]))])
+	else:
+		dados = []
+
+
+	index = -1
+	teses = Tese.objects.filter(grupo_idgrupo=1064)
+	
+	i = 0
+	while i < len(teses):
+		h = HTMLParser.HTMLParser()
+		print str(teses[i].idtese) + ' == ' + tese_id
+		if str(teses[i].idtese) == tese_id:
+			index = re.sub('<[^>]*>', '', h.unescape(teses[i].tese))
+			break
+		i=i+1
+
+
+	context = RequestContext(request,{'teses' : teses, 'dados': dados, 'idteseIndex':index, 'idtese':tese_id})
+	
+	return render(request, 'indicacao.html', context)
 
 def teses(request, tese_id):
 	if tese_id:

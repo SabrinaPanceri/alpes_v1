@@ -1,0 +1,6 @@
+ garson 0.257697% similar leonardo
+ garson 0.129826% similar adriano
+ garson 0.188378% similar fatima
+ leonardo 0.0419447% similar adriano
+ leonardo 0.0551003% similar fatima
+ adriano 0.178594% similar fatima

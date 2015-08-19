@@ -1,0 +1,6 @@
+ caroline 0.26295% similar loren
+ caroline 0.131244% similar luis
+ caroline -0.000989311% similar carolina
+ loren 0.0681643% similar luis
+ loren -0.000161404% similar carolina
+ luis 0.0507975% similar carolina

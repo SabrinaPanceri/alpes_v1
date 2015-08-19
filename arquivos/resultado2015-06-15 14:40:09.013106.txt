@@ -1,0 +1,3 @@
+ rita 0.176916% similar ellen
+ rita 0.424734% similar sheila
+ ellen -0.0731847% similar sheila

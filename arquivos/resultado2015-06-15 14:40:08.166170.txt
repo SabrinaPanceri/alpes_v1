@@ -1,0 +1,10 @@
+ graziella 0.406189% similar ariane
+ graziella 0.146547% similar barbara
+ graziella 0.244838% similar guilherme
+ graziella 0.510781% similar karen
+ ariane 0.0404292% similar barbara
+ ariane 0.16952% similar guilherme
+ ariane 0.26365% similar karen
+ barbara 0.0417614% similar guilherme
+ barbara 0.110491% similar karen
+ guilherme 0.286316% similar karen
