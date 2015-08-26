@@ -2,12 +2,13 @@
 #############################################################################################################
 # Imports necessários
 import HTMLParser
-import re, nltk
+import re
+# import nltk
 from django.db import connection
 from alpes_core.textProcess import removeStopWords
 from nltk.stem import RSLPStemmer
-from nltk.corpus import floresta
-from nltk.probability import FreqDist
+# from nltk.corpus import floresta
+# from nltk.probability import FreqDist
 
 
 

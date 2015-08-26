@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//alpes_core/clusterArgFinal.py=utf-8
 encoding//alpes_core/clusterArgInicial.py=utf-8
+encoding//alpes_core/clusterArgInicial1.py=utf-8
 encoding//alpes_core/clusters.py=utf-8
 encoding//alpes_core/ex_kmeans.py=utf-8
 encoding//alpes_core/ex_lsa.py=utf-8
