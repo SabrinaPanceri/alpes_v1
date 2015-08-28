@@ -2,12 +2,17 @@
 #############################################################################################################
 # Imports necessários
 import HTMLParser
-import re, nltk
+import re, nltk, sys
+import nlpnet
 from django.db import connection
 from alpes_core.textProcess import removeStopWords, stemming
 from nltk.stem import RSLPStemmer
 from nltk.corpus import floresta
 from nltk.probability import FreqDist
+from nltk import word_tokenize as wt
+
+nlpnet.set_data_dir('/home/panceri/nlpnet-data/pos-pt')
+
 
 
 #############################################################################################################
@@ -140,29 +145,73 @@ def clusterArgInicial(idtese):
 # Normalização dos termos
 # Troca de termos similares por um mesmo termo para auxiliar no cálculo de similaridade
 # Experimentos com o Floresta Treebank
+# print "floresta.words()"
 # print floresta.words()
 # 
+# print "floresta.tagged_words()"
 # print floresta.tagged_words()
-# 
+#  
 # def simplify_tag(t):
 #     if "+" in t:
 #         return t[t.index("+")+1:]
 #     else:
 #         return t
-#      
+#       
 # twords = floresta.tagged_words()
 # twords = [(w.lower(), simplify_tag(t)) for (w,t) in twords]
+# print "twords[:10]"
 # print twords[:10]
 # 
+# print"(' '.join(word + '/' + tag for (word, tag) in twords[:10]))" 
 # print(' '.join(word + '/' + tag for (word, tag) in twords[:10]))
-# 
+#  
 # tags = [simplify_tag(tag) for (word,tag) in floresta.tagged_words()]
 # fd = FreqDist(tags)
+# print "fd.keys()[:20]"
 # print fd.keys()[:20]
-# 
+#  
 # psents = floresta.parsed_sents()
-# print floresta.tagged_sents()
+# 
+# # tsents = floresta.tagged_sents()
+# # print "tsents"
+# # print tsents
+# # 
+# # print "mac_morpho"
+# # print nltk.corpus.mac_morpho.words()
+# # 
+# # print "mac_morpho-SENTS"
+# # print nltk.corpus.mac_morpho.sents()
+
+flts = floresta.tagged_sents()
+etip = nltk.UnigramTagger(flts)
+etiq = nltk.BigramTagger(flts)
+etig = nltk.TrigramTagger(flts)
+eti = nltk.NgramTagger(flts)
+
+print "unigrams"
+print(etip.tag(wt("O menino vai para casa")))
+print(etip.tag(wt("O menino casar com a menina")))
+print "bigrams"
+print(etiq.tag(wt("O menino vai para casa")))
+print(etiq.tag(wt("O menino casar com a menina")))
+print "trigrams"
+print(etig.tag(wt("O menino vai para casa")))
+print(etig.tag(wt("O menino casar com a menina")))
+print "Ngrams"
+print(eti.tag(wt("O menino vai para casa")))
+print(eti.tag(wt("O menino casar com a menina")))
+
+
+### PosTagger em Português
+### Funcionando!!!
+
+tagger = nlpnet.POSTagger()
+print "nlpnet"
+print tagger.tag("O menino vai para casa")
+print tagger.tag("O menino casar com a menina")
 
 
 
-    
+
+
+  
