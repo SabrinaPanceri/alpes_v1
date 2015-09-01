@@ -1,19 +1,28 @@
 # -*- coding: utf-8 -*-
 #############################################################################################################
-# Imports necessários
+
+# Imports obrigatorios
 import HTMLParser
-import re, nltk, sys
+import re
 import nlpnet
 from django.db import connection
-from alpes_core.textProcess import removeStopWords, stemming
+from alpes_core.textProcess import removeStopWords
 from nltk.stem import RSLPStemmer
-from nltk.corpus import floresta
-from nltk.probability import FreqDist
-from nltk import word_tokenize as wt
 
+
+# import nltk, sys
+# from alpes_core.textProcess import stemming
+# from nltk.corpus import floresta
+# from nltk.probability import FreqDist
+# from nltk import word_tokenize as wt
+
+
+#############################################################################################################
+### INDICA A BASE DE DADOS PARA FAZER A CLASSIFICACAO SINTATICA
+### USO DO POS TAGGER DA NLPNET
 nlpnet.set_data_dir('/home/panceri/nlpnet-data/pos-pt')
 
-
+#############################################################################################################
 
 #############################################################################################################
 
@@ -27,7 +36,7 @@ nlpnet.set_data_dir('/home/panceri/nlpnet-data/pos-pt')
 ## 3 - Remoção pontuações                                                                                   #
 ## 4 - Remoção de stopwords                                                                                 #
 ## 5 - Stemming                                                                                             #
-## 6 - Normalização (falta desenv)                                                                          #
+## 6 - Normalização (em desenvolvimento)                                                                          #
 #############################################################################################################
 
 ##############################################################################################################
@@ -61,6 +70,10 @@ def clusterArgInicial(idtese):
     sw_tese = []
     sw_posInicial = []
     aux_usu = []
+    
+    #lista com dados pos tagger
+    tag_tese = []
+    tag_posInicial = []
 
     #lista com dados após a aplicação de Stemming
     st_posInicial = []
@@ -97,6 +110,29 @@ def clusterArgInicial(idtese):
 
     for i in posInicial:
         sw_posInicial.append(removeStopWords(i))
+        
+#############################################################################################################
+# Normalização dos termos
+# Troca de termos similares por um mesmo termo para auxiliar no cálculo de similaridade
+# PosTagger NLPNET
+    tagger = nlpnet.POSTagger()
+    
+# 1º classifcar as palavras
+    for i in sw_posInicial:
+        tag_posInicial.append(tagger.tag(i))
+        print tag_posInicial
+        print ""
+    
+    teste = []
+    for i in posInicial:
+        teste.append(tagger.tag(i))
+        print teste
+        print ""
+
+# 2º buscar os sinônimos e substituir
+# integração com o base da wordnet.br
+# http://143.107.183.175:21480/tep2/index.htm
+        
 
 #############################################################################################################
 #Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
@@ -134,7 +170,6 @@ def clusterArgInicial(idtese):
 
 
 
-
 #############################################################################################################
 #retorno da função - usado na views.py para alimentar o template debate.html
 #passar parametros que devem ser apresentados na templates debate.html
@@ -142,73 +177,13 @@ def clusterArgInicial(idtese):
 
 
 #############################################################################################################
-# Normalização dos termos
-# Troca de termos similares por um mesmo termo para auxiliar no cálculo de similaridade
-# Experimentos com o Floresta Treebank
-# print "floresta.words()"
-# print floresta.words()
-# 
-# print "floresta.tagged_words()"
-# print floresta.tagged_words()
-#  
-# def simplify_tag(t):
-#     if "+" in t:
-#         return t[t.index("+")+1:]
-#     else:
-#         return t
-#       
-# twords = floresta.tagged_words()
-# twords = [(w.lower(), simplify_tag(t)) for (w,t) in twords]
-# print "twords[:10]"
-# print twords[:10]
-# 
-# print"(' '.join(word + '/' + tag for (word, tag) in twords[:10]))" 
-# print(' '.join(word + '/' + tag for (word, tag) in twords[:10]))
-#  
-# tags = [simplify_tag(tag) for (word,tag) in floresta.tagged_words()]
-# fd = FreqDist(tags)
-# print "fd.keys()[:20]"
-# print fd.keys()[:20]
-#  
-# psents = floresta.parsed_sents()
-# 
-# # tsents = floresta.tagged_sents()
-# # print "tsents"
-# # print tsents
-# # 
-# # print "mac_morpho"
-# # print nltk.corpus.mac_morpho.words()
-# # 
-# # print "mac_morpho-SENTS"
-# # print nltk.corpus.mac_morpho.sents()
-
-flts = floresta.tagged_sents()
-etip = nltk.UnigramTagger(flts)
-etiq = nltk.BigramTagger(flts)
-etig = nltk.TrigramTagger(flts)
-eti = nltk.NgramTagger(flts)
-
-print "unigrams"
-print(etip.tag(wt("O menino vai para casa")))
-print(etip.tag(wt("O menino casar com a menina")))
-print "bigrams"
-print(etiq.tag(wt("O menino vai para casa")))
-print(etiq.tag(wt("O menino casar com a menina")))
-print "trigrams"
-print(etig.tag(wt("O menino vai para casa")))
-print(etig.tag(wt("O menino casar com a menina")))
-print "Ngrams"
-print(eti.tag(wt("O menino vai para casa")))
-print(eti.tag(wt("O menino casar com a menina")))
 
 
-### PosTagger em Português
-### Funcionando!!!
 
-tagger = nlpnet.POSTagger()
-print "nlpnet"
-print tagger.tag("O menino vai para casa")
-print tagger.tag("O menino casar com a menina")
+
+
+
+
 
 
 
