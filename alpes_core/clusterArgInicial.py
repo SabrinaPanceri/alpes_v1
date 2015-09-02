@@ -6,7 +6,7 @@ import HTMLParser
 import re
 import nlpnet
 from django.db import connection
-from alpes_core.textProcess import removeStopWords
+from alpes_core.textProcess import removeStopWords, removeA, removePontuacao
 from nltk.stem import RSLPStemmer
 
 
@@ -19,8 +19,11 @@ from nltk.stem import RSLPStemmer
 
 #############################################################################################################
 ### INDICA A BASE DE DADOS PARA FAZER A CLASSIFICACAO SINTATICA
-### USO DO POS TAGGER DA NLPNET
-nlpnet.set_data_dir('/home/panceri/nlpnet-data/pos-pt')
+### USO DO POS TAGGER DA NLPNET 
+### COPIAR PARA O SERVIDOR A PASTA NLPNET-DATA
+### COLOCAR CAMINHO CORRETO DENTRO DO SERVIDOR!!!
+#nlpnet.set_data_dir('/home/panceri/nlpnet-data/pos-pt')
+nlpnet.set_data_dir('/home/panceri/nlpnet-data/')
 
 #############################################################################################################
 
@@ -72,7 +75,6 @@ def clusterArgInicial(idtese):
     aux_usu = []
     
     #lista com dados pos tagger
-    tag_tese = []
     tag_posInicial = []
 
     #lista com dados após a aplicação de Stemming
@@ -90,48 +92,70 @@ def clusterArgInicial(idtese):
         tese.append(re.sub('<[^>]*>', '', h.unescape(t[0])).lower())
             
 
-    #Colocando os textos de posicionamento final em numa lista separada
+    #Colocando os textos de posicionamento inicial em numa lista separada
     for i in dados:
         x = 0
         usu.append(i[x].upper())
         posInicial.append(i[x+1].lower()) #lista com o posicionamento Inicial
 
 #############################################################################################################
-#Fases de pré-processamento linguistico
-# - Remoção de stopwords
-# - Troca de caracteres acentuados por caracteres não acentuados
-# - Remoção pontuações
+### Classificacao das palavras de acordo com sua classe gramatical
+### Utilizacao do postagger NLPNET
+### http://nilc.icmc.usp.br/nlpnet/index.html#
+    
+    tagger = nlpnet.POSTagger()
+    
+    semAce_posInicial = [] #armazena o posInicial apenas sem acentos e sem pontuacao
+    
+    for i in posInicial:
+        semAce_posInicial.append(removeA(removePontuacao(i)))
+    
+    for i in semAce_posInicial:
+        tag_posInicial.append(tagger.tag(i))
+
+#############################################################################################################
+### Semantic Role Labeling model 
+### http://www.nilc.icmc.usp.br/nlpnet/models.html#srl-portuguese
+### Marcacao semantica funcionando. Verificar como usar para melhorar os resultados.
+#     srl_tagger = nlpnet.SRLTagger()
+#     auxSrl_PosIni = [] 
+#     srl_PosIni = [] #posicionamento inicial tagueado com SRL 
+#     
+#     for i in posInicial:
+#         auxSrl_PosIni.append(srl_tagger.tag(i))
+#       
+#     for aux in auxSrl_PosIni:
+#         for j in aux:
+#             srl_PosIni.append(j.arg_structures)
+
+#############################################################################################################
+### REMOCAO DE STOPWORDS
+### Remocao dos termos de acordo com a NLTK
+    
     for i in usu:
         aux_usu.append(removeStopWords(i))
 
     for i in tese:
         sw_tese.append(removeStopWords(i))
 
-
     for i in posInicial:
         sw_posInicial.append(removeStopWords(i))
         
+
 #############################################################################################################
 # Normalização dos termos
-# Troca de termos similares por um mesmo termo para auxiliar no cálculo de similaridade
-# PosTagger NLPNET
-    tagger = nlpnet.POSTagger()
-    
-# 1º classifcar as palavras
-    for i in sw_posInicial:
-        tag_posInicial.append(tagger.tag(i))
-        print tag_posInicial
-        print ""
-    
-    teste = []
-    for i in posInicial:
-        teste.append(tagger.tag(i))
-        print teste
-        print ""
-
-# 2º buscar os sinônimos e substituir
-# integração com o base da wordnet.br
+# Troca de termos por seus sinonimos com base na WordNet.BR
 # http://143.107.183.175:21480/tep2/index.htm
+
+
+
+
+
+
+
+
+        
+
         
 
 #############################################################################################################
