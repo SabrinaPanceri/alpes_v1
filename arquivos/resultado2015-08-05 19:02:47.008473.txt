@@ -1,3 +1,0 @@
- garson 0.357045% similar barbara
- garson 0.10901% similar natalia
- barbara 0.374629% similar natalia
