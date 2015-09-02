@@ -8,6 +8,7 @@ import nlpnet
 from django.db import connection
 from alpes_core.textProcess import removeStopWords, removeA, removePontuacao
 from nltk.stem import RSLPStemmer
+from alpes_core.wordnet import normalizacao
 
 
 # import nltk, sys
@@ -112,7 +113,7 @@ def clusterArgInicial(idtese):
     
     for i in semAce_posInicial:
         tag_posInicial.append(tagger.tag(i))
-
+    
 #############################################################################################################
 ### Semantic Role Labeling model 
 ### http://www.nilc.icmc.usp.br/nlpnet/models.html#srl-portuguese
@@ -147,16 +148,18 @@ def clusterArgInicial(idtese):
 # Troca de termos por seus sinonimos com base na WordNet.BR
 # http://143.107.183.175:21480/tep2/index.htm
 
+    #normalizacao("andar")
 
+#CONTINUAR DAQUI
+    #pela tague pegar a palavra e mandar para normalizacao
 
+    for i in range(len(tag_posInicial)):
+        for j in range(len(tag_posInicial[i])):
+            for x in tag_posInicial[i][j]:
+                print x
+                print i
+                print j
 
-
-
-
-
-        
-
-        
 
 #############################################################################################################
 #Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
