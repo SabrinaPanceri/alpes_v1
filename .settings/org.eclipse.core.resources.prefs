@@ -14,5 +14,6 @@ encoding//alpes_core/naoUtilizados/text_process.py=utf-8
 encoding//alpes_core/naoUtilizados/tfidf.py=utf-8
 encoding//alpes_core/textProcess.py=utf-8
 encoding//alpes_core/views.py=utf-8
+encoding//alpes_core/wordnet.py=utf-8
 encoding//alpes_v1/settings.py=utf-8
 encoding//alpes_v1/urls.py=utf-8
