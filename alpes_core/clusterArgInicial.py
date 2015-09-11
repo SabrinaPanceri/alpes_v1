@@ -156,10 +156,15 @@ def clusterArgInicial(idtese):
     for i in range(len(tag_posInicial)):
         for j in range(len(tag_posInicial[i])):
             for x in tag_posInicial[i][j]:
-                print x
-                print i
-                print j
-
+                print x, "x"
+                print x[1], "x[1]"
+                print i, "i"
+                print j, "j"
+                
+                if x[1] == "N":
+                    print x[0],"x[0]"
+                    a = normalizacao(x[0])
+                    print a, "a = termo normalizado"
 
 #############################################################################################################
 #Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa

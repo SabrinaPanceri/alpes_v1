@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#encoding =utf8
 
 import codecs
 
@@ -22,10 +23,12 @@ def normalizacao(termo):
     sinonimo = ""
     
     #abre o arquivo com as relacoes de sinonimia (termos sinonimos) e antonimia (termos contrarios) 
-    base_tep2 = open('/home/panceri/git/alpes_v1/base_tep2/base_tep2.txt', 'r')
+    base_tep2 = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
     
     #variavel com conteúdo do arquivo em memoria
-    arquivo = base_tep2.readlines() 
+    arquivo = base_tep2.readlines()
+    
+    print "arquivo", arquivo
     
     #fechar arquivo
     base_tep2.close()
@@ -33,7 +36,7 @@ def normalizacao(termo):
     #busca termo dentro de arquivo
     for f in arquivo:
         if(f.find(termo)>-1):
-            print f
+            print f, "f"
     
     
     
