@@ -2,7 +2,7 @@
 #encoding =utf8
 
 import codecs
-
+import re
 ##############################################################################################################
 ### A NORMALIZACAO DE TERMOS REFERE-SE A TECNICA DE TROCAR PALAVRAS SINONIMAS, OU SEJA, QUE TENHAM SIGNIFICADO
 ### SEMELHANTE, POR UM UNICO TERMO REPRESENTATIVO NO CORPUS DE ANALISE. DESSA FORMA, É POSSIVEL AUMENTAR O GRAU
@@ -19,31 +19,57 @@ import codecs
 ### NUM2 = NUMERO DA LINHA DE REFERENCIA PARA VERBO ANTONIMO (SENTIDO OPOSTO)
 ##############################################################################################################
 
-def normalizacao(termo):
-    sinonimo = ""
+def normalizacao(termo, etiqueta):
+    
+    
+    sinonimo = []
     
     #abre o arquivo com as relacoes de sinonimia (termos sinonimos) e antonimia (termos contrarios) 
-    base_tep2 = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
+    base_tep = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
     
     #variavel com conteúdo do arquivo em memoria
-    arquivo = base_tep2.readlines()
+    wordNet = base_tep.readlines()
     
-    print "arquivo", arquivo
     
     #fechar arquivo
-    base_tep2.close()
+    base_tep.close()
     
     #busca termo dentro de arquivo
-    for f in arquivo:
-        if(f.find(termo)>-1):
-            print f, "f"
+    if etiqueta == "N":
+        print "ANALISANDO SUBSTANTIVO"
+        print termo, etiqueta
+        for sinonimos in wordNet:
+            if(sinonimos.find("[Substantivo]")>-1): 
+                if(sinonimos.find(termo)>-1):            
+                    print "termo", termo
+                    print "sinonimos por linha", sinonimos
+                    sinonimo.append(sinonimos)
+    elif etiqueta == "ADJ":
+        print "ANALISANDO ADJETIVOS"
+        print termo, etiqueta
+        for sinonimos in wordNet:
+            if(sinonimos.find("[Adjetivo]")>-1): 
+                if(sinonimos.find(termo)>-1):            
+                    print "termo", termo
+                    print "sinonimos por linha", sinonimos
+                    sinonimo.append(sinonimos)
+    elif etiqueta == "V" or etiqueta == "VAUX":
+        print "ANALISANDO VERBOS"
+        print termo, etiqueta
+        for sinonimos in wordNet:
+            if(sinonimos.find("[Verbo]")>-1): 
+                if(sinonimos.find(termo)>-1):            
+                    print "termo", termo
+                    print "sinonimos por linha", sinonimos
+                    sinonimo.append(sinonimos)
+    else:
+        print "ANALISANDO OUTROS -> NPROP, PCP, PDEN"
+        print termo, etiqueta
+        for sinonimos in wordNet: 
+            if(sinonimos.find(termo)>-1):            
+                print "termo", termo
+                print "sinonimos por linha", sinonimos
+                sinonimo.append(sinonimos)
     
-    
-    
-    
-    
-    
-    
-    
-    
+   # print "todos os sinonimos", sinonimo 
     return sinonimo

@@ -62,7 +62,23 @@ def removeStopWords(texto):
                 aux = aux + " " + i
     return aux
 
-                
+
+def limpaCorpus(texto):
+    aux = []
+    
+    etiquetas = ["PDEN","N","V","ADJ","PCP","VAUX"]
+                   
+    for i in range(len(texto)):
+        for j in range(len(texto[i])):
+            if len(texto[i][j][0]) > 2 and texto[i][j][1] in etiquetas:
+                #print texto[i][j]
+                aux.append(texto[i][j])
+    
+    #print "SEM STOPWORDS:", aux
+    
+    return aux
+
+      
 def vetores(texto):
 #     words = palavras.findall(texto)
     words = palavras.tokenize(texto)

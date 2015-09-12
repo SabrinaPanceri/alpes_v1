@@ -6,7 +6,8 @@ import HTMLParser
 import re
 import nlpnet
 from django.db import connection
-from alpes_core.textProcess import removeStopWords, removeA, removePontuacao
+from alpes_core.textProcess import removeStopWords, removeA, removePontuacao,\
+    limpaCorpus
 from nltk.stem import RSLPStemmer
 from alpes_core.wordnet import normalizacao
 
@@ -70,13 +71,14 @@ def clusterArgInicial(idtese):
     dados = []
     tese = []
     
+    #lista com dados pos tagger
+    tag_posInicial = []
+    
     #lista com dados após a remoção das stopwords
     sw_tese = []
     sw_posInicial = []
     aux_usu = []
-    
-    #lista com dados pos tagger
-    tag_posInicial = []
+    sw_tagPosInicial = [] #texto marcado e sem stopwords
 
     #lista com dados após a aplicação de Stemming
     st_posInicial = []
@@ -109,7 +111,8 @@ def clusterArgInicial(idtese):
     semAce_posInicial = [] #armazena o posInicial apenas sem acentos e sem pontuacao
     
     for i in posInicial:
-        semAce_posInicial.append(removeA(removePontuacao(i)))
+        #semAce_posInicial.append(removeA(removePontuacao(i)))
+        semAce_posInicial.append(removePontuacao(i))
     
     for i in semAce_posInicial:
         tag_posInicial.append(tagger.tag(i))
@@ -142,29 +145,37 @@ def clusterArgInicial(idtese):
     for i in posInicial:
         sw_posInicial.append(removeStopWords(i))
         
+    for i in tag_posInicial:
+        sw_tagPosInicial.append(limpaCorpus(i))
+        
 
 #############################################################################################################
 # Normalização dos termos
 # Troca de termos por seus sinonimos com base na WordNet.BR
 # http://143.107.183.175:21480/tep2/index.htm
 
-    #normalizacao("andar")
-
 #CONTINUAR DAQUI
     #pela tague pegar a palavra e mandar para normalizacao
 
-    for i in range(len(tag_posInicial)):
-        for j in range(len(tag_posInicial[i])):
-            for x in tag_posInicial[i][j]:
-                print x, "x"
-                print x[1], "x[1]"
-                print i, "i"
-                print j, "j"
-                
-                if x[1] == "N":
-                    print x[0],"x[0]"
-                    a = normalizacao(x[0])
-                    print a, "a = termo normalizado"
+#     for i in range(len(tag_posInicial)):
+#         for j in range(len(tag_posInicial[i])):
+#             for x in tag_posInicial[i][j]:
+#                 #print x, "x"
+#                 #print x[1], "x[1]"
+#                 #print i, "i"
+#                 #print j, "j"
+#                 
+#                 ## Excluir: ART, NUM, 
+#                 
+#                 if x[1] != "ART":
+#                  #   print x[0],"x[0]"
+#                     normalizacao(x[0])
+
+    for texto in sw_tagPosInicial:
+        print len(texto)
+        for termo in texto:
+            normalizacao(termo[0], termo[1])
+        
 
 #############################################################################################################
 #Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
