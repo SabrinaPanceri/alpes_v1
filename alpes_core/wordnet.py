@@ -3,6 +3,7 @@
 
 import codecs
 import re
+
 ##############################################################################################################
 ### A NORMALIZACAO DE TERMOS REFERE-SE A TECNICA DE TROCAR PALAVRAS SINONIMAS, OU SEJA, QUE TENHAM SIGNIFICADO
 ### SEMELHANTE, POR UM UNICO TERMO REPRESENTATIVO NO CORPUS DE ANALISE. DESSA FORMA, É POSSIVEL AUMENTAR O GRAU
@@ -20,30 +21,56 @@ import re
 ##############################################################################################################
 
 def normalizacao(termo, etiqueta):
-    
-    
     sinonimo = []
     
     #abre o arquivo com as relacoes de sinonimia (termos sinonimos) e antonimia (termos contrarios) 
     base_tep = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
     
     #variavel com conteúdo do arquivo em memoria
+    #não imprimir essa variável!!!
     wordNet = base_tep.readlines()
-    
     
     #fechar arquivo
     base_tep.close()
+    
+    dicSin = {}
+    
+#     teste = "ser"
+#          
+#     for i in range(len(wordNet)):
+#         if teste in wordNet[i]:
+#             print wordNet[i].split()
+     
+    
+    if etiqueta == "N":
+        print "ANALISANDO SUBSTANTIVO 1"
+        print termo, etiqueta
+        for sinonimos in wordNet:
+            if(sinonimos.find("[Substantivo]")>=0):
+                if(sinonimos.find(termo)>=0):            
+                    print "termo", termo
+                    print "sinonimos por linha", sinonimos
+                    print "split", sinonimos
+                    
+                    dicSin[termo] = sinonimo.append(sinonimos)  
+                    
+                    #sinonimo.append(sinonimos)
+                    print "dicSin", dicSin
+                    #exit()
+    
+    
     
     #busca termo dentro de arquivo
     if etiqueta == "N":
         print "ANALISANDO SUBSTANTIVO"
         print termo, etiqueta
         for sinonimos in wordNet:
-            if(sinonimos.find("[Substantivo]")>-1): 
-                if(sinonimos.find(termo)>-1):            
+            if(sinonimos.find("[Substantivo]")>=0):
+                if(sinonimos.find(termo)>=0):            
                     print "termo", termo
                     print "sinonimos por linha", sinonimos
                     sinonimo.append(sinonimos)
+                    #exit()
     elif etiqueta == "ADJ":
         print "ANALISANDO ADJETIVOS"
         print termo, etiqueta

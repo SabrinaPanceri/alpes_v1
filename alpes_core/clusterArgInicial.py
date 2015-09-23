@@ -172,7 +172,7 @@ def clusterArgInicial(idtese):
 #                     normalizacao(x[0])
 
     for texto in sw_tagPosInicial:
-        print len(texto)
+        #print len(texto)
         for termo in texto:
             normalizacao(termo[0], termo[1])
         
