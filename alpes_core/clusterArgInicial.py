@@ -171,10 +171,14 @@ def clusterArgInicial(idtese):
 #                  #   print x[0],"x[0]"
 #                     normalizacao(x[0])
 
+    dicSin = {}
+
     for texto in sw_tagPosInicial:
         #print len(texto)
         for termo in texto:
-            normalizacao(termo[0], termo[1])
+            normalizacao(dicSin,termo[0], termo[1])
+    
+    print "dicSin", dicSin
         
 
 #############################################################################################################

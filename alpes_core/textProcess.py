@@ -27,9 +27,10 @@ def similaridadeCossenos(text1, text2):
 
 
 def removePontuacao(texto):
-    aux = texto.lower().replace(',',' ').replace('.',' ').replace('-',' ').replace('(',' ').\
-    replace(')',' ').replace('?',' ').replace('!',' ').replace('[',' ').replace(']',' ').replace(':',' ').\
-    replace('/',' ').replace('\r',' ').replace('\n',' ').replace('\t',' ').replace('=',' ').replace('"',' ')
+    aux = texto.lower().replace(',','').replace('.','').replace('-','').replace('(','')
+    aux = aux.replace(')','').replace('?','').replace('!','').replace('[','').replace(']','')
+    aux = aux.replace(':','').replace('/','').replace('\r','').replace('\n','').replace('\t','')
+    aux = aux.replace('=','').replace('"','').replace('{','').replace('}','')
     return aux
 
 def removeA(texto):
