@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.db import connection
 
 from alpes_core.models import Tese
-from alpes_core.clusterArgFinal import clusterArgFinal
+from alpes_core import clusterArgFinal
 from alpes_core.clusterArgInicial import clusterArgInicial
 from alpes_core.clusters import clusters
 

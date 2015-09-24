@@ -6,8 +6,7 @@ import HTMLParser
 import re
 import nlpnet
 from django.db import connection
-from alpes_core.textProcess import removeStopWords, removeA, removePontuacao,\
-    limpaCorpus
+from alpes_core.textProcess import removeStopWords, removePontuacao, limpaCorpus
 from nltk.stem import RSLPStemmer
 from alpes_core.wordnet import normalizacao
 

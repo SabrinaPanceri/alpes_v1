@@ -1,5 +1,5 @@
 # # -*- coding: utf-8 -*-
-
+ 
 #lógia do algoritmo de tf-idf e cosine similarity
 # from sklearn.feature_extraction.text import TfidfTransformer
 # from sklearn.metrics.pairwise import cosine_similarity

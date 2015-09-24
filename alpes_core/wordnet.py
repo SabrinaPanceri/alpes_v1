@@ -3,7 +3,7 @@
 
 import codecs
 import re
-from unicodedata import normalize
+from alpes_core.textProcess import removeA
 
 
 ##############################################################################################################
@@ -44,7 +44,7 @@ def normalizacao(dicSin, termo, etiqueta):
                 if(sinonimos.find(termo)>=0): 
                     aux1 = re.findall('{[^}]*}', sinonimos)
                     for a in aux1:
-                        auxi = normalize('NFKD', a).encode('UTF8','ignore').decode('UTF8')
+                        auxi = removeA(a)
                         b = auxi.split()
                         for palavra in b:
                             palavra1 = str(palavra)
@@ -61,7 +61,7 @@ def normalizacao(dicSin, termo, etiqueta):
                 if(sinonimos.find(termo)>=0):
                     aux1 = re.findall('{[^}]*}', sinonimos)
                     for a in aux1:
-                        auxi = normalize('NFKD', a).encode('UTF8','ignore').decode('UTF8')
+                        auxi = removeA(a)
                         b = auxi.split()
                         for palavra in b:
                             palavra1 = str(palavra)
@@ -78,7 +78,7 @@ def normalizacao(dicSin, termo, etiqueta):
                 if(sinonimos.find(termo)>=0):            
                     aux1 = re.findall('{[^}]*}', sinonimos)
                     for a in aux1:
-                        auxi = normalize('NFKD', a).encode('UTF8','ignore').decode('UTF8')
+                        auxi = removeA(a)
                         b = auxi.split()
                         for palavra in b:
                             palavra1 = str(palavra)
@@ -93,7 +93,7 @@ def normalizacao(dicSin, termo, etiqueta):
             if(sinonimos.find(termo)>=0):            
                 aux1 = re.findall('{[^}]*}', sinonimos)
                 for a in aux1:
-                    auxi = normalize('NFKD', a).encode('UTF8','ignore').decode('UTF8')
+                    auxi = removeA(a)
                     b = auxi.split()
                     for palavra in b:
                         palavra1 = str(palavra)
