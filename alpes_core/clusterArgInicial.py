@@ -156,20 +156,6 @@ def clusterArgInicial(idtese):
 #CONTINUAR DAQUI
     #pela tague pegar a palavra e mandar para normalizacao
 
-#     for i in range(len(tag_posInicial)):
-#         for j in range(len(tag_posInicial[i])):
-#             for x in tag_posInicial[i][j]:
-#                 #print x, "x"
-#                 #print x[1], "x[1]"
-#                 #print i, "i"
-#                 #print j, "j"
-#                 
-#                 ## Excluir: ART, NUM, 
-#                 
-#                 if x[1] != "ART":
-#                  #   print x[0],"x[0]"
-#                     normalizacao(x[0])
-
     dicSin = {}
 
     for texto in sw_tagPosInicial:
@@ -177,7 +163,7 @@ def clusterArgInicial(idtese):
         for termo in texto:
             normalizacao(dicSin,termo[0], termo[1])
     
-    print "dicSin", dicSin
+#     print "dicSin", dicSin
         
 
 #############################################################################################################

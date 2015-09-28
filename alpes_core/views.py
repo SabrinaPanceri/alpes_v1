@@ -207,6 +207,7 @@ def posInicial(request, debate_id):
 	#Utilizando LSA
 	
 	base_treinamento = codecs.open('/home/panceri/git/alpes_v1/arquivos/baseTreinamento.txt', 'r', 'UTF8')
+	##trocar caminho quando colocar no servidor!!!
 	
 	treinamento = [removeA(removePontuacao(i)) for i in base_treinamento]
 	base_treinamento.close()
@@ -262,7 +263,7 @@ def posInicial(request, debate_id):
 
 # Para n_cluster = 6
  	grupos = tfIdf_Kmeans(st_posInicial, 6)
-	print grupos
+# 	print grupos
 
 	grupo1 = []
 	grupo2 = []
@@ -380,30 +381,30 @@ def posInicial(request, debate_id):
 			num2 = ind_aux[x]
 			cos.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-			print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			print "euc", euc
+# 			print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+# 			print "euc", euc
 
 	simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
-	print "simLSA"
-	pprint(sorted(simLSA, reverse=True))
+# 	print "simLSA"
+# 	pprint(sorted(simLSA, reverse=True))
 
 	simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
-	print "simLSA1"
-	pprint(sorted(simLSA1, reverse=True))
-	print "cos",cos
-	print "len_cos",len(cos)
+# 	print "simLSA1"
+# 	pprint(sorted(simLSA1, reverse=True))
+# 	print "cos",cos
+# 	print "len_cos",len(cos)
 	sum_cos = 0
 
-	if len(cos) != 0:
-		for i in cos:
-			sum_cos = i + sum_cos
-
-		print "media = ", sum_cos / len(cos)
-	else:
-		print "sem média"
+# 	if len(cos) != 0:
+# 		for i in cos:
+# 			sum_cos = i + sum_cos
+# 
+# 		print "media = ", sum_cos / len(cos)
+# 	else:
+# 		print "sem média"
 
 ##########################################################################################
-	print "grupo 2", len(grupo2)
+# 	print "grupo 2", len(grupo2)
 	cos2 = []
 	lsaPosIni = []
 	lsaUsu =[]
@@ -419,34 +420,34 @@ def posInicial(request, debate_id):
 			cos2.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
 # 			print aux_usu[num1],aux_usu[num2]
-			print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			print "euc", euc
-	print "cos",cos2
-	print "len_cos",len(cos2)
+# 			print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+# 			print "euc", euc
+# 	print "cos",cos2
+# 	print "len_cos",len(cos2)
 	simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
-	print "simLSA"
-	pprint(sorted(simLSA, reverse=True))
+# 	print "simLSA"
+# 	pprint(sorted(simLSA, reverse=True))
 
 	simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
-	print "simLSA1"
-	pprint(sorted(simLSA1, reverse=True))
+# 	print "simLSA1"
+# 	pprint(sorted(simLSA1, reverse=True))
 
 
-	sum_cos = 0
-	if len(cos2) != 0:
-		for i in cos2:
-			sum_cos = i + sum_cos
-		print "media = ", sum_cos / len(cos2)
-	else:
-		print "sem média"
+# 	sum_cos = 0
+# 	if len(cos2) != 0:
+# 		for i in cos2:
+# 			sum_cos = i + sum_cos
+# 		print "media = ", sum_cos / len(cos2)
+# 	else:
+# 		print "sem média"
 
 ##########################################################################################	
-	print "grupo 3", len(grupo3)
+# 	print "grupo 3", len(grupo3)
 	cos3 = []	
 	lsaPosIni = []
 	lsaUsu =[]
-	print lsaPosIni
-	print lsaUsu
+# 	print lsaPosIni
+# 	print lsaUsu
 
 	for y in range(len(ind_aux3)):
 		lsaPosIni.append(posIni[ind_aux3[y]])
@@ -457,30 +458,30 @@ def posInicial(request, debate_id):
 			cos3.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
 # 			print aux_usu[num1],aux_usu[num2]
-			print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			print "euc", euc
+# 			print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+# 			print "euc", euc
 
-	print "cos",cos3
-	print "len_cos",len(cos3)
+# 	print "cos",cos3
+# 	print "len_cos",len(cos3)
 
 	simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
-	print "simLSA"
-	pprint(sorted(simLSA, reverse=True))
+# 	print "simLSA"
+# 	pprint(sorted(simLSA, reverse=True))
 
 	simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
-	print "simLSA1"
-	pprint(sorted(simLSA1, reverse=True))
+# 	print "simLSA1"
+# 	pprint(sorted(simLSA1, reverse=True))
 
-	sum_cos = 0
-	if len(cos3) != 0:
-		for i in cos3:
-			sum_cos = i + sum_cos
-		print "media = ", sum_cos / len(cos3)
-	else:
-		print "sem média"
+# 	sum_cos = 0
+# 	if len(cos3) != 0:
+# 		for i in cos3:
+# 			sum_cos = i + sum_cos
+# 		print "media = ", sum_cos / len(cos3)
+# 	else:
+# 		print "sem média"
 
 ##########################################################################################
-	print "grupo 4", len(grupo4)
+# 	print "grupo 4", len(grupo4)
 	cos4 = []
 	lsaPosIni = []
 	lsaUsu =[]
@@ -495,35 +496,35 @@ def posInicial(request, debate_id):
 			cos4.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
 # 			print aux_usu[num1],aux_usu[num2]
-			print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			print "euc", euc
+# 			print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+# 			print "euc", euc
  
-	print "cos",cos4
-	print "len_cos",len(cos4)
+# 	print "cos",cos4
+# 	print "len_cos",len(cos4)
 	simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
-	print "simLSA"
-	pprint(sorted(simLSA, reverse=True))
+# 	print "simLSA"
+# 	pprint(sorted(simLSA, reverse=True))
  
 	simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
-	print "simLSA1"
-	pprint(sorted(simLSA1, reverse=True))
+# 	print "simLSA1"
+# 	pprint(sorted(simLSA1, reverse=True))
  
-	sum_cos = 0
-	if len(cos4) != 0:
-		for i in cos4:
-			sum_cos = i + sum_cos
-		print "media = ", sum_cos / len(cos4)
-	else:
-		print "sem média"
+# 	sum_cos = 0
+# 	if len(cos4) != 0:
+# 		for i in cos4:
+# 			sum_cos = i + sum_cos
+# 		print "media = ", sum_cos / len(cos4)
+# 	else:
+# 		print "sem média"
 
 
 ##########################################################################################	
-	print "grupo 5", len(grupo5)
+# 	print "grupo 5", len(grupo5)
 	cos5 = []
 	lsaPosIni = []
 	lsaUsu =[]
-	print lsaPosIni
-	print lsaUsu
+# 	print lsaPosIni
+# 	print lsaUsu
  
 	for y in range(len(ind_aux5)):
 		lsaPosIni.append(posIni[ind_aux5[y]])
@@ -534,29 +535,29 @@ def posInicial(request, debate_id):
 			cos5.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
 # 			print aux_usu[num1],aux_usu[num2]
-			print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			print "euc", euc
+# 			print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+# 			print "euc", euc
  
-	print "cos",cos5
-	print "len_cos", len(cos5)
+# 	print "cos",cos5
+# 	print "len_cos", len(cos5)
 	simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
-	print "simLSA"
-	pprint(sorted(simLSA, reverse=True))
+# 	print "simLSA"
+# 	pprint(sorted(simLSA, reverse=True))
  
 	simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
-	print "simLSA1"
-	pprint(sorted(simLSA1, reverse=True))
+# 	print "simLSA1"
+# 	pprint(sorted(simLSA1, reverse=True))
  
-	sum_cos = 0
-	if len(cos5) != 0:
-		for i in cos5:
-			sum_cos = i + sum_cos
-		print "media = ", sum_cos / len(cos5)
-	else:
-		print "sem média"
+# 	sum_cos = 0
+# 	if len(cos5) != 0:
+# 		for i in cos5:
+# 			sum_cos = i + sum_cos
+# 		print "media = ", sum_cos / len(cos5)
+# 	else:
+# 		print "sem média"
 
 ##########################################################################################
-	print "grupo 6", len(grupo6)
+# 	print "grupo 6", len(grupo6)
 	cos6 = []
 	cos5 = []
 	lsaPosIni = []
@@ -571,26 +572,26 @@ def posInicial(request, debate_id):
 			cos6.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
 			euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
 # 			print aux_usu[num1],aux_usu[num2]
-			print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-			print "euc", euc
+# 			print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+# 			print "euc", euc
  
-	print "cos",cos6
-	print "len_cos",len(cos6)
+# 	print "cos",cos6
+# 	print "len_cos",len(cos6)
 	simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
-	print "simLSA"
-	pprint(sorted(simLSA, reverse=True))
+# 	print "simLSA"
+# 	pprint(sorted(simLSA, reverse=True))
  
 	simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
-	print "simLSA1"
-	pprint(sorted(simLSA1, reverse=True))
+# 	print "simLSA1"
+# 	pprint(sorted(simLSA1, reverse=True))
  
-	sum_cos = 0
-	if len(cos6) != 0:
-		for i in cos6:
-			sum_cos = i + sum_cos
-		print "media = ", sum_cos / len(cos6)
-	else:
-		print "sem média"
+# 	sum_cos = 0
+# 	if len(cos6) != 0:
+# 		for i in cos6:
+# 			sum_cos = i + sum_cos
+# 		print "media = ", sum_cos / len(cos6)
+# 	else:
+# 		print "sem média"
 
 
 ##########################################################################################
