@@ -1,0 +1,21 @@
+ carlos pedro 0.48181% similar loren
+ carlos pedro 0.454046% similar luis
+ carlos pedro 0.326674% similar cauaa
+ carlos pedro 0.464393% similar ellen
+ carlos pedro 0.29973% similar fatima
+ carlos pedro 0.503296% similar carolina
+ loren 0.221616% similar luis
+ loren 0.323739% similar cauaa
+ loren 0.285771% similar ellen
+ loren 0.135931% similar fatima
+ loren 0.132833% similar carolina
+ luis 0.148943% similar cauaa
+ luis 0.190665% similar ellen
+ luis 0.22887% similar fatima
+ luis 0.191345% similar carolina
+ cauaa 0.35805% similar ellen
+ cauaa 0.281203% similar fatima
+ cauaa 0.113172% similar carolina
+ ellen 0.404623% similar fatima
+ ellen 0.30456% similar carolina
+ fatima 0.157018% similar carolina

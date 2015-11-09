@@ -3,7 +3,8 @@
 
 import codecs
 import re
-from alpes_core.textProcess import removeA
+from alpes_core.textProcess import removeA, removePontuacao
+from pprint import pprint
 
 
 ##############################################################################################################
@@ -23,84 +24,72 @@ from alpes_core.textProcess import removeA
 ##############################################################################################################
 
 def normalizacao(dicSin, termo, etiqueta):
+    #variáveis locais
     sinonimo = []
+    SA_wordnet = []
+    aux = []
+    
     #abre o arquivo com as relacoes de sinonimia (termos sinonimos) e antonimia (termos contrarios) 
     base_tep = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
+    
     #variavel com conteúdo do arquivo em memoria
-    #não imprimir essa variável!!!
+    #não imprimir essa variável, MUITO GRANDEE!!!
     wordNet = base_tep.readlines()
-    #fechar arquivo
+    
+    #fechar arquivo 
     base_tep.close()
-    aux = []
+    
+    #retirar acentos da base
+    for i in wordNet:
+        SA_wordnet.append(removeA(i))
         
     # busca termo dentro de arquivo
     # armazena termo como chave do dicionario
     # os sinonimos são armazenados como uma lista
     if etiqueta == "N":
-#         print "ANALISANDO SUBSTANTIVO"
-#         print termo, etiqueta
-        for sinonimos in wordNet:
+        for sinonimos in SA_wordnet:
             if(sinonimos.find("[Substantivo]")>=0):
                 if(sinonimos.find(termo)>=0): 
                     aux1 = re.findall('{[^}]*}', sinonimos)
                     for a in aux1:
-                        auxi = removeA(a)
-                        b = auxi.split()
-                        for palavra in b:
-                            palavra1 = str(palavra)
-                            term = re.compile(termo)
-                            if term.match(palavra1) is not None:
-                                aux.append(b)
+                        auxN = removePontuacao(a)
+                        b = auxN.split()
+                        if termo in b:
+                            aux.append(b)
         dicSin[termo] = aux
-        
+
     elif etiqueta == "ADJ":
-#         print "ANALISANDO ADJETIVOS"
-#         print termo, etiqueta
         for sinonimos in wordNet:
             if(sinonimos.find("[Adjetivo]")>=0):
                 if(sinonimos.find(termo)>=0):
                     aux1 = re.findall('{[^}]*}', sinonimos)
                     for a in aux1:
-                        auxi = removeA(a)
-                        b = auxi.split()
-                        for palavra in b:
-                            palavra1 = str(palavra)
-                            term = re.compile(termo)
-                            if term.match(palavra1) is not None:
-                                aux.append(b)
+                        auxAD = removePontuacao(a)
+                        b = auxAD.split()
+                        if termo in b:
+                            aux.append(b)
         dicSin[termo] = aux
-        
+         
     elif etiqueta == "V" or etiqueta == "VAUX":
-#         print "ANALISANDO VERBOS"
-#         print termo, etiqueta
         for sinonimos in wordNet:
             if(sinonimos.find("[Verbo]")>=0):
                 if(sinonimos.find(termo)>=0):            
                     aux1 = re.findall('{[^}]*}', sinonimos)
                     for a in aux1:
-                        auxi = removeA(a)
-                        b = auxi.split()
-                        for palavra in b:
-                            palavra1 = str(palavra)
-                            term = re.compile(termo)
-                            if term.match(palavra1) is not None:
-                                aux.append(b)
+                        auxV = removePontuacao(removeA(a))
+                        b = auxV.split()
+                        if termo in b:
+                            aux.append(b)
         dicSin[termo] = aux
     else:
-#         print "ANALISANDO OUTROS -> NPROP, PCP, PDEN"
-#         print termo, etiqueta
         for sinonimos in wordNet: 
             if(sinonimos.find(termo)>=0):            
                 aux1 = re.findall('{[^}]*}', sinonimos)
                 for a in aux1:
-                    auxi = removeA(a)
-                    b = auxi.split()
-                    for palavra in b:
-                        palavra1 = str(palavra)
-                        term = re.compile(termo)
-                        if term.match(palavra1) is not None:
+                    auxO = removePontuacao(removeA(a))
+                    b = auxO.split()
+                    if termo in b:
                             aux.append(b)
         dicSin[termo] = aux
-     
-#     print "todos os sinonimos", sinonimo 
+ 
     return sinonimo

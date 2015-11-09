@@ -3,12 +3,15 @@
 
 # Imports obrigatorios
 import HTMLParser
+import codecs
 import re
 import nlpnet
 from django.db import connection
-from alpes_core.textProcess import removeStopWords, removePontuacao, limpaCorpus
+from alpes_core.textProcess import removeStopWords, removePontuacao, limpaCorpus,\
+    removeEndWeb, removeA, removeNum
 from nltk.stem import RSLPStemmer
 from alpes_core.wordnet import normalizacao
+from pprint import pprint
 
 
 # import nltk, sys
@@ -107,15 +110,17 @@ def clusterArgInicial(idtese):
     
     tagger = nlpnet.POSTagger()
     
-    semAce_posInicial = [] #armazena o posInicial apenas sem acentos e sem pontuacao
+    #armazena o posInicial apenas sem acentos, sem pontuações, sem endereço web e sem numeros
+    semAce_posInicial = [] 
     
     for i in posInicial:
-        #semAce_posInicial.append(removeA(removePontuacao(i)))
-        semAce_posInicial.append(removePontuacao(i))
+        semAce_posInicial.append(removeEndWeb(removePontuacao(removeA(removeNum(i)))))
+        #semAce_posInicial.append(removePontuacao(i))
+    #print semAce_posInicial
     
     for i in semAce_posInicial:
         tag_posInicial.append(tagger.tag(i))
-    
+
 #############################################################################################################
 ### Semantic Role Labeling model 
 ### http://www.nilc.icmc.usp.br/nlpnet/models.html#srl-portuguese
@@ -134,6 +139,7 @@ def clusterArgInicial(idtese):
 #############################################################################################################
 ### REMOCAO DE STOPWORDS
 ### Remocao dos termos de acordo com a NLTK
+### Remocao dos termos classificados como artigos, verbos, adjetivos, etc...
     
     for i in usu:
         aux_usu.append(removeStopWords(i))
@@ -146,8 +152,10 @@ def clusterArgInicial(idtese):
         
     for i in tag_posInicial:
         sw_tagPosInicial.append(limpaCorpus(i))
-        
-
+    
+#     pprint(sw_tagPosInicial)
+#     print len(sw_tagPosInicial)
+    
 #############################################################################################################
 # Normalização dos termos
 # Troca de termos por seus sinonimos com base na WordNet.BR
@@ -159,9 +167,22 @@ def clusterArgInicial(idtese):
     dicSin = {}
 
     for texto in sw_tagPosInicial:
-        #print len(texto)
+#         pprint(texto)
         for termo in texto:
+#             print "termo"
+#             pprint(termo)
             normalizacao(dicSin,termo[0], termo[1])
+    
+#     dicionario = codecs.open("/home/panceri/git/alpes_v1/arquivos/dicionario.txt", "w","UTF8")
+
+    pprint(dicSin.items())
+    
+#     for i in range(len(dicSin)):
+# #         print dicSin.items()
+#         dicionario.writelines(dicSin.items().__str__())
+#     exit()
+    
+#     dicionario.close()
     
 #     print "dicSin", dicSin
         

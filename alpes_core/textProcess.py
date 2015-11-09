@@ -27,10 +27,17 @@ def similaridadeCossenos(text1, text2):
 
 
 def removePontuacao(texto):
-    aux = texto.lower().replace(',','').replace('.','').replace('-','').replace('(','')
+    aux = texto.lower().replace(',',' ').replace('.',' ').replace('(','')
     aux = aux.replace(')','').replace('?','').replace('!','').replace('[','').replace(']','')
-    aux = aux.replace(':','').replace('/','').replace('\r','').replace('\n','').replace('\t','')
-    aux = aux.replace('=','').replace('"','').replace('{','').replace('}','')
+    aux = aux.replace(':',' ').replace('/',' ').replace('\r','').replace('\n','').replace('\t','')
+    aux = aux.replace('=',' ').replace('"',' ').replace('{','').replace('}','')
+    aux = aux.replace("'",' ').replace('`',' ').replace('http',' ')
+    return aux
+
+def removeNum(texto):
+    aux = texto.lower().replace('1','').replace('2','').replace('3','').replace('4','')
+    aux = aux.replace('5','').replace('6','').replace('7','').replace('8','').replace('9','')
+    aux = aux.replace('0','')
     return aux
 
 def removeA(texto):
@@ -64,6 +71,11 @@ def removeStopWords(texto):
     return aux
 
 
+
+#### REMOÇÃO DAS PALAVRAS CLASSIFICADAS
+#### COMO ARTIGOS, PREPOSIÇÕES, ETC...
+#### DEIXE NO CORPUS DE ANÁLISE APENAS OS TERMOS RELEVANTES:
+#### ADJETIVOS, VERBOS AUXILIARES, SUBSTANTIVOS, VERBOS,
 def limpaCorpus(texto):
     aux = []
     
@@ -72,14 +84,20 @@ def limpaCorpus(texto):
     for i in range(len(texto)):
         for j in range(len(texto[i])):
             if len(texto[i][j][0]) > 2 and texto[i][j][1] in etiquetas:
-                #print texto[i][j]
+#                 print texto[i][j]
                 aux.append(texto[i][j])
     
-    #print "SEM STOPWORDS:", aux
+#     print "SEM STOPWORDS:", aux
     
     return aux
 
-      
+
+def removeEndWeb(textoHttp):
+    auxHttp = re.sub(r'^http?:\/\/.*[\r\n]*', '', textoHttp)
+    
+    return auxHttp
+
+  
 def vetores(texto):
 #     words = palavras.findall(texto)
     words = palavras.tokenize(texto)
