@@ -162,15 +162,22 @@ def clusterArgInicial(idtese):
 # http://143.107.183.175:21480/tep2/index.htm
 
 #CONTINUAR DAQUI
-    #pela tague pegar a palavra e mandar para normalizacao
+    # pela tague pegar a palavra e mandar para normalizacao - OK
+    # ao achar a palavra, pegar todas as outras (sinonimas) e ligar a essa palavra. 
+    # ver qual estrutura fica melhor neste caso, se árvore ou matriz n-dimensional
+    # retirar plurais ou fazer busca na base_tep pelos radicais
 
     dicSin = {}
 
+    #FAZER TESTE COM TERMO NA FORMA DE RADICAL
+    
+    
+    
     for texto in sw_tagPosInicial:
-        pprint(texto)
+#         pprint(texto)
         for termo in texto:
-            print "termo"
-            pprint(termo)
+#             print "termo"
+#             pprint(termo)
             normalizacao(dicSin,termo[0], termo[1])
     
 #     dicionario = codecs.open("/home/panceri/git/alpes_v1/arquivos/dicionario.txt", "w","UTF8")

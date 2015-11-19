@@ -3,8 +3,9 @@
 
 import codecs
 import re
-from alpes_core.textProcess import removeA, removePontuacao
+from alpes_core.textProcess import removeA, removePontuacao, stemming
 from pprint import pprint
+from nltk import RSLPStemmer
 
 
 ##############################################################################################################
@@ -19,8 +20,8 @@ from pprint import pprint
 ### FORMATO DO ARQUIVO
 ### NUM1. [Tipo] {termos sinonimos} <NUM2>
 ### 263. [Verbo] {consentir, deixar, permitir} <973>
-### NUM1 = NUMERO DA LINHA DE REFERENCIA PARA VERBO SINONIMO
-### NUM2 = NUMERO DA LINHA DE REFERENCIA PARA VERBO ANTONIMO (SENTIDO OPOSTO)
+### NUM1 = NUMERO DA LINHA DE REFERENCIA PARA TERMO SINONIMO
+### NUM2 = NUMERO DA LINHA DE REFERENCIA PARA TERMO ANTONIMO (SENTIDO OPOSTO)
 ##############################################################################################################
 
 def normalizacao(dicSin, termo, etiqueta):
@@ -42,7 +43,10 @@ def normalizacao(dicSin, termo, etiqueta):
     #retirar acentos da base
     for i in wordNet:
         SA_wordnet.append(removeA(i))
-        
+    
+    #teste com busca pelo radical (stemmer)
+    radicais = RSLPStemmer()
+
     # busca termo dentro de arquivo
     # armazena termo como chave do dicionario
     # os sinonimos são armazenados como uma lista
@@ -53,9 +57,13 @@ def normalizacao(dicSin, termo, etiqueta):
                     aux1 = re.findall('{[^}]*}', sinonimos)
                     for a in aux1:
                         auxN = removePontuacao(a)
-                        b = auxN.split()
-                        if termo in b:
-                            aux.append(b)
+                        for b in auxN.split():                            
+                            if b in auxN:
+                            #teste com busca pelo radical (stemmer)
+                                aux.append(radicais.stem(b))
+        
+        print "termo", termo
+        print "aux", aux
         dicSin[termo] = aux
 
     elif etiqueta == "ADJ":
