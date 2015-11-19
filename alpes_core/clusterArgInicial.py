@@ -167,23 +167,24 @@ def clusterArgInicial(idtese):
     dicSin = {}
 
     for texto in sw_tagPosInicial:
-#         pprint(texto)
+        pprint(texto)
         for termo in texto:
-#             print "termo"
-#             pprint(termo)
+            print "termo"
+            pprint(termo)
             normalizacao(dicSin,termo[0], termo[1])
     
 #     dicionario = codecs.open("/home/panceri/git/alpes_v1/arquivos/dicionario.txt", "w","UTF8")
-
+# 
     pprint(dicSin.items())
-    
+#     print dicSin
+#     
 #     for i in range(len(dicSin)):
 # #         print dicSin.items()
 #         dicionario.writelines(dicSin.items().__str__())
 #     exit()
-    
+#       
 #     dicionario.close()
-    
+#       
 #     print "dicSin", dicSin
         
 

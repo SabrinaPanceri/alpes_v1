@@ -1,3 +1,0 @@
- caroline 0.408744% similar leonardo
- caroline 0.308905% similar adriano
- leonardo 0.196591% similar adriano
