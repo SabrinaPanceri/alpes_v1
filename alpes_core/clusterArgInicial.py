@@ -44,7 +44,7 @@ nlpnet.set_data_dir('/home/panceri/nlpnet-data/')
 ## 3 - Remoção pontuações                                                                                   #
 ## 4 - Remoção de stopwords                                                                                 #
 ## 5 - Stemming                                                                                             #
-## 6 - Normalização (em desenvolvimento)                                                                          #
+## 6 - Normalização (em finalizacao!)                                                                       #
 #############################################################################################################
 
 ##############################################################################################################
@@ -82,12 +82,17 @@ def clusterArgInicial(idtese):
     sw_posInicial = []
     aux_usu = []
     sw_tagPosInicial = [] #texto marcado e sem stopwords
-    st_tagPosInicial = [] #texto marcado, sem stopwords e com stemmer aplicado
 
 
     #lista com dados após a aplicação de Stemming
     st_posInicial = []
     st_tese = []
+    st_tagPosInicial = [] #texto marcado, sem stopwords e com stemmer aplicado
+    
+#############################################################################################################    
+    #DICIONÁRIO COM OS TERMOS NA FORMA DA RADICAL E RELACIONADOS AO NUMERO DA LINHA DOS SINONIMOS COM BASE
+    # NO ARQUIVO DA WORDNET
+    dicSin = {}
       
 
 #############################################################################################################    
@@ -194,7 +199,6 @@ def clusterArgInicial(idtese):
 ## FALTA FAZER: 
 # SUBSTITUIR OS TERMOS POR UM NÚMERO DE REFERÊNCIA PARA FAZER A COMPARAÇÃO COM BASE NOS NÚMEROS E NÃO NAS STRINGS
     
-    dicSin = {}
 
     for texto in st_tagPosInicial:
         for termo in texto:
@@ -236,7 +240,7 @@ def clusterArgInicial(idtese):
 #############################################################################################################
 #retorno da função - usado na views.py para alimentar o template debate.html
 #passar parametros que devem ser apresentados na templates debate.html
-    return [st_tese, posInicial, sw_tese, aux_usu, st_posInicial, tese]
+    return [st_tese, posInicial, sw_tese, aux_usu, st_posInicial, tese, dicSin]
 
 
 #############################################################################################################
