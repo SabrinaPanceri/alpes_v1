@@ -8,10 +8,11 @@ import re
 import nlpnet
 from django.db import connection
 from alpes_core.textProcess import removeStopWords, removePontuacao, limpaCorpus,\
-    removeEndWeb, removeA, removeNum
+    removeA, removeNum, removeSE
 from nltk.stem import RSLPStemmer
 from alpes_core.wordnet import normalizacao
 from pprint import pprint
+from alpes_core.organizacaoWordnet import organizaWordnet
 
 
 # import nltk, sys
@@ -81,6 +82,8 @@ def clusterArgInicial(idtese):
     sw_posInicial = []
     aux_usu = []
     sw_tagPosInicial = [] #texto marcado e sem stopwords
+    st_tagPosInicial = [] #texto marcado, sem stopwords e com stemmer aplicado
+
 
     #lista com dados após a aplicação de Stemming
     st_posInicial = []
@@ -114,27 +117,11 @@ def clusterArgInicial(idtese):
     semAce_posInicial = [] 
     
     for i in posInicial:
-        semAce_posInicial.append(removeEndWeb(removePontuacao(removeA(removeNum(i)))))
-        #semAce_posInicial.append(removePontuacao(i))
-    #print semAce_posInicial
+        semAce_posInicial.append(removePontuacao(removeA(removeNum(removeSE((i))))))
+#     pprint(semAce_posInicial)
     
     for i in semAce_posInicial:
         tag_posInicial.append(tagger.tag(i))
-
-#############################################################################################################
-### Semantic Role Labeling model 
-### http://www.nilc.icmc.usp.br/nlpnet/models.html#srl-portuguese
-### Marcacao semantica funcionando. Verificar como usar para melhorar os resultados.
-#     srl_tagger = nlpnet.SRLTagger()
-#     auxSrl_PosIni = [] 
-#     srl_PosIni = [] #posicionamento inicial tagueado com SRL 
-#     
-#     for i in posInicial:
-#         auxSrl_PosIni.append(srl_tagger.tag(i))
-#       
-#     for aux in auxSrl_PosIni:
-#         for j in aux:
-#             srl_PosIni.append(j.arg_structures)
 
 #############################################################################################################
 ### REMOCAO DE STOPWORDS
@@ -155,6 +142,44 @@ def clusterArgInicial(idtese):
     
 #     pprint(sw_tagPosInicial)
 #     print len(sw_tagPosInicial)
+
+#############################################################################################################
+#Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
+#retirando afixos dos textos do posInicial e tese
+# FOI NECESSÁRIO RETIRAR OS ACENTOS DOS TERMOS DOS ARQUIVOS COM AS REGRAS DE FORMAÇÃO 
+    stemmer = RSLPStemmer()
+ 
+    for i in range(len(sw_posInicial)):
+        st_aux = sw_posInicial[i]
+        string_aux = ""
+        for sufixo in st_aux.split():
+            string_aux = string_aux + " " + stemmer.stem(sufixo)
+         
+        st_posInicial.append(string_aux)
+
+    
+    for i in range(len(sw_tese)):
+        st_aux = sw_tese[i]
+        string_aux = ""
+        for sufixo in st_aux.split():
+            string_aux = string_aux + " " + stemmer.stem(sufixo)
+         
+        st_tese.append(string_aux)
+        
+    for i in range(len(sw_tagPosInicial)):
+#         pprint(sw_tagPosInicial[i])
+        termosST = ""
+        auxST = []
+        for j in range(len(sw_tagPosInicial[i])):
+            aux = stemmer.stem(sw_tagPosInicial[i][j][0])
+            etiqueta = sw_tagPosInicial[i][j][1]
+            termosST = (aux,etiqueta)
+            auxST.append(termosST)
+        
+        st_tagPosInicial.append(auxST)
+#     pprint(st_tagPosInicial)
+#     print len(st_tagPosInicial)
+#     exit()
     
 #############################################################################################################
 # Normalização dos termos
@@ -167,54 +192,40 @@ def clusterArgInicial(idtese):
     # ver qual estrutura fica melhor neste caso, se árvore ou matriz n-dimensional
     # retirar plurais ou fazer busca na base_tep pelos radicais
 
+    # FUNCAO PARA ORGANIZAR O ARQUIVO DA WORDNET
+#     organizaWordnet()
+    
     dicSin = {}
 
     #FAZER TESTE COM TERMO NA FORMA DE RADICAL
     
     
     
-    for texto in sw_tagPosInicial:
+#     for texto in sw_tagPosInicial:
+    for texto in st_tagPosInicial:
 #         pprint(texto)
         for termo in texto:
 #             print "termo"
 #             pprint(termo)
             normalizacao(dicSin,termo[0], termo[1])
+            
+            
+        
     
 #     dicionario = codecs.open("/home/panceri/git/alpes_v1/arquivos/dicionario.txt", "w","UTF8")
 # 
-    pprint(dicSin.items())
-#     print dicSin
+#     pprint(dicSin)
+    
 #     
 #     for i in range(len(dicSin)):
 # #         print dicSin.items()
 #         dicionario.writelines(dicSin.items().__str__())
-#     exit()
+    exit()
 #       
 #     dicionario.close()
 #       
 #     print "dicSin", dicSin
-        
-
-#############################################################################################################
-#Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
-#retirando afixos dos textos do posInicial e tese
-    stemmer = RSLPStemmer()
- 
-    for i in range(len(sw_posInicial)):
-        st_aux = sw_posInicial[i]
-        string_aux = ""
-        for sufixo in st_aux.split():
-            string_aux = string_aux + " " + stemmer.stem(sufixo)
-         
-        st_posInicial.append(string_aux)
- 
-    for i in range(len(sw_tese)):
-        st_aux = sw_tese[i]
-        string_aux = ""
-        for sufixo in st_aux.split():
-            string_aux = string_aux + " " + stemmer.stem(sufixo)
-         
-        st_tese.append(string_aux)
+    
 
 
 #############################################################################################################
@@ -228,6 +239,22 @@ def clusterArgInicial(idtese):
 #     lsi = gensim.models.lsimodel.LsiModel(lsi_posInicial)
 # # #     print sw_posInicial
 #     lsi.print_topics(10)
+
+
+#############################################################################################################
+### Semantic Role Labeling model 
+### http://www.nilc.icmc.usp.br/nlpnet/models.html#srl-portuguese
+### Marcacao semantica funcionando. Verificar como usar para melhorar os resultados.
+#     srl_tagger = nlpnet.SRLTagger()
+#     auxSrl_PosIni = [] 
+#     srl_PosIni = [] #posicionamento inicial tagueado com SRL 
+#     
+#     for i in posInicial:
+#         auxSrl_PosIni.append(srl_tagger.tag(i))
+#       
+#     for aux in auxSrl_PosIni:
+#         for j in aux:
+#             srl_PosIni.append(j.arg_structures)
 
 
 

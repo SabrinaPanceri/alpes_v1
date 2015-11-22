@@ -46,6 +46,8 @@ def normalizacao(dicSin, termo, etiqueta):
     
     #teste com busca pelo radical (stemmer)
     radicais = RSLPStemmer()
+    
+    termoStm = radicais.stem(termo)
 
     # busca termo dentro de arquivo
     # armazena termo como chave do dicionario
@@ -53,29 +55,30 @@ def normalizacao(dicSin, termo, etiqueta):
     if etiqueta == "N":
         for sinonimos in SA_wordnet:
             if(sinonimos.find("[Substantivo]")>=0):
-                if(sinonimos.find(termo)>=0): 
+                if(sinonimos.find(termo)>=0):
                     aux1 = re.findall('{[^}]*}', sinonimos)
                     for a in aux1:
-                        auxN = removePontuacao(a)
-                        for b in auxN.split():                            
-                            if b in auxN:
-                            #teste com busca pelo radical (stemmer)
-                                aux.append(radicais.stem(b))
-        
-        print "termo", termo
-        print "aux", aux
+                        aux2 = re.findall('^[0-9]*.', sinonimos) #retorna o numero de referencia dos sinonimos
+                        auxN = removePontuacao(a) #lista de sinonimos sem as {}
+#                         termoStmS = radicais.stem(termo) #radical de formação do termo de busca (stem)
+                        for b in auxN.split():
+                            x = radicais.stem(b)
+                            if termoStm == x:
+                                aux.append(aux2)
         dicSin[termo] = aux
-
     elif etiqueta == "ADJ":
         for sinonimos in wordNet:
             if(sinonimos.find("[Adjetivo]")>=0):
                 if(sinonimos.find(termo)>=0):
                     aux1 = re.findall('{[^}]*}', sinonimos)
                     for a in aux1:
-                        auxAD = removePontuacao(a)
-                        b = auxAD.split()
-                        if termo in b:
-                            aux.append(b)
+                        aux2 = re.findall('^[0-9]*.', sinonimos) #retorna o numero de referencia dos sinonimos
+                        auxAD = removePontuacao(a) #lista de sinonimos sem as {}
+#                         termoStmA = radicais.stem(termo) #radical de formação do termo de busca (stem)
+                        for b in auxAD.split():
+                            x = radicais.stem(b)
+                            if termoStm == x:
+                                aux.append(aux2)
         dicSin[termo] = aux
          
     elif etiqueta == "V" or etiqueta == "VAUX":
@@ -84,20 +87,26 @@ def normalizacao(dicSin, termo, etiqueta):
                 if(sinonimos.find(termo)>=0):            
                     aux1 = re.findall('{[^}]*}', sinonimos)
                     for a in aux1:
-                        auxV = removePontuacao(removeA(a))
-                        b = auxV.split()
-                        if termo in b:
-                            aux.append(b)
+                        aux2 = re.findall('^[0-9]*.', sinonimos) #retorna o numero de referencia dos sinonimos
+                        auxV = removePontuacao(a)
+#                         termoStmV = radicais.stem(termo) #radical de formação do termo de busca (stem)
+                        for b in auxV.split():
+                            x = radicais.stem(b)
+                            if termoStm == x:
+                                aux.append(aux2)
         dicSin[termo] = aux
-    else:
+    else: #PARA TRATAR OS ADVÉRBIOS
         for sinonimos in wordNet: 
-            if(sinonimos.find(termo)>=0):            
+            if(sinonimos.find(termo)>=0):
                 aux1 = re.findall('{[^}]*}', sinonimos)
                 for a in aux1:
-                    auxO = removePontuacao(removeA(a))
-                    b = auxO.split()
-                    if termo in b:
-                            aux.append(b)
+                    aux2 = re.findall('^[0-9]*.', sinonimos) #retorna o numero de referencia dos sinonimos
+                    auxO = removePontuacao(a)
+#                     termoStmO = radicais.stem(termo) #radical de formação do termo de busca (stem)
+                    for b in auxO.split():
+                        x = radicais.stem(b)
+                        if termoStm == x:
+                            aux.append(aux2)
         dicSin[termo] = aux
- 
+    
     return sinonimo

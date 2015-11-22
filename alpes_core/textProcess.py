@@ -29,9 +29,10 @@ def similaridadeCossenos(text1, text2):
 def removePontuacao(texto):
     aux = texto.lower().replace(',',' ').replace('.',' ').replace('(','')
     aux = aux.replace(')','').replace('?','').replace('!','').replace('[','').replace(']','')
-    aux = aux.replace(':',' ').replace('/',' ').replace('\r','').replace('\n','').replace('\t','')
+    aux = aux.replace('\r','').replace('\n','').replace('\t','')
     aux = aux.replace('=',' ').replace('"',' ').replace('{','').replace('}','')
-    aux = aux.replace("'",' ').replace('`',' ').replace('http',' ')
+    aux = aux.replace("'",' ').replace('`',' ')
+    aux = aux.replace(':','').replace('/','').replace('http','')
     return aux
 
 def removeNum(texto):
@@ -43,6 +44,11 @@ def removeNum(texto):
 def removeA(texto):
     aux = normalize('NFKD', texto).encode('ASCII','ignore').decode('ASCII')
     return aux
+
+def removeSE(texto):
+    aux = texto.lower().replace('-se','')
+    return aux
+    
 
 def removeStopWords(texto):
     aux = ""
@@ -92,10 +98,9 @@ def limpaCorpus(texto):
     return aux
 
 
-def removeEndWeb(textoHttp):
-    auxHttp = re.sub(r'^http?:\/\/.*[\r\n]*', '', textoHttp)
-    
-    return auxHttp
+# def removeEndWeb(textoHttp):
+#     auxHttp = re.sub(r'(?i)\b((?:http[s]?|www\d{0,3}|[a-z0-9.\-]|[a-z0-9.\-]+[a-z]{2,4}\/))', '', textoHttp)
+#     return auxHttp
 
   
 def vetores(texto):
