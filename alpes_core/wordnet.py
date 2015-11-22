@@ -47,7 +47,7 @@ def normalizacao(dicSin, termo, etiqueta):
     #teste com busca pelo radical (stemmer)
     radicais = RSLPStemmer()
     
-    termoStm = radicais.stem(termo)
+#     termoStm = radicais.stem(termo)
 
     # busca termo dentro de arquivo
     # armazena termo como chave do dicionario
@@ -60,10 +60,9 @@ def normalizacao(dicSin, termo, etiqueta):
                     for a in aux1:
                         aux2 = re.findall('^[0-9]*.', sinonimos) #retorna o numero de referencia dos sinonimos
                         auxN = removePontuacao(a) #lista de sinonimos sem as {}
-#                         termoStmS = radicais.stem(termo) #radical de formação do termo de busca (stem)
                         for b in auxN.split():
                             x = radicais.stem(b)
-                            if termoStm == x:
+                            if termo == x:
                                 aux.append(aux2)
         dicSin[termo] = aux
     elif etiqueta == "ADJ":
@@ -74,10 +73,9 @@ def normalizacao(dicSin, termo, etiqueta):
                     for a in aux1:
                         aux2 = re.findall('^[0-9]*.', sinonimos) #retorna o numero de referencia dos sinonimos
                         auxAD = removePontuacao(a) #lista de sinonimos sem as {}
-#                         termoStmA = radicais.stem(termo) #radical de formação do termo de busca (stem)
                         for b in auxAD.split():
                             x = radicais.stem(b)
-                            if termoStm == x:
+                            if termo == x:
                                 aux.append(aux2)
         dicSin[termo] = aux
          
@@ -89,10 +87,9 @@ def normalizacao(dicSin, termo, etiqueta):
                     for a in aux1:
                         aux2 = re.findall('^[0-9]*.', sinonimos) #retorna o numero de referencia dos sinonimos
                         auxV = removePontuacao(a)
-#                         termoStmV = radicais.stem(termo) #radical de formação do termo de busca (stem)
                         for b in auxV.split():
                             x = radicais.stem(b)
-                            if termoStm == x:
+                            if termo == x:
                                 aux.append(aux2)
         dicSin[termo] = aux
     else: #PARA TRATAR OS ADVÉRBIOS
@@ -105,7 +102,7 @@ def normalizacao(dicSin, termo, etiqueta):
 #                     termoStmO = radicais.stem(termo) #radical de formação do termo de busca (stem)
                     for b in auxO.split():
                         x = radicais.stem(b)
-                        if termoStm == x:
+                        if termo == x:
                             aux.append(aux2)
         dicSin[termo] = aux
     

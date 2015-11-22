@@ -144,9 +144,9 @@ def clusterArgInicial(idtese):
 #     print len(sw_tagPosInicial)
 
 #############################################################################################################
-#Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
-#retirando afixos dos textos do posInicial e tese
-# FOI NECESSÁRIO RETIRAR OS ACENTOS DOS TERMOS DOS ARQUIVOS COM AS REGRAS DE FORMAÇÃO 
+# Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
+# Retirando afixos dos textos do posInicial e tese
+## FOI NECESSÁRIO RETIRAR OS ACENTOS DOS TERMOS DOS ARQUIVOS COM AS REGRAS DE FORMAÇÃO ## 
     stemmer = RSLPStemmer()
  
     for i in range(len(sw_posInicial)):
@@ -185,48 +185,23 @@ def clusterArgInicial(idtese):
 # Normalização dos termos
 # Troca de termos por seus sinonimos com base na WordNet.BR
 # http://143.107.183.175:21480/tep2/index.htm
+## NORMALIZAÇÃO FEITA COM BASE NOS RADICAIS DE FORMAÇÃO DAS PALAVRAS
+## APLICAÇÃO DO RSPL PRIMEIRO PARA DEPOIS BUSCAR NA BASE OS TERMOS SIMILARES
+## DENTRO DA BASE_TEP OS TERMOS TAMBÉM FORAM REDUZIDOS AOS SEUS RADICIAIS DE FORMAÇÃO
+## O DICIONÁRIO ESTÁ COM A REFERÊNCIA PARA A LINHA AONDE ESTÃO OS TERMOS SINÔNIMOS
 
-#CONTINUAR DAQUI
-    # pela tague pegar a palavra e mandar para normalizacao - OK
-    # ao achar a palavra, pegar todas as outras (sinonimas) e ligar a essa palavra. 
-    # ver qual estrutura fica melhor neste caso, se árvore ou matriz n-dimensional
-    # retirar plurais ou fazer busca na base_tep pelos radicais
-
-    # FUNCAO PARA ORGANIZAR O ARQUIVO DA WORDNET
-#     organizaWordnet()
+########
+## FALTA FAZER: 
+# SUBSTITUIR OS TERMOS POR UM NÚMERO DE REFERÊNCIA PARA FAZER A COMPARAÇÃO COM BASE NOS NÚMEROS E NÃO NAS STRINGS
     
     dicSin = {}
 
-    #FAZER TESTE COM TERMO NA FORMA DE RADICAL
-    
-    
-    
-#     for texto in sw_tagPosInicial:
     for texto in st_tagPosInicial:
-#         pprint(texto)
         for termo in texto:
-#             print "termo"
-#             pprint(termo)
             normalizacao(dicSin,termo[0], termo[1])
-            
-            
-        
-    
-#     dicionario = codecs.open("/home/panceri/git/alpes_v1/arquivos/dicionario.txt", "w","UTF8")
-# 
-#     pprint(dicSin)
-    
-#     
-#     for i in range(len(dicSin)):
-# #         print dicSin.items()
-#         dicionario.writelines(dicSin.items().__str__())
-    exit()
-#       
-#     dicionario.close()
-#       
-#     print "dicSin", dicSin
-    
 
+#     pprint(dicSin)
+#     exit()
 
 #############################################################################################################
 # #LSI
