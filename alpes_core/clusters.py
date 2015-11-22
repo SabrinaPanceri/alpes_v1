@@ -35,9 +35,6 @@ def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_extern
     indices = []
      
      
-     
-      
-     
 ##########################################################################################
      
     #ABORDAGEM 1 -> COM LSA E KMEANS JUNTOS

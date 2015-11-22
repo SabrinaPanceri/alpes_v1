@@ -12,7 +12,6 @@ from alpes_core.textProcess import removeStopWords, removePontuacao, limpaCorpus
 from nltk.stem import RSLPStemmer
 from alpes_core.wordnet import normalizacao
 from pprint import pprint
-from alpes_core.organizacaoWordnet import organizaWordnet
 
 
 # import nltk, sys
