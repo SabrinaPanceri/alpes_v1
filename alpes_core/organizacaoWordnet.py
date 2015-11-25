@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
-#encoding =utf8
-import codecs
-# import re
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
 
-def organizaWordNet(word,linesCopy):
+def findWordInLines(word,linesCopy):
     finded = []
     i = 0
+    index = []
     for line in linesCopy:
         start = line.index('{')
         end =  line.index('}')
@@ -17,16 +16,20 @@ def organizaWordNet(word,linesCopy):
             if w.strip() == word.strip():
                 
                 finded.append(line)
-                linesCopy.pop(i)
+                #linesCopy.pop(i)
+                index.append(i)
                 i = i+1
                 break
         i = i+1
+
+    i = len(index)
+    while i > 0:
+        linesCopy.pop(i-1)
+        i = i - 1
     return linesCopy,finded
 
-
-#PARA EXECUTAR O ARQUIVO .py SEM PRECISAR INTEGRAR COM O DJANGO!!!!
 def main():
-    f = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
+    f = open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r')
 
     lines = f.readlines()
 
@@ -36,19 +39,17 @@ def main():
 
     start = line.index('{')
     end =  line.index('}')
-    aux = []
+
 
     words = line[(start+1):end]
     words = words.split(',')
-#     lines.pop(0)
-    aux.append()
-    
+    lines.pop(0)
     print len(lines)
     i=0
     lenwords = len(words)
     while i < lenwords:
         word = words[i]
-        rtn  = organizaWordNet(word,lines)
+        rtn  = findWordInLines(word,lines)
         lines = rtn[0]
 
         wordsAppend = []
@@ -76,65 +77,6 @@ def main():
     print len(lines)
     exit()
 
-#PARA EXECUTAR O ARQUIVO .py SEM PRECISAR INTEGRAR COM O DJANGO!!!!
+
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# 
-# def organizaWordnet():
-# 
-#     base_tep = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
-#     wordnet = []
-#     #variavel com conteúdo do arquivo em memoria
-#     #não imprimir essa variável, MUITO GRANDEE!!!
-#     wordNet = base_tep.readlines()
-#     
-#     #fechar arquivo 
-#     base_tep.close()
-#     
-# 
-# ### 263. [Verbo] {consentir, deixar, permitir} <973>
-# ### 1ª linha do arquivo
-# ### 1. [Verbo] {exagerar, exceder, quinta-essenciar, rebuscar, refinar, requintar} 
-#     
-#     x = 0
-#     for i in range(len(wordNet)):
-#         print i
-#         print "split", wordNet[i].split(" ")
-#         
-# #         print "termos",re.findall('{[^}]*}', i)
-# #         
-# #         print "num",re.findall('[[0-9]^.]*.', i)
-#         exit()
-#     
-#     
-#     
-#     
-#     
-# #     for sinonimos in wordNet:
-# #         print re.findall('{[^}]*}', sinonimos)
-# #         exit()
-#   
-#     
-#     
-#     return True
-

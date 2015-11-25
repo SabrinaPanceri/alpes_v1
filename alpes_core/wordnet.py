@@ -65,6 +65,7 @@ def normalizacao(dicSin, termo, etiqueta):
                             if termo == x:
                                 aux.append(aux2)
         dicSin[termo] = aux
+
     elif etiqueta == "ADJ":
         for sinonimos in wordNet:
             if(sinonimos.find("[Adjetivo]")>=0):
@@ -78,7 +79,8 @@ def normalizacao(dicSin, termo, etiqueta):
                             if termo == x:
                                 aux.append(aux2)
         dicSin[termo] = aux
-         
+        pprint(dicSin)
+        exit()
     elif etiqueta == "V" or etiqueta == "VAUX":
         for sinonimos in wordNet:
             if(sinonimos.find("[Verbo]")>=0):

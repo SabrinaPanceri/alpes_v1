@@ -61,6 +61,7 @@ def gruposArgumentacao(auxResult, K=3, LSA=None):
         else:
             print "ERRO"
             exit()
+
 ###########################################################################################
 ### ABORDAGEM (2): UTILIZAR OUTROS TEXTOS COMO BASE PARA CRIAÇÃO DOS DICIONÁRIOS DO LSA ###
 ###########################################################################################
@@ -90,7 +91,7 @@ def gruposArgumentacao(auxResult, K=3, LSA=None):
 ##########################################################################################
 ### ABORDAGEM (3): UTILIZAÇÃO DO K-MEANS PURO COM TF-IDF                               ###
 ##########################################################################################
-
+    
     elif LSA == None:
         test_set = st_posInicial
         train_set = st_tese
@@ -106,6 +107,7 @@ def gruposArgumentacao(auxResult, K=3, LSA=None):
         tfidf = TfidfTransformer(norm="l2")
         tfidf.fit(freq_term_matrix)
         tf_idf_matrix = tfidf.transform(freq_term_matrix)
+       
         
         if K == 3:
             grupos = tfIdf_Kmeans(st_posInicial, 3)
@@ -219,6 +221,22 @@ def gruposArgumentacao(auxResult, K=3, LSA=None):
 ##########################################################################################
 ### IMPRESSÃO DOS GRUPOS NO CONSOLE - PARA CONFERÊNCIA (COMENTAR DEPOIS)               ###
 ##########################################################################################
+
+##########################################################################################
+## UTILIZADO PARA VALIDAR O CÁLCULO REALIZADO E IMPRIMI-LO                              ##
+##########################################################################################
+    vectorizer = CountVectorizer()
+    vectorizer.fit_transform(train_set)
+    count_vectorizer = CountVectorizer()
+    count_vectorizer.fit_transform(train_set) 
+    count_vectorizer.vocabulary_
+    freq_term_matrix = count_vectorizer.transform(test_set)
+    tfidf = TfidfTransformer(norm="l2")
+    tfidf.fit(freq_term_matrix)
+    tf_idf_matrix = tfidf.transform(freq_term_matrix)
+##########################################################################################
+    
+    
     print "grupo 1", len(grupo1)
     cos = []
     lsaPosIni = []
