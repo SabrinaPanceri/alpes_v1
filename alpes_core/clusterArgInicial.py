@@ -12,6 +12,7 @@ from alpes_core.textProcess import removeStopWords, removePontuacao, limpaCorpus
 from nltk.stem import RSLPStemmer
 from alpes_core.wordnet import normalizacao
 from pprint import pprint
+from alpes_core.normalizacao1 import normalizacaoWordnet
 
 
 # import nltk, sys
@@ -153,7 +154,7 @@ def clusterArgInicial(idtese):
     for i in tag_posInicial:
         sw_tagPosInicial.append(limpaCorpus(i))
     
-    for i in tag_posInicial:
+    for i in tag_comAce_posInicial:
         sw_tagcomAce_posInicial.append(limpaCorpus(i))
     
 #     pprint(sw_tagPosInicial)
@@ -218,18 +219,13 @@ def clusterArgInicial(idtese):
 ## APLICAÇÃO DO RSPL PRIMEIRO PARA DEPOIS BUSCAR NA BASE OS TERMOS SIMILARES
 ## DENTRO DA BASE_TEP OS TERMOS TAMBÉM FORAM REDUZIDOS AOS SEUS RADICIAIS DE FORMAÇÃO
 ## O DICIONÁRIO ESTÁ COM A REFERÊNCIA PARA A LINHA AONDE ESTÃO OS TERMOS SINÔNIMOS
-    
-    
-#     for texto in st_tagPosInicial:
-#         for termo in texto:
-#             normalizacao(dicSin,termo[0], termo[1])
-    
-    for i in range(len(st_tagPosInicial)):
-        for j in range(len(st_tagPosInicial[i])):
-            termo = sw_tagPosInicial[i][j][0] #termo original digitado pelo aluno
-            radical = st_tagPosInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
-            etiqueta = st_tagPosInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
-            normalizacao(dicSin, termo, radical, etiqueta)
+   
+#     for i in range(len(st_tagPosInicial)):
+#         for j in range(len(st_tagPosInicial[i])):
+#             termo = sw_tagPosInicial[i][j][0] #termo original digitado pelo aluno
+#             radical = st_tagPosInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
+#             etiqueta = st_tagPosInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
+#             normalizacao(dicSin, termo, radical, etiqueta)
 #             normalizacao(dicSin, termo="tempos", radical="temp", etiqueta="N")
 
 
@@ -240,15 +236,12 @@ def clusterArgInicial(idtese):
             termo = sw_tagcomAce_posInicial[i][j][0] #termo original digitado pelo aluno
             radical = st_tagcomAce_posInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
             etiqueta = st_tagcomAce_posInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
-            normalizacao(dicSin, termo, radical, etiqueta)
+            print termo, radical, etiqueta
+            normalizacaoWordnet(dicSin, termo, radical, etiqueta)
 #             normalizacao(dicSin, termo="tempos", radical="temp", etiqueta="N")
         
-#     for texto in sw_tagPosInicial:
-#         for termo in texto:
-#             normalizacao(dicSin,termo[0], termo[1])
 
-#     pprint(dicSin)
-#     exit()
+
 
 #############################################################################################################
 # #LSI
