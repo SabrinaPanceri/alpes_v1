@@ -1,4 +1,15 @@
 #coding: utf-8
+
+##################################################################
+### CÓDIGO DESENVOLVIDO POR SABRINA SIQUEIRA PANCERI            ##
+### PROTÓTIPO DE SUA  DISSERTAÇÃO DE MESTRADO                   ##
+### ESSE CÓDIGO PODE SER COPIADO, ALTERADO E DISTRIBUÍDO        ##
+### DESDE QUE SUA FONTE SEJA REFERENCIADA                       ##
+### PARA MAIS INFORMAÇÕES, ENTRE EM CONTATO ATRAVÉS DO EMAIL    ##
+### SABRINASPANCERI@GMAIL.COM                                   ##
+##################################################################
+
+
 import HTMLParser
 import re
 from django.shortcuts import render
@@ -21,7 +32,7 @@ import codecs
 from pprint import pprint
 # 
 from alpes_core.lsa_kmeans import LSA_Kmeans
-from alpes_core.trataAgrupamento import gruposArgumentacao
+from alpes_core.gruposArgumentacao import gruposArgumentacao
 from nltk.cluster import KMeansClusterer, euclidean_distance
 
 # Create your views here.

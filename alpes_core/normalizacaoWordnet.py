@@ -1,5 +1,35 @@
 # -*- coding: utf-8 -*-
 #encoding =utf8
+##################################################################
+### CÓDIGO DESENVOLVIDO POR SABRINA SIQUEIRA PANCERI            ##
+### PROTÓTIPO DE SUA  DISSERTAÇÃO DE MESTRADO                   ##
+### ESSE CÓDIGO PODE SER COPIADO, ALTERADO E DISTRIBUÍDO        ##
+### DESDE QUE SUA FONTE SEJA REFERENCIADA                       ##
+### PARA MAIS INFORMAÇÕES, ENTRE EM CONTATO ATRAVÉS DO EMAIL    ##
+### SABRINASPANCERI@GMAIL.COM                                   ##
+##################################################################
+
+####################################################################################################################################
+### A NORMALIZACAO DE TERMOS REFERE-SE A TECNICA DE TROCAR PALAVRAS SINONIMAS, OU SEJA, QUE TENHAM SIGNIFICADO                    ##
+### SEMELHANTE, POR UM UNICO TERMO REPRESENTATIVO NO CORPUS DE ANALISE. DESSA FORMA, É POSSIVEL AUMENTAR O GRAU                   ##
+### DE SIMILARIDADE ENTRE OS TEXTOS ANALISADOS ATRAVES DO USO DE TECNICAS DE ANALISE ESTATISTICAS, COMO SIMILA                    ##
+### RIDADE DE COSSENOS OU DISTANCIA EUCLIDIANA.                                                                                   ##
+###                                                                                                                               ##
+### A NORMALIZACAO FOI DESENVOLVIDA COM BASE NOS DADOS DISPONIBILIZADOS PELO PROJETO TEP 2.0 DO NILC/USP                          ##
+### http://143.107.183.175:21480/tep2/index.htm                                                                                   ##
+###                                                                                                                               ## 
+### FORMATO DO ARQUIVO                                                                                                            ##
+### NUM1. [Tipo] {termos sinonimos} <NUM2>                                                                                        ##
+### 263. [Verbo] {consentir, deixar, permitir} <973>                                                                              ##
+### NUM1 = NUMERO DA LINHA DE REFERENCIA PARA TERMO SINONIMO                                                                      ##
+### NUM2 = NUMERO DA LINHA DE REFERENCIA PARA TERMO ANTONIMO (SENTIDO OPOSTO)                                                     ##
+####################################################################################################################################
+### A ANÁLISE É REALIZADA COM BASE NO TEXTO SEM A EXCLUSÃO DOS ACENTOS                                                            ##
+### POIS AO EXCLUÍ-LOS A REDUÇÃO AO RADICAL DE FORMAÇÃO (APLICAÇÃO DO RSLP) É PREJUDICADA                                         ##
+### OS TESTES REALIZADOS MOSTRARAM QUE ESSA É UMA MELHOR ABORDAGEM, UMA VEZ QUE NOSSOS TEXTOS SÃO PEQUENOS                        ##
+### E PRECISAMOS CHEGAR O MAIS PRÓXIMO POSSÍVEL SEM CONSIDERAR SEUS SENTIDOS E/OU CONTEXTOS                                       ##
+####################################################################################################################################
+
 
 import codecs
 import re
@@ -7,33 +37,14 @@ from alpes_core.textProcess import removeA, removePontuacao
 from pprint import pprint
 from nltk import RSLPStemmer
 
-
-##############################################################################################################
-### A NORMALIZACAO DE TERMOS REFERE-SE A TECNICA DE TROCAR PALAVRAS SINONIMAS, OU SEJA, QUE TENHAM SIGNIFICADO
-### SEMELHANTE, POR UM UNICO TERMO REPRESENTATIVO NO CORPUS DE ANALISE. DESSA FORMA, É POSSIVEL AUMENTAR O GRAU
-### DE SIMILARIDADE ENTRE OS TEXTOS ANALISADOS ATRAVES DO USO DE TECNICAS DE ANALISE ESTATISTICAS, COMO SIMILA
-### RIDADE DE COSSENOS OU DISTANCIA EUCLIDIANA.
-###
-### A NORMALIZACAO FOI DESENVOLVIDA COM BASE NOS DADOS DISPONIBILIZADOS PELO PROJETO TEP 2.0 DO NILC/USP
-### http://143.107.183.175:21480/tep2/index.htm
-### 
-### FORMATO DO ARQUIVO
-### NUM1. [Tipo] {termos sinonimos} <NUM2>
-### 263. [Verbo] {consentir, deixar, permitir} <973>
-### NUM1 = NUMERO DA LINHA DE REFERENCIA PARA TERMO SINONIMO
-### NUM2 = NUMERO DA LINHA DE REFERENCIA PARA TERMO ANTONIMO (SENTIDO OPOSTO)
-##############################################################################################################
-
 def normalizacaoWordnet(dicSin, termo, radical, etiqueta):
     #variáveis locais
     SA_wordnet = [] #armazena a wordnet sem acentos   
-    listaTodosSin = [] #lista com todos os termos sinonimos encontrados
-    listaNumRef = [] #lista com o número da linha de referência dos termos sinominos
-    listaDicion = [] 
+    listaDicion = [] #lista com o número da linha de referência dos termos sinominos e com todos os termos sinonimos encontrados 
     
     #abre o arquivo com as relacoes de sinonimia (termos linhaWordNet) e antonimia (termos contrarios) 
     base_tep = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
-    dicionario = open('/home/panceri/git/alpes_v1/base_tep2/dicionarioSinonimos.txt', 'w')
+#     dicionario = open('/home/panceri/git/alpes_v1/base_tep2/dicionarioSinonimos.txt', 'w')
     
     #variavel com conteúdo do arquivo em memoria
     #não imprimir essa variável, MUITO GRANDEE!!!
@@ -112,21 +123,8 @@ def normalizacaoWordnet(dicSin, termo, radical, etiqueta):
                             numETerm =  re.findall('^[0-9]*.+{[^}]*}', linhaWordNet)
                             listaDicion.append(numETerm)
         dicSin[termo] = listaDicion
-        pprint(dicSin)
-        exit()
+#         pprint(dicSin)
+#         exit()
 
-    
-### verificar como imprimir isso num arquivo
-### veriricar como imprimir um dicionario num arquivo txt    
-#     listaux = []
-#     for termo, listaNumRef in dicSin.items():
-#         temp = '{}: {}'.format(termo, listaNumRef)
-# #         print '{}: {}'.format(termo, listaNumRef)
-#         listaux.append(temp)
-#         
-#         dicionario.write(temp)
-#     
-#     dicionario.close()
-#     exit()
     
 

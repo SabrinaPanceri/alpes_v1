@@ -1,4 +1,13 @@
 # -*- coding: utf-8 -*-
+##################################################################
+### CÓDIGO DESENVOLVIDO POR SABRINA SIQUEIRA PANCERI            ##
+### PROTÓTIPO DE SUA  DISSERTAÇÃO DE MESTRADO                   ##
+### ESSE CÓDIGO PODE SER COPIADO, ALTERADO E DISTRIBUÍDO        ##
+### DESDE QUE SUA FONTE SEJA REFERENCIADA                       ##
+### PARA MAIS INFORMAÇÕES, ENTRE EM CONTATO ATRAVÉS DO EMAIL    ##
+### SABRINASPANCERI@GMAIL.COM                                   ##
+##################################################################
+
 #############################################################################################################
 
 # Imports obrigatorios
@@ -10,9 +19,8 @@ from django.db import connection
 from alpes_core.textProcess import removeStopWords, removePontuacao, limpaCorpus,\
     removeA, removeNum, removeSE
 from nltk.stem import RSLPStemmer
-from alpes_core.wordnet import normalizacao
 from pprint import pprint
-from alpes_core.normalizacao1 import normalizacaoWordnet
+from alpes_core.normalizacaoWordnet import normalizacaoWordnet
 
 
 # import nltk, sys
@@ -212,14 +220,28 @@ def clusterArgInicial(idtese):
 #     exit()
     
 #############################################################################################################
-# Normalização dos termos
+# PROCESSO DE NORMALIZAÇÃO 
 # Troca de termos por seus sinonimos com base na WordNet.BR
 # http://143.107.183.175:21480/tep2/index.htm
 ## NORMALIZAÇÃO FEITA COM BASE NOS RADICAIS DE FORMAÇÃO DAS PALAVRAS
 ## APLICAÇÃO DO RSPL PRIMEIRO PARA DEPOIS BUSCAR NA BASE OS TERMOS SIMILARES
 ## DENTRO DA BASE_TEP OS TERMOS TAMBÉM FORAM REDUZIDOS AOS SEUS RADICIAIS DE FORMAÇÃO
 ## O DICIONÁRIO ESTÁ COM A REFERÊNCIA PARA A LINHA AONDE ESTÃO OS TERMOS SINÔNIMOS
-   
+## OS TERMOS SÃO ANALISADOS CONSIDERANDO SUAS ACENTUAÇÕES, PARA APLICAÇÃO CORRETA DO RSLP
+#############################################################################################################   
+    for i in range(len(st_tagcomAce_posInicial)):
+        for j in range(len(st_tagcomAce_posInicial[i])):
+            termo = sw_tagcomAce_posInicial[i][j][0] #termo original digitado pelo aluno
+            radical = st_tagcomAce_posInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
+            etiqueta = st_tagcomAce_posInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
+#             print termo, radical, etiqueta
+            normalizacaoWordnet(dicSin, termo, radical, etiqueta)
+    pprint(dicSin)
+
+#############################################################################################################
+### IMPLEMENTAÇÃO INICIAL TENDO POR BASE A ANÁLISE DOS TEXTOS SEM ACENTOS
+### SE UTILIZAR A APLICAÇÃO DO RSLP PRIMEIRO, NÃO PRODUZ BONS RESULTADOS
+### SE BUSCAR COM BASE NO TERMO, PODE SER UTILIZADO, POIS A COMPARAÇÃO NÃO É PREJUDICADA
 #     for i in range(len(st_tagPosInicial)):
 #         for j in range(len(st_tagPosInicial[i])):
 #             termo = sw_tagPosInicial[i][j][0] #termo original digitado pelo aluno
@@ -227,21 +249,6 @@ def clusterArgInicial(idtese):
 #             etiqueta = st_tagPosInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
 #             normalizacao(dicSin, termo, radical, etiqueta)
 #             normalizacao(dicSin, termo="tempos", radical="temp", etiqueta="N")
-
-
-#### TESTE COM ANÁLISE DOS TEXTOS ACENTUADOS
-#### TESTE PARA VERIFICAR SE ISSO INFLUENCIA NA APLICAÇÃO DE STEMMER E NA RECUPERAÇÃO DOS SINONIMOS
-    for i in range(len(st_tagcomAce_posInicial)):
-        for j in range(len(st_tagcomAce_posInicial[i])):
-            termo = sw_tagcomAce_posInicial[i][j][0] #termo original digitado pelo aluno
-            radical = st_tagcomAce_posInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
-            etiqueta = st_tagcomAce_posInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
-            print termo, radical, etiqueta
-            normalizacaoWordnet(dicSin, termo, radical, etiqueta)
-#             normalizacao(dicSin, termo="tempos", radical="temp", etiqueta="N")
-        
-
-
 
 #############################################################################################################
 # #LSI

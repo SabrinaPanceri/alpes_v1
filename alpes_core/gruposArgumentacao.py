@@ -1,4 +1,13 @@
 # -*- coding: utf-8 -*-
+##################################################################
+### CÓDIGO DESENVOLVIDO POR SABRINA SIQUEIRA PANCERI            ##
+### PROTÓTIPO DE SUA  DISSERTAÇÃO DE MESTRADO                   ##
+### ESSE CÓDIGO PODE SER COPIADO, ALTERADO E DISTRIBUÍDO        ##
+### DESDE QUE SUA FONTE SEJA REFERENCIADA                       ##
+### PARA MAIS INFORMAÇÕES, ENTRE EM CONTATO ATRAVÉS DO EMAIL    ##
+### SABRINASPANCERI@GMAIL.COM                                   ##
+##################################################################
+
 from alpes_core.lsa_kmeans import LSA_Kmeans
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances

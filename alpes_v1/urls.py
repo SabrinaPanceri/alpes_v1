@@ -1,5 +1,16 @@
 #coding: utf-8
 
+
+##################################################################
+### CÓDIGO DESENVOLVIDO POR SABRINA SIQUEIRA PANCERI            ##
+### PROTÓTIPO DE SUA  DISSERTAÇÃO DE MESTRADO                   ##
+### ESSE CÓDIGO PODE SER COPIADO, ALTERADO E DISTRIBUÍDO        ##
+### DESDE QUE SUA FONTE SEJA REFERENCIADA                       ##
+### PARA MAIS INFORMAÇÕES, ENTRE EM CONTATO ATRAVÉS DO EMAIL    ##
+### SABRINASPANCERI@GMAIL.COM                                   ##
+##################################################################
+
+
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
@@ -21,7 +32,7 @@ urlpatterns = patterns('',
     url(r'^posInicial/(?P<debate_id>\d+)/$', 'alpes_core.views.posInicial', name='posInicial'), 
     
     #URL DOS AGRUPAMENTOS - TESTE COM POSINICIAL1
-    url(r'^posInicial/(?P<debate_id>\d+)/$', 'alpes_core.views.posInicial1', name='posInicial1'),
+    url(r'^posInicial1/(?P<debate_id>\d+)/$', 'alpes_core.views.posInicial1', name='posInicial1'),
     
     #não funciona!!!!
     url(r'^grupos/(?P<debate_id>\d+)/$', 'alpes_core.views.agrupamentos', name='grupos'),
