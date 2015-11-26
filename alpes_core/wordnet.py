@@ -82,9 +82,6 @@ def normalizacao(dicSin, termo, radical, etiqueta):
                         for termSinWordNet in sa_palavraSinonima.split():
                             st_termSinWordNet = stemmer.stem(termSinWordNet)
                             if radical == st_termSinWordNet:
-#                                 print radical
-#                                 print st_termSinWordNet
-#                                 print termo
                                 listaNumRef.append(numRefSin)
                             listaTodosSin.append(sa_palavraSinonima)
         dicSin[termo] = listaNumRef,listaTodosSin
@@ -117,10 +114,16 @@ def normalizacao(dicSin, termo, radical, etiqueta):
                             listaTodosSin.append(sa_palavraSinonima)
         dicSin[termo] = listaNumRef
     
+    
+### verificar como imprimir isso num arquivo
+### veriricar como imprimir um dicionario num arquivo txt    
+    listaux = []
     for termo, listaNumRef in dicSin.items():
         temp = '{}: {}'.format(termo, listaNumRef)
 #         print '{}: {}'.format(termo, listaNumRef)
-        dicionario.writelines(temp)
+        listaux.append(temp)
+        
+        dicionario.write(temp)
     
     dicionario.close()
 #     exit()
