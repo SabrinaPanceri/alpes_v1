@@ -3,7 +3,7 @@
 
 import codecs
 import re
-from alpes_core.textProcess import removeA, removePontuacao, stemming
+from alpes_core.textProcess import removeA, removePontuacao
 from pprint import pprint
 from nltk import RSLPStemmer
 
@@ -24,14 +24,15 @@ from nltk import RSLPStemmer
 ### NUM2 = NUMERO DA LINHA DE REFERENCIA PARA TERMO ANTONIMO (SENTIDO OPOSTO)
 ##############################################################################################################
 
-def normalizacao(dicSin, termo, etiqueta):
+def normalizacao(dicSin, termo, radical, etiqueta):
     #variáveis locais
-    sinonimo = []
-    SA_wordnet = []
-    aux = []
+    SA_wordnet = [] #armazena a wordnet sem acentos   
+    listaTodosSin = [] #lista com todos os termos sinonimos encontrados
+    listaNumRef = [] #lista com o número da linha de referência dos termos sinominos 
     
-    #abre o arquivo com as relacoes de sinonimia (termos sinonimos) e antonimia (termos contrarios) 
+    #abre o arquivo com as relacoes de sinonimia (termos linhaWordNet) e antonimia (termos contrarios) 
     base_tep = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
+    dicionario = open('/home/panceri/git/alpes_v1/base_tep2/dicionarioSinonimos.txt', 'w')
     
     #variavel com conteúdo do arquivo em memoria
     #não imprimir essa variável, MUITO GRANDEE!!!
@@ -45,67 +46,82 @@ def normalizacao(dicSin, termo, etiqueta):
         SA_wordnet.append(removeA(i))
     
     #teste com busca pelo radical (stemmer)
-    radicais = RSLPStemmer()
+    stemmer = RSLPStemmer()
     
-#     termoStm = radicais.stem(termo)
+#     termoStm = stemmer.stem(termo)
+
+    
+#     print termo, radical, etiqueta
 
     # busca termo dentro de arquivo
     # armazena termo como chave do dicionario
-    # os sinonimos são armazenados como uma lista
+    # os linhaWordNet são armazenados como uma lista
     if etiqueta == "N":
-        for sinonimos in SA_wordnet:
-            if(sinonimos.find("[Substantivo]")>=0):
-                if(sinonimos.find(termo)>=0):
-                    aux1 = re.findall('{[^}]*}', sinonimos)
-                    for a in aux1:
-                        aux2 = re.findall('^[0-9]*.', sinonimos) #retorna o numero de referencia dos sinonimos
-                        auxN = removePontuacao(a) #lista de sinonimos sem as {}
-                        for b in auxN.split():
-                            x = radicais.stem(b)
-                            if termo == x:
-                                aux.append(aux2)
-        dicSin[termo] = aux
+        for linhaWordNet in SA_wordnet:
+            if(linhaWordNet.find("[Substantivo]")>=0):
+                if(linhaWordNet.find(termo)>=0):
+                    listaSinonimos = re.findall('{[^}]*}', linhaWordNet)
+                    for palavraSinonima in listaSinonimos:
+                        numRefSin = re.findall('^[0-9]*.', linhaWordNet) #retorna o numero de referencia dos linhaWordNet
+                        sa_palavraSinonima = removePontuacao(palavraSinonima) #lista de linhaWordNet sem as {}
+                        for termSinWordNet in sa_palavraSinonima.split():
+                            st_termSinWordNet = stemmer.stem(termSinWordNet)
+                            if radical == st_termSinWordNet:
+                                listaNumRef.append(numRefSin)
+                            listaTodosSin.append(termSinWordNet)
+        dicSin[termo] = listaNumRef,listaTodosSin
 
     elif etiqueta == "ADJ":
-        for sinonimos in wordNet:
-            if(sinonimos.find("[Adjetivo]")>=0):
-                if(sinonimos.find(termo)>=0):
-                    aux1 = re.findall('{[^}]*}', sinonimos)
-                    for a in aux1:
-                        aux2 = re.findall('^[0-9]*.', sinonimos) #retorna o numero de referencia dos sinonimos
-                        auxAD = removePontuacao(a) #lista de sinonimos sem as {}
-                        for b in auxAD.split():
-                            x = radicais.stem(b)
-                            if termo == x:
-                                aux.append(aux2)
-        dicSin[termo] = aux
-        pprint(dicSin)
-        exit()
+        for linhaWordNet in wordNet:
+            if(linhaWordNet.find("[Adjetivo]")>=0):
+                if(linhaWordNet.find(termo)>=0):
+                    listaSinonimos = re.findall('{[^}]*}', linhaWordNet)
+                    for palavraSinonima in listaSinonimos:
+                        numRefSin = re.findall('^[0-9]*.', linhaWordNet) #retorna o numero de referencia dos linhaWordNet
+                        sa_palavraSinonima = removePontuacao(palavraSinonima) #lista de linhaWordNet sem as {}
+                        for termSinWordNet in sa_palavraSinonima.split():
+                            st_termSinWordNet = stemmer.stem(termSinWordNet)
+                            if radical == st_termSinWordNet:
+#                                 print radical
+#                                 print st_termSinWordNet
+#                                 print termo
+                                listaNumRef.append(numRefSin)
+                            listaTodosSin.append(sa_palavraSinonima)
+        dicSin[termo] = listaNumRef,listaTodosSin
+
     elif etiqueta == "V" or etiqueta == "VAUX":
-        for sinonimos in wordNet:
-            if(sinonimos.find("[Verbo]")>=0):
-                if(sinonimos.find(termo)>=0):            
-                    aux1 = re.findall('{[^}]*}', sinonimos)
-                    for a in aux1:
-                        aux2 = re.findall('^[0-9]*.', sinonimos) #retorna o numero de referencia dos sinonimos
-                        auxV = removePontuacao(a)
-                        for b in auxV.split():
-                            x = radicais.stem(b)
-                            if termo == x:
-                                aux.append(aux2)
-        dicSin[termo] = aux
+        for linhaWordNet in wordNet:
+            if(linhaWordNet.find("[Verbo]")>=0):
+                if(linhaWordNet.find(termo)>=0):            
+                    listaSinonimos = re.findall('{[^}]*}', linhaWordNet)
+                    for palavraSinonima in listaSinonimos:
+                        numRefSin = re.findall('^[0-9]*.', linhaWordNet) #retorna o numero de referencia dos linhaWordNet
+                        sa_palavraSinonima = removePontuacao(palavraSinonima)
+                        for termSinWordNet in sa_palavraSinonima.split():
+                            st_termSinWordNet = stemmer.stem(termSinWordNet)
+                            if radical == st_termSinWordNet:
+                                listaNumRef.append(numRefSin)
+                                listaTodosSin.append(sa_palavraSinonima)
+        dicSin[termo] = listaNumRef
     else: #PARA TRATAR OS ADVÉRBIOS
-        for sinonimos in wordNet: 
-            if(sinonimos.find(termo)>=0):
-                aux1 = re.findall('{[^}]*}', sinonimos)
-                for a in aux1:
-                    aux2 = re.findall('^[0-9]*.', sinonimos) #retorna o numero de referencia dos sinonimos
-                    auxO = removePontuacao(a)
-#                     termoStmO = radicais.stem(termo) #radical de formação do termo de busca (stem)
-                    for b in auxO.split():
-                        x = radicais.stem(b)
-                        if termo == x:
-                            aux.append(aux2)
-        dicSin[termo] = aux
+        for linhaWordNet in wordNet: 
+            if(linhaWordNet.find(termo)>=0):
+                listaSinonimos = re.findall('{[^}]*}', linhaWordNet)
+                for palavraSinonima in listaSinonimos:
+                    numRefSin = re.findall('^[0-9]*.', linhaWordNet) #retorna o numero de referencia dos linhaWordNet
+                    sa_palavraSinonima = removePontuacao(palavraSinonima)
+                    for termSinWordNet in sa_palavraSinonima.split():
+                        st_termSinWordNet = stemmer.stem(termSinWordNet)
+                        if radical == st_termSinWordNet:
+                            listaNumRef.append(numRefSin)
+                            listaTodosSin.append(sa_palavraSinonima)
+        dicSin[termo] = listaNumRef
     
-    return sinonimo
+    for termo, listaNumRef in dicSin.items():
+        temp = '{}: {}'.format(termo, listaNumRef)
+#         print '{}: {}'.format(termo, listaNumRef)
+        dicionario.writelines(temp)
+    
+    dicionario.close()
+#     exit()
+    

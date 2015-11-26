@@ -12,30 +12,31 @@ def findWordInLines(word,linesCopy):
         wordsLine = wordsLine.split(',')
 
         for w in wordsLine:
-
             if w.strip() == word.strip():
-                
                 finded.append(line)
-                #linesCopy.pop(i)
                 index.append(i)
                 i = i+1
                 break
         i = i+1
 
     i = len(index)
+    
     while i > 0:
         linesCopy.pop(i-1)
         i = i - 1
+    
     return linesCopy,finded
 
 def main():
     f = open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r')
+    novaWordNet = open('/home/panceri/git/alpes_v1/base_tep2/novaWordNet.txt', 'w')
 
     lines = f.readlines()
 
     line = lines[0]
-
+    print "inicio"
     print (line)
+     
 
     start = line.index('{')
     end =  line.index('}')
@@ -44,7 +45,7 @@ def main():
     words = line[(start+1):end]
     words = words.split(',')
     lines.pop(0)
-    print len(lines)
+#     print len(lines)
     i=0
     lenwords = len(words)
     while i < lenwords:
@@ -67,15 +68,25 @@ def main():
                     valid = False
                     
             if valid:
-                words.append(w)
+                words.append(w+" ")
+        
+        
         
         lenwords = len(words)
         
-        print ("{2} - {0} - {1}".format(i,len(words),len(lines)))
+#         print ("{2} - {0} - {1}".format(i,len(words),len(lines)))
         i = i + 1
-
+#     print words
+    num = 1
+    auxWords = num.__str__()+"."+" "+"{"+words.__str__()+"}"
+    num = num + 1
+    print auxWords
+    novaWordNet.writelines(auxWords)
+    novaWordNet.close()
     print len(lines)
-    exit()
+    print len(words)
+    print "fim"
+#     exit()
 
 
 if __name__ == "__main__":

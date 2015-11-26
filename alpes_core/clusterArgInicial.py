@@ -75,18 +75,21 @@ def clusterArgInicial(idtese):
     
     #lista com dados pos tagger
     tag_posInicial = []
+    tag_comAce_posInicial = []
     
     #lista com dados após a remoção das stopwords
     sw_tese = []
     sw_posInicial = []
     aux_usu = []
     sw_tagPosInicial = [] #texto marcado e sem stopwords
+    sw_tagcomAce_posInicial = [] #texto COM ACENTOS marcado e sem stopwords 
 
 
     #lista com dados após a aplicação de Stemming
     st_posInicial = []
     st_tese = []
     st_tagPosInicial = [] #texto marcado, sem stopwords e com stemmer aplicado
+    st_tagcomAce_posInicial = [] #texto COM ACENTOS marcado, sem stopwords e com stemmer aplicado
     
 #############################################################################################################    
     #DICIONÁRIO COM OS TERMOS NA FORMA DA RADICAL E RELACIONADOS AO NUMERO DA LINHA DOS SINONIMOS COM BASE
@@ -117,8 +120,8 @@ def clusterArgInicial(idtese):
     
     tagger = nlpnet.POSTagger()
     
-    #armazena o posInicial apenas sem acentos, sem pontuações, sem endereço web e sem numeros
-    semAce_posInicial = [] 
+    semAce_posInicial = [] #armazena o posInicial apenas sem acentos, sem pontuações, sem endereço web e sem numeros 
+    comAce_posInicial = [] #armazena o posInicial apenas COM acentos, sem pontuações, sem endereço web e sem numeros
     
     for i in posInicial:
         semAce_posInicial.append(removePontuacao(removeA(removeNum(removeSE((i))))))
@@ -126,6 +129,12 @@ def clusterArgInicial(idtese):
     
     for i in semAce_posInicial:
         tag_posInicial.append(tagger.tag(i))
+        
+    for i in posInicial:
+        comAce_posInicial.append(removePontuacao(removeNum(removeSE((i)))))
+        
+    for i in comAce_posInicial:
+        tag_comAce_posInicial.append(tagger.tag(i))
 
 #############################################################################################################
 ### REMOCAO DE STOPWORDS
@@ -143,6 +152,9 @@ def clusterArgInicial(idtese):
         
     for i in tag_posInicial:
         sw_tagPosInicial.append(limpaCorpus(i))
+    
+    for i in tag_posInicial:
+        sw_tagcomAce_posInicial.append(limpaCorpus(i))
     
 #     pprint(sw_tagPosInicial)
 #     print len(sw_tagPosInicial)
@@ -181,6 +193,19 @@ def clusterArgInicial(idtese):
             auxST.append(termosST)
         
         st_tagPosInicial.append(auxST)
+        
+    for i in range(len(sw_tagcomAce_posInicial)):
+#         pprint(sw_tagPosInicial[i])
+        termosST = ""
+        auxST = []
+        for j in range(len(sw_tagcomAce_posInicial[i])):
+            aux = stemmer.stem(sw_tagcomAce_posInicial[i][j][0])
+            etiqueta = sw_tagcomAce_posInicial[i][j][1]
+            termosST = (aux,etiqueta)
+            auxST.append(termosST)
+        
+        st_tagcomAce_posInicial.append(auxST)
+    
 #     pprint(st_tagPosInicial)
 #     print len(st_tagPosInicial)
 #     exit()
@@ -194,10 +219,33 @@ def clusterArgInicial(idtese):
 ## DENTRO DA BASE_TEP OS TERMOS TAMBÉM FORAM REDUZIDOS AOS SEUS RADICIAIS DE FORMAÇÃO
 ## O DICIONÁRIO ESTÁ COM A REFERÊNCIA PARA A LINHA AONDE ESTÃO OS TERMOS SINÔNIMOS
     
+    
+#     for texto in st_tagPosInicial:
+#         for termo in texto:
+#             normalizacao(dicSin,termo[0], termo[1])
+    
+    for i in range(len(st_tagPosInicial)):
+        for j in range(len(st_tagPosInicial[i])):
+            termo = sw_tagPosInicial[i][j][0] #termo original digitado pelo aluno
+            radical = st_tagPosInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
+            etiqueta = st_tagPosInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
+            normalizacao(dicSin, termo, radical, etiqueta)
+#             normalizacao(dicSin, termo="tempos", radical="temp", etiqueta="N")
 
-    for texto in st_tagPosInicial:
-        for termo in texto:
-            normalizacao(dicSin,termo[0], termo[1])
+
+#### TESTE COM ANÁLISE DOS TEXTOS ACENTUADOS
+#### TESTE PARA VERIFICAR SE ISSO INFLUENCIA NA APLICAÇÃO DE STEMMER E NA RECUPERAÇÃO DOS SINONIMOS
+    for i in range(len(st_tagcomAce_posInicial)):
+        for j in range(len(st_tagcomAce_posInicial[i])):
+            termo = sw_tagcomAce_posInicial[i][j][0] #termo original digitado pelo aluno
+            radical = st_tagcomAce_posInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
+            etiqueta = st_tagcomAce_posInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
+            normalizacao(dicSin, termo, radical, etiqueta)
+#             normalizacao(dicSin, termo="tempos", radical="temp", etiqueta="N")
+        
+#     for texto in sw_tagPosInicial:
+#         for termo in texto:
+#             normalizacao(dicSin,termo[0], termo[1])
 
 #     pprint(dicSin)
 #     exit()
