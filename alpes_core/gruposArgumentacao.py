@@ -18,37 +18,39 @@ from alpes_core.ex_lsa import similaridade_lsa
 from alpes_core.textProcess import removeA, removePontuacao
 import codecs
 from pprint import pprint
-#####################################################################################################################################################################
-## 1- COLOCAR NA INTERFACE A OPÇÃO DE DIVIDIR EM QUANTOS GRUPOS O PROFESSOR QUER DIVIDIR OS ALUNOS            ##
-## 2- COLOCAR A OPÇÃO DE ESCOLHAR APLICAR LSA COM O ENVIO DE MATERIAIS OU A PARTIR DAS PRÓPRIAS ARGUMENTAÇÕES ##
-## 3- FAZER "SWITCH" PARA ESSAS OPÇÕES E COLOCAR NESTA FUNÇÃO                                                 ##
-## 4- LINKAR ESSA FUNÇÃO NA VIEW DE TESTE (POSINICIAL1)                                                       ##
-## 5- CLUSTERIZAÇÃO FEITA A PARTIR DOS TERMOS NORMALIZADOS!!!! 
-##
-##
-#####################################################################################################################################################################
-## EXPLICAÇÃO DOS PARÂMETROS:
-## K = quantidade de grupos em que os alunos deverão ser divididos
-## LSA = utiliza LSA=True com base nos argumentos por PADRÃO; SE LSA=False, utiliza o materiais didático enviado
-# pelo professor como base para criação dos dicionários para análise
-## auxResult = Passa todos os resultados encontrados com a aplicação da função clusterArgInicial + idTese
-##
-##
-##
+##################################################################################################################
+## 1- COLOCAR NA INTERFACE A OPÇÃO DE DIVIDIR EM QUANTOS GRUPOS O PROFESSOR QUER DIVIDIR OS ALUNOS             ###
+## 2- COLOCAR A OPÇÃO DE ESCOLHAR APLICAR LSA COM O ENVIO DE MATERIAIS OU A PARTIR DAS PRÓPRIAS ARGUMENTAÇÕES  ###
+## 3- FAZER "SWITCH" PARA ESSAS OPÇÕES E COLOCAR NESTA FUNÇÃO                                                  ###
+## 4- LINKAR ESSA FUNÇÃO NA VIEW DE TESTE (POSINICIAL1)                                                        ###
+## 5- CLUSTERIZAÇÃO FEITA A PARTIR DOS TERMOS NORMALIZADOS!!!!                                                 ###
+##                                                                                                             ###
+##################################################################################################################
+## EXPLICAÇÃO DOS PARÂMETROS:                                                                                   ##
+## K = quantidade de grupos em que os alunos deverão ser divididos                                              ##
+## LSA = utiliza LSA=True com base nos argumentos por PADRÃO; SE LSA=False, utiliza o materiais didático enviado##
+# pelo professor como base para criação dos dicionários para análise                                            ##
+## auxResult = Passa todos os resultados encontrados com a aplicação da função clusterArgInicial + idTese       ##
+##                                                                                                              ##
+##################################################################################################################
+
 def gruposArgumentacao(auxResult, K=3, LSA=None):
-#####################################################################################################################################################################    
+    
     grupos = []
     tese = auxResult[5]
-## FALTA FAZER: 
+# FALTA FAZER: 
 # SUBSTITUIR OS TERMOS POR UM NÚMERO DE REFERÊNCIA PARA FAZER A COMPARAÇÃO COM BASE NOS NÚMEROS E NÃO NAS STRINGS
     dicSin = auxResult[6]
+    
+#     pprint(dicSin)
+    
 ## dicSin = contém o dicionario com os termos sinonimos já relacionados (relaciona as palavras digitadas pelos alunos com
 ## o arquivo da wordnet, destaca as relações de sinonimias e apresenta o radical do termo (stemm aplicado) vinculado aos
 ## numeros das linha aonde estão os seus similares na wordnet    
     
-    st_tese = auxResult[0]
-    posIni = auxResult[1]
-    sw_tese = auxResult[2]
+    st_tese = auxResult[0] #texto da tese com aplicação de stemmer
+    posIni = auxResult[1] #texto original da argumentação
+    sw_tese = auxResult[2] 
     aux_usu = auxResult[3]
     st_posInicial = auxResult[4]
 
@@ -234,6 +236,8 @@ def gruposArgumentacao(auxResult, K=3, LSA=None):
 ##########################################################################################
 ## UTILIZADO PARA VALIDAR O CÁLCULO REALIZADO E IMPRIMI-LO                              ##
 ##########################################################################################
+    test_set = st_posInicial
+    train_set = st_tese
     vectorizer = CountVectorizer()
     vectorizer.fit_transform(train_set)
     count_vectorizer = CountVectorizer()

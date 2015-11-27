@@ -1,13 +1,13 @@
 eclipse.preferences.version=1
 encoding//alpes_core/clusterArgFinal.py=utf-8
 encoding//alpes_core/clusterArgInicial.py=utf-8
-encoding//alpes_core/clusterArgInicial1.py=utf-8
 encoding//alpes_core/clusters.py=utf-8
 encoding//alpes_core/ex_kmeans.py=utf-8
 encoding//alpes_core/ex_lsa.py=utf-8
 encoding//alpes_core/gruposArgumentacao.py=utf-8
 encoding//alpes_core/lsa_kmeans.py=utf-8
 encoding//alpes_core/models.py=utf-8
+encoding//alpes_core/naoUtilizados/clusterArgInicial1.py=utf-8
 encoding//alpes_core/naoUtilizados/cosineSimilarity.py=utf-8
 encoding//alpes_core/naoUtilizados/term_freq_Tese.py=utf-8
 encoding//alpes_core/naoUtilizados/term_frequency.py=utf-8

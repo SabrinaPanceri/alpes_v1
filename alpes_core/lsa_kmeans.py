@@ -141,16 +141,18 @@ def LSA_Kmeans(clusters, textoTreinamento, nomeUsuarios, textoComparacao=None):
     for idx, label in enumerate(km_model.labels_):
         clustering[label].append(idx)
  
-    print "clustering _LSA_KMEANS"
-    pprint(clustering)
+ 
+### impressões para visualizar no console
+#     print "clustering _LSA_KMEANS"
+#     pprint(clustering)
     
-    print len(clustering)
+#     print len(clustering)
     
-    for i in range(len(clustering)):
-        for j in clustering[i]:
-            print "grupo", i
-            print j, nomeUsuarios[j]
-            print textoComparacao[j]
+#     for i in range(len(clustering)):
+#         for j in clustering[i]:
+#             print "grupo", i
+#             print j, nomeUsuarios[j]
+#             print textoComparacao[j]
             
     
     return clustering    

@@ -27,15 +27,15 @@ urlpatterns = patterns('',
     #abre o projeto com a página inicio1.html
     url(r'^$', 'alpes_core.views.home', name='home'),
     url(r'^(?P<tese_id>\d+)/$', 'alpes_core.views.teses', name='teses'),
+    
     url(r'^debate/(?P<debate_id>\d+)/$', 'alpes_core.views.debate', name='debate'),
+    
     #view funcional e realizando agrupamentos - usado para o artigo sbie/2015
     url(r'^posInicial/(?P<debate_id>\d+)/$', 'alpes_core.views.posInicial', name='posInicial'), 
     
-    #URL DOS AGRUPAMENTOS - TESTE COM POSINICIAL1
-    url(r'^posInicial1/(?P<debate_id>\d+)/$', 'alpes_core.views.posInicial1', name='posInicial1'),
+    #URL DOS AGRUPAMENTOS - PARA REALIZAR A CLUSTERIZAÇÃO
+    url(r'^clusterizacao/(?P<debate_id>\d+)/$', 'alpes_core.views.clusterizacao', name='posInicial'),
     
-    #não funciona!!!!
-    url(r'^grupos/(?P<debate_id>\d+)/$', 'alpes_core.views.agrupamentos', name='grupos'),
     
     #navegação entre as páginas
 #     url(r'^index', 'alpes_core.views.index', name='index'),

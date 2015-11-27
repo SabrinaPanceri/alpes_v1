@@ -9,7 +9,7 @@
 ##################################################################
 
 #############################################################################################################
-
+from datetime import datetime
 # Imports obrigatorios
 import HTMLParser
 import codecs
@@ -229,14 +229,22 @@ def clusterArgInicial(idtese):
 ## O DICIONÁRIO ESTÁ COM A REFERÊNCIA PARA A LINHA AONDE ESTÃO OS TERMOS SINÔNIMOS
 ## OS TERMOS SÃO ANALISADOS CONSIDERANDO SUAS ACENTUAÇÕES, PARA APLICAÇÃO CORRETA DO RSLP
 #############################################################################################################   
+    qtdeTermos = 0
     for i in range(len(st_tagcomAce_posInicial)):
+        print datetime.now()
         for j in range(len(st_tagcomAce_posInicial[i])):
             termo = sw_tagcomAce_posInicial[i][j][0] #termo original digitado pelo aluno
             radical = st_tagcomAce_posInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
             etiqueta = st_tagcomAce_posInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
 #             print termo, radical, etiqueta
             normalizacaoWordnet(dicSin, termo, radical, etiqueta)
+            qtdeTermos = qtdeTermos + 1
+        print qtdeTermos
+        print datetime.now()
+    
+    print qtdeTermos
     pprint(dicSin)
+    exit()
 
 #############################################################################################################
 ### IMPLEMENTAÇÃO INICIAL TENDO POR BASE A ANÁLISE DOS TEXTOS SEM ACENTOS

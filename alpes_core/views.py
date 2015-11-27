@@ -9,7 +9,7 @@
 ### SABRINASPANCERI@GMAIL.COM                                   ##
 ##################################################################
 
-
+from datetime import datetime
 import HTMLParser
 import re
 from django.shortcuts import render
@@ -616,10 +616,13 @@ def posInicial(request, debate_id):
 	return render(request, 'posInicial.html',context)
 
 
-def posInicial1(request, debate_id):
+def clusterizacao(request, debate_id):
 # TESTE COM CLUSTERIZAÇÃO A PARTIR DO DICIONÁRIO DE SINONIMOS
 # utilizar os número de referência dos sinonimos como base para a análise de similaridade
-
+	print "view-clusterização em funcionamento!!!"
+	inicio = datetime.now()
+	print inicio,"view clusterizacao"
+	
 	auxResult = clusterArgInicial(debate_id)
 	
 	tese = auxResult[5]
@@ -629,6 +632,9 @@ def posInicial1(request, debate_id):
 # 	resultado = gruposArgumentacao(auxResult, 5, True/None/False)
 # 	resultado = gruposArgumentacao(auxResult, 6, True/None/False)
 	
+	fim = datetime.now()
+	print fim
+	
 	grupo1 = resultado[0]
 	grupo2 = resultado[1]
 	grupo3 = resultado[2]
@@ -636,11 +642,12 @@ def posInicial1(request, debate_id):
 	grupo5 = resultado[4]
 	grupo6 = resultado[5]
 
-
+	
+	
+	
 	context = RequestContext(request,{'results' : [grupo1,grupo2,grupo3,grupo4,\
 										len(grupo1),len(grupo2),len(grupo3),len(grupo4), tese, \
 										grupo5, len(grupo5), grupo6, len(grupo6)]})
-	
 	
 	return render(request, 'posInicial.html',context)
 

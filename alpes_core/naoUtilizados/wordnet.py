@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 #encoding =utf8
+##################################################################
+### CÓDIGO DESENVOLVIDO POR SABRINA SIQUEIRA PANCERI            ##
+### PROTÓTIPO DE SUA  DISSERTAÇÃO DE MESTRADO                   ##
+### ESSE CÓDIGO PODE SER COPIADO, ALTERADO E DISTRIBUÍDO        ##
+### DESDE QUE SUA FONTE SEJA REFERENCIADA                       ##
+### PARA MAIS INFORMAÇÕES, ENTRE EM CONTATO ATRAVÉS DO EMAIL    ##
+### SABRINASPANCERI@GMAIL.COM                                   ##
+##################################################################
 
 import codecs
 import re
