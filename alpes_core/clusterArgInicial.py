@@ -231,7 +231,9 @@ def clusterArgInicial(idtese):
 #############################################################################################################   
     qtdeTermos = 0
     for i in range(len(st_tagcomAce_posInicial)):
-        print datetime.now()
+        print sw_tagcomAce_posInicial[i]
+        qtdeTermos = 0
+#         print datetime.now()
         for j in range(len(st_tagcomAce_posInicial[i])):
             termo = sw_tagcomAce_posInicial[i][j][0] #termo original digitado pelo aluno
             radical = st_tagcomAce_posInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
@@ -239,12 +241,16 @@ def clusterArgInicial(idtese):
 #             print termo, radical, etiqueta
             normalizacaoWordnet(dicSin, termo, radical, etiqueta)
             qtdeTermos = qtdeTermos + 1
-        print qtdeTermos
-        print datetime.now()
+#         print qtdeTermos
+#         print datetime.now()
+#         pprint(dicSin)
+        
+
     
-    print qtdeTermos
-    pprint(dicSin)
-    exit()
+#     pprint(dicSin)
+#     print qtdeTermos
+#     print datetime.now()
+#     exit()
 
 #############################################################################################################
 ### IMPLEMENTAÇÃO INICIAL TENDO POR BASE A ANÁLISE DOS TEXTOS SEM ACENTOS

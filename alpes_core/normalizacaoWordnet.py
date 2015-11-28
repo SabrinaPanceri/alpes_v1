@@ -81,29 +81,27 @@ def normalizacaoWordnet(dicSin, termo, radical, etiqueta):
     if etiqueta == "N":
         for linhaWordNet in wordNet:
             if(linhaWordNet.find("[Substantivo]")>=0):
-                termosSinonimos = re.findall('{[^}]*}', linhaWordNet)
+                termosSinonimos = re.findall(r'\{(.*\w)\}', linhaWordNet)
                 for listaSinonimos in termosSinonimos:
-                    sa_listaSinonimos = removePontuacao(listaSinonimos) #lista de linhaWordNet sem as {}
+                    sa_listaSinonimos = removePontuacao(listaSinonimos) #lista de linhaWordNet sem as ,
                     for palavraSinonima in sa_listaSinonimos.split():
                         st_palavraSinonima = stemmer.stem(palavraSinonima)
-#                         auxTermos = sa_listaSinonimos.split()
                         if radical == st_palavraSinonima:
-                            numETerm =  re.findall('^[0-9]*.+{[^}]*}', linhaWordNet)
+                            numETerm = re.findall(r"([0-9]+). \[\w+\] \{(.*)\}",linhaWordNet)
                             listaDicion.append(numETerm)
         dicSin[termo] = listaDicion
-#         pprint(dicSin)
-        
+#             pprint(dicSin)
     elif etiqueta == "ADJ":
         for linhaWordNet in wordNet:
             if(linhaWordNet.find("[Adjetivo]")>=0):
-                termosSinonimos = re.findall('{[^}]*}', linhaWordNet)
+                termosSinonimos = re.findall(r'\{(.*)\}', linhaWordNet)
                 for listaSinonimos in termosSinonimos:
-                    sa_listaSinonimos = removePontuacao(listaSinonimos) #lista de linhaWordNet sem as {}
+                    sa_listaSinonimos = removePontuacao(listaSinonimos) #lista de linhaWordNet sem as ,
                     for palavraSinonima in sa_listaSinonimos.split():
                         st_palavraSinonima = stemmer.stem(palavraSinonima)
 #                         auxTermos = sa_listaSinonimos.split()
                         if radical == st_palavraSinonima:
-                            numETerm =  re.findall('^[0-9]*.+{[^}]*}', linhaWordNet)
+                            numETerm = re.findall(r"([0-9]+). \[\w+\] \{(.*)\}",linhaWordNet)
                             listaDicion.append(numETerm)
         dicSin[termo] = listaDicion
 #         pprint(dicSin)
@@ -111,28 +109,28 @@ def normalizacaoWordnet(dicSin, termo, radical, etiqueta):
     elif etiqueta == "V" or etiqueta == "VAUX":
         for linhaWordNet in wordNet:
             if(linhaWordNet.find("[Verbo]")>=0):
-                termosSinonimos = re.findall('{[^}]*}', linhaWordNet)
+                termosSinonimos = re.findall(r'\{(.*)\}', linhaWordNet)
                 for listaSinonimos in termosSinonimos:
-                    sa_listaSinonimos = removePontuacao(listaSinonimos) #lista de linhaWordNet sem as {}
+                    sa_listaSinonimos = removePontuacao(listaSinonimos) #lista de linhaWordNet sem as ,
                     for palavraSinonima in sa_listaSinonimos.split():
                         st_palavraSinonima = stemmer.stem(palavraSinonima)
 #                         auxTermos = sa_listaSinonimos.split()
                         if radical == st_palavraSinonima:
-                            numETerm =  re.findall('^[0-9]*.+{[^}]*}', linhaWordNet)
+                            numETerm = re.findall(r"([0-9]+). \[\w+\] \{(.*)\}",linhaWordNet)
                             listaDicion.append(numETerm)
         dicSin[termo] = listaDicion
 #         pprint(dicSin)
 
     else: #PARA TRATAR OS ADVÉRBIOS
         for linhaWordNet in wordNet: 
-            termosSinonimos = re.findall('{[^}]*}', linhaWordNet)
+            termosSinonimos = re.findall(r'\{(.*)\}', linhaWordNet)
             for listaSinonimos in termosSinonimos:
-                sa_listaSinonimos = removePontuacao(listaSinonimos) #lista de linhaWordNet sem as {}
+                sa_listaSinonimos = removePontuacao(listaSinonimos) #lista de linhaWordNet sem as ,
                 for palavraSinonima in sa_listaSinonimos.split():
                     st_palavraSinonima = stemmer.stem(palavraSinonima)
 #                     auxTermos = sa_listaSinonimos.split()
                     if radical == st_palavraSinonima:
-                            numETerm =  re.findall('^[0-9]*.+{[^}]*}', linhaWordNet)
+                            numETerm = re.findall(r"([0-9]+). \[\w+\] \{(.*)\}",linhaWordNet)
                             listaDicion.append(numETerm)
         dicSin[termo] = listaDicion
 #         pprint(dicSin)
