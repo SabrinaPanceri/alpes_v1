@@ -18,6 +18,7 @@ encoding//alpes_core/normalizacaoWordnet.py=utf-8
 encoding//alpes_core/organizacaoWordnet.py=utf-8
 encoding//alpes_core/textProcess.py=utf-8
 encoding//alpes_core/views.py=utf-8
+encoding//alpes_core/views2.py=utf-8
 encoding//alpes_v1/settings.py=utf-8
 encoding//alpes_v1/urls.py=utf-8
 encoding//base_tep2/base_tep2.txt=UTF-8

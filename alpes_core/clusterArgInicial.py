@@ -62,6 +62,8 @@ nlpnet.set_data_dir('/home/panceri/nlpnet-data/')
 ##############################################################################################################  
 
 def clusterArgInicial(idtese):
+    inicio = datetime.now()
+    print inicio,"clusterArgInicial"
     #Variaveis e funçoes para conexação com o banco de dados do Debate de Teses
     cursor = connection.cursor()
     cursor2 = connection.cursor()
@@ -231,7 +233,7 @@ def clusterArgInicial(idtese):
 #############################################################################################################   
     qtdeTermos = 0
     for i in range(len(st_tagcomAce_posInicial)):
-        print sw_tagcomAce_posInicial[i]
+#         print sw_tagcomAce_posInicial[i]
         qtdeTermos = 0
 #         print datetime.now()
         for j in range(len(st_tagcomAce_posInicial[i])):
@@ -247,10 +249,10 @@ def clusterArgInicial(idtese):
         
 
     
-#     pprint(dicSin)
+#         pprint(dicSin)
 #     print qtdeTermos
 #     print datetime.now()
-#     exit()
+#         exit()
 
 #############################################################################################################
 ### IMPLEMENTAÇÃO INICIAL TENDO POR BASE A ANÁLISE DOS TEXTOS SEM ACENTOS

@@ -7,12 +7,17 @@ def main():
     print 
 
     dicSin = {}
-    dicSin['velocidade'] = [['18751', "apressuramento, celeridade, ligeireza, \
-    pressa, rapidez, velocidade"]]
-    dicSin['inovadores'] = [['7875', "inovador, inovante, novador"]]
-    dicSin['tempo'] = [['1234', "tempo"]]
-    dicSin['rapidez'] = [['18751', "apressuramento, celeridade, ligeireza, \
-    pressa, rapidez , velocidade"]]
+    dicSin['velocidade'] = [[(u'18751', u'apressuramento, celeridade, ligeireza, pressa, \
+    rapidez, velocidade')]]
+    dicSin['inovadores'] = [[(u'7875', u'inovador, inovante, novador')],\
+                            [(u'7875', u'inovador, inovante, novador')]]
+    dicSin['tempos'] = [[(u'13909', u'\xe9poca, tempo')],[(u'14282', u'dila\xe7\xe3o, prazo, tempo')],\
+                        [(u'14528', u'folga, lugar, tempo, vagar')],\
+             [(u'14691', u'entretempo, \xednterim, meio tempo')],\
+             [(u'16116', u'esta\xe7\xe3o, saz\xe3o, tempo')],\
+             [(u'18250',u'ensejo, hora, lugar, margem, oportunidade, tempo, vez')]]
+    dicSin['rapidez'] = [[(u'18751', u'apressuramento, celeridade, ligeireza, \
+    pressa, rapidez, velocidade')]]
     
     
     texto = []
@@ -29,13 +34,14 @@ def main():
        (torna, V), (exigente, ADJ), (requerendo, V), \
       (plano, N), (negócios, N), (preveja, V), \
       (formas, N), (desenvolver, V), (produto, N), (melhor, ADJ), \
-      (qualidade, N), (maior, ADJ), (agilidade, N), (possível, ADJ), (rapidez, ADJ)")
+      (qualidade, N), (maior, ADJ), (agilidade, N), (possível, ADJ)")
     
     
 #     print texto
 #     print dicSin
     
 #trabalhando com lista
+    posicao = []
     for sliceTexto in texto:
         auxkey = dicSin.keys()
         for aux in auxkey:
@@ -44,6 +50,9 @@ def main():
                     text = text.replace("(","").replace(",","").replace(")","")
                     if aux in text:
                         print aux, text
+                        posicao.append(aux) 
+    print posicao
+                        
                         
                         
                         
@@ -72,3 +81,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
