@@ -263,23 +263,28 @@ def clusterArgInicial(idtese):
 
     
     st_WordNet = [] ##armazena num, tipo, e radical dos sinonimos
-    i = 0
+    
     for linhaWordnet in wordNet:
         listaAux = []
-        linha = re.findall(r"([0-9]+). \[(\w+)\] (\{.*\})",linhaWordnet)
-        start = linha[0][2].index('{')
-        end =  linha[0][2].index('}')
-        wordsLine = linha[0][2][(start+1):end]
-        wordsLine = wordsLine.split(', ')
-        listaAux.append(linha[0][0])
-        listaAux.append(linha[0][1])
-        
-        for dados in wordsLine:
-            dadosStem = stemmer.stem(dados)
-            listaAux.append(dadosStem)
-        
+        num = re.findall(r"([0-9]+)", linhaWordnet)
+        tipo = re.findall(r"\[(.*)\]", linhaWordnet)
+        termos = re.findall(r"\{(.*)\}", linhaWordnet)        
+        listaAux.append(num)
+        listaAux.append(tipo)
+         
+        for T in termos:
+            aux = T.split()
+            auxL = []
+            for i in aux:
+                aux1 = i.replace(",", "")
+                dadosStem = stemmer.stem(aux1)
+                auxL.append(dadosStem)
+            listaAux.append(auxL)
+ 
         st_WordNet.append(listaAux)
-
+        
+#     pprint(st_WordNet)
+#     exit()
 
 #     duration = time.time() - start
 #     stats = yappi.get_func_stats()

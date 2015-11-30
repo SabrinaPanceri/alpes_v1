@@ -48,11 +48,10 @@ import time
 
 
 def normalizacaoWordnet(st_WordNet, sw_tagcomAce_posInicial, st_tagcomAce_posInicial):
-    
-    norm_posInicial = []
-    dicSin = {}
-    
-    qtdeTermosTotal = 0
+
+################################################################
+### MEDIÇÃO DE PROCESSAMENTO / DESEMPENHO / REQUISIÕES #########
+################################################################
     yappi.set_clock_type('cpu')
     yappi.start(builtins=True)      
     start = time.time() 
@@ -60,58 +59,107 @@ def normalizacaoWordnet(st_WordNet, sw_tagcomAce_posInicial, st_tagcomAce_posIni
 #########################################################################################
 ### BUSCA PELOS TERMOS SINÔNIMOS EM st_WordNet E MONTA O DICIONÁRIO COM AS RELAÇÕES    ##
 #########################################################################################    
-
+    dicSin = []
+    qtdeTermosTotal = 0
+    
     for i in range(len(st_tagcomAce_posInicial)):
         qtdeTermos = 0
-#         print datetime.now()
         for j in range(len(st_tagcomAce_posInicial[i])):
-            termo = sw_tagcomAce_posInicial[i][j][0] #termo original digitado pelo aluno
             radical = st_tagcomAce_posInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
             etiqueta = st_tagcomAce_posInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
             qtdeTermos = qtdeTermos + 1
             listaAux = []
             for linhaW in st_WordNet:
-                
-                if etiqueta == 'N' and linhaW[1] == 'Substantivo' and radical in linhaW[2:]:
+
+                if etiqueta == 'N' and linhaW[1][0] == 'Substantivo' and radical in linhaW[2]:
                     listaAux.append(linhaW)
 
-                elif (etiqueta == 'V' or etiqueta == 'VAUX') and linhaW[1] == 'Verbo' and radical in linhaW[2:]:
+                elif (etiqueta == 'V' or etiqueta == 'VAUX') and linhaW[1][0] == 'Verbo' and radical in linhaW[2]:
                     listaAux.append(linhaW)
                 
-                elif etiqueta == 'ADJ' and linhaW[1] == 'Adjetivo' and radical in linhaW[2:]:
+                elif etiqueta == 'ADJ' and linhaW[1][0] == 'Adjetivo' and radical in linhaW[2]:
+                    listaAux.append(linhaW)
+                
+                else: #etiquetas como PDEN, PCP, etc.. 
                     listaAux.append(linhaW)
                     
-                    
-            dicSin[termo] = listaAux
-#         pprint(dicSin)
-        print qtdeTermos
+
+#             dicSin[termo] = listaAux
+            dicSin.append(listaAux)
+#             pprint(dicSin)
+#             exit()
+
+
+
+#         print qtdeTermos
         qtdeTermosTotal = qtdeTermos + qtdeTermosTotal
 #         exit()
-    print qtdeTermosTotal       
-    
-    print "FIM DA NORMALIZAÇAO"
-    
-    duration = time.time() - start
-    stats = yappi.get_func_stats()
-    stats.save('normalizacao.out', type = 'callgrind')
-     
+    print "Total de termos analisados=", qtdeTermosTotal
+    print    
+
     
 #########################################################################################
 ### REALIZA A TROCA DO TERMOS SINÔNIMOS POR UM ÚNICO TERMO E MONTA OS NOVOS            ##
 ### POSICIONAMENTOS INICIAIS PARA ANÁLISE DE SIMILARIDADE NA VARIÁVELS norm_porInicial ##
-#########################################################################################    
+#########################################################################################
+    norm_posInicial = []    
     
-    for i in sw_tagcomAce_posInicial:
-        print i
+#     pprint(dicSin)
+# termo = sw_tagcomAce_posInicial[i][j][0] #termo original digitado pelo aluno
+#                 ind  = linhaW[0][0]
+#                 ind = int(ind)
+#                 dicSin.insert(ind, termo)
+    
+    print "troca de termos"
+    
+    print dicSin[0]
+    
+    for i in range(len(sw_tagcomAce_posInicial)):
+        for j in sw_tagcomAce_posInicial[i]:
+            auxS = ""
+            auxNorm = []
+            auxS = j[0]
+#             for k, v in dicSin.iteritems(): 
+                
+                
+                
+#                 auxStr = auxS + j[1] 
+#                 auxNorm.append(auxStr)
+        
+        
+        
+        norm_posInicial.append(auxNorm)
+    
+
+        
+            
+        
+        
+#         exit()
+        
+        
+#         for i in range(len(sw_tagcomAce_posInicial)):
+#             for j in sw_tagcomAce_posInicial[i]:
+#                 print ""
+#                                 
+#             
+#             
+#         exit()
     
     
     
     
+
+################################################################
+### MEDIÇÃO DE PROCESSAMENTO / DESEMPENHO / REQUISIÕES #########
+################################################################    
+    duration = time.time() - start
+    stats = yappi.get_func_stats()
+    stats.save('normalizacaoWordnet.out', type = 'callgrind')
     
-    
-    
-    
-    
+
+
+#########################################################################################   
     return norm_posInicial
 
 

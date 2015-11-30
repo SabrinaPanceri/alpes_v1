@@ -30,11 +30,11 @@ urlpatterns = patterns('',
     
     url(r'^debate/(?P<debate_id>\d+)/$', 'alpes_core.views.debate', name='debate'),
     
-    #view funcional e realizando agrupamentos - usado para o artigo sbie/2015
-    url(r'^posInicial/(?P<debate_id>\d+)/$', 'alpes_core.views.posInicial', name='posInicial'), 
+#     #view funcional e realizando agrupamentos - usado para o artigo sbie/2015
+#     url(r'^posInicial/(?P<debate_id>\d+)/$', 'alpes_core.views.posInicial', name='posInicial'), 
     
     #URL DOS AGRUPAMENTOS - PARA REALIZAR A CLUSTERIZAÇÃO
-    url(r'^clusterizacao/(?P<debate_id>\d+)/$', 'alpes_core.views.clusterizacao', name='posInicial'),
+    url(r'posInicial/(?P<debate_id>\d+)/$', 'alpes_core.views.clusterizacao', name='clusterizacao'),
     
     
     #navegação entre as páginas
