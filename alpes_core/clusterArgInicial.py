@@ -261,17 +261,24 @@ def clusterArgInicial(idtese):
 #     yappi.start(builtins=True)
 #     start = time.time()    
 
+    wordNet_ST = open('/home/panceri/git/alpes_v1/base_tep2/basetepST.txt', 'w')
+    
+
+    
     
     st_WordNet = [] ##armazena num, tipo, e radical dos sinonimos
     
     for linhaWordnet in wordNet:
         listaAux = []
-        num = re.findall(r"([0-9]+)", linhaWordnet)
-        tipo = re.findall(r"\[(.*)\]", linhaWordnet)
         termos = re.findall(r"\{(.*)\}", linhaWordnet)        
+        num = re.findall(r"([0-9]+)\.", linhaWordnet)
+        print "num-:>", num
+
+        tipo = re.findall(r"\[(.*)\]", linhaWordnet)
+        
         listaAux.append(num)
         listaAux.append(tipo)
-         
+            
         for T in termos:
             aux = T.split()
             auxL = []
@@ -279,11 +286,25 @@ def clusterArgInicial(idtese):
                 aux1 = i.replace(",", "")
                 dadosStem = stemmer.stem(aux1)
                 auxL.append(dadosStem)
+            
+            
             listaAux.append(auxL)
  
         st_WordNet.append(listaAux)
-        
 #     pprint(st_WordNet)
+#     exit()
+        
+# ### CRIANDO NOVO ARQUIVO PARA ANÁLISE
+# ### [NUM][TIPO][SINONIMOS EM SUA FORMA DE RADICAL]
+#     for aux_StWordNet in st_WordNet:
+# #         print aux_StWordNet
+#         for linha_StWordNet in aux_StWordNet:
+#             print linha_StWordNet.__str__()+" "
+#             wordNet_ST.writelines(linha_StWordNet.__str__()+" ")
+#             break
+# #             wordNet_ST.writelines(linha_StWordNet)
+#     
+#     wordNet_ST.close()
 #     exit()
 
 #     duration = time.time() - start
@@ -305,11 +326,13 @@ def clusterArgInicial(idtese):
     
     print posInicial_Normalizado
     
+    
+    
     duration = time.time() - start
     stats = yappi.get_func_stats()
     stats.save('normalizacaoWordnet.out', type = 'callgrind')
 
-
+    exit()
 
 ####################################################################################################################################
 

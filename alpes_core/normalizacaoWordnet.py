@@ -70,24 +70,43 @@ def normalizacaoWordnet(st_WordNet, sw_tagcomAce_posInicial, st_tagcomAce_posIni
             qtdeTermos = qtdeTermos + 1
             listaAux = []
             for linhaW in st_WordNet:
-
-                if etiqueta == 'N' and linhaW[1][0] == 'Substantivo' and radical in linhaW[2]:
-                    listaAux.append(linhaW)
-
-                elif (etiqueta == 'V' or etiqueta == 'VAUX') and linhaW[1][0] == 'Verbo' and radical in linhaW[2]:
-                    listaAux.append(linhaW)
+                print 'linhaW', linhaW
+                print "linhaW[1][0]-> ", linhaW[1][0]
                 
-                elif etiqueta == 'ADJ' and linhaW[1][0] == 'Adjetivo' and radical in linhaW[2]:
-                    listaAux.append(linhaW)
-                
-                else: #etiquetas como PDEN, PCP, etc.. 
-                    listaAux.append(linhaW)
+                for conteudo in linhaW[2]:
                     
-
+                    if radical == conteudo:
+                        print "conteudo-> ", conteudo
+                        print 'radical-> ', radical
+                        
+                        if (etiqueta == 'N' and linhaW[1][0] == 'Substantivo'):
+                            print "IF -> N"
+                            print linhaW
+                            listaAux.append(linhaW)
+    
+                        elif ((etiqueta == 'V' or etiqueta == 'VAUX') and linhaW[1][0] == 'Verbo'):
+                            print "IF -> V"
+                            print linhaW
+                            listaAux.append(linhaW)
+                    
+                        elif (etiqueta == 'ADJ' and linhaW[1][0] == 'Adjetivo'):
+                            print "IF -> adj"
+                            print linhaW
+                            listaAux.append(linhaW)
+                    
+                        else: #etiquetas como PDEN, PCP, etc..
+                            print "IF -> outros"
+                            print linhaW 
+                            listaAux.append(linhaW)
+                
+                        print ""
+                        print 'listaAux'
+                        pprint(listaAux)
+                        exit()
 #             dicSin[termo] = listaAux
-            dicSin.append(listaAux)
+        dicSin.append(listaAux)
 #             pprint(dicSin)
-#             exit()
+        exit()
 
 
 
@@ -112,7 +131,9 @@ def normalizacaoWordnet(st_WordNet, sw_tagcomAce_posInicial, st_tagcomAce_posIni
     
     print "troca de termos"
     
-    print dicSin[0]
+    print len(dicSin)
+    print len(dicSin[0])
+    print len(dicSin[1])
     
     for i in range(len(sw_tagcomAce_posInicial)):
         for j in sw_tagcomAce_posInicial[i]:
