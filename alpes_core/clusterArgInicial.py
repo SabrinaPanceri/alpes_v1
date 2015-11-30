@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 ##################################################################
 ### CÓDIGO DESENVOLVIDO POR SABRINA SIQUEIRA PANCERI            ##
@@ -8,8 +9,8 @@
 ### SABRINASPANCERI@GMAIL.COM                                   ##
 ##################################################################
 
+
 #############################################################################################################
-from datetime import datetime
 # Imports obrigatorios
 import HTMLParser
 import codecs
@@ -22,6 +23,8 @@ from nltk.stem import RSLPStemmer
 from pprint import pprint
 from alpes_core.normalizacaoWordnet import normalizacaoWordnet
 
+import yappi
+import time
 
 # import nltk, sys
 # from alpes_core.textProcess import stemming
@@ -52,18 +55,17 @@ nlpnet.set_data_dir('/home/panceri/nlpnet-data/')
 ## 3 - Remoção pontuações                                                                                   #
 ## 4 - Remoção de stopwords                                                                                 #
 ## 5 - Stemming                                                                                             #
-## 6 - Normalização (em finalizacao!)                                                                       #
+## 6 - Normalização                                                                   #
 #############################################################################################################
 
 ##############################################################################################################
-## DESENVOLVIMENTO DA FERRAMENTA "GRUPOS DE ARGUMENTAÇÃO" - ARTIGO SBIE 2015
-## UTILIZAÇÃO DO POSICIONAMENTO INICIAL PARA CRIAR GRUPOS DE ALUNOS QUE INICIARAM O DEBATE COM CONHECIMENTOS 
+## DESENVOLVIMENTO DA FERRAMENTA "GRUPOS DE ARGUMENTAÇÃO" - PROTÓTIPO ALPES
+## UTILIZAÇÃO DA ARGUMENTAÇÃO INICIAL PARA CRIAR GRUPOS DE ALUNOS QUE INICIARAM O DEBATE COM CONHECIMENTOS 
 ## SIMILARES SOBRE A TESE 
 ##############################################################################################################  
 
 def clusterArgInicial(idtese):
-    inicio = datetime.now()
-    print inicio,"clusterArgInicial"
+
     #Variaveis e funçoes para conexação com o banco de dados do Debate de Teses
     cursor = connection.cursor()
     cursor2 = connection.cursor()
@@ -103,13 +105,13 @@ def clusterArgInicial(idtese):
     st_tagcomAce_posInicial = [] #texto COM ACENTOS marcado, sem stopwords e com stemmer aplicado
     
 #############################################################################################################    
-    #DICIONÁRIO COM OS TERMOS NA FORMA DA RADICAL E RELACIONADOS AO NUMERO DA LINHA DOS SINONIMOS COM BASE
-    # NO ARQUIVO DA WORDNET
-    dicSin = {}
+    #LISTA COM OS POSICIONAMENTOS INICIAIS APÓS APLICAÇÃO DA NORMALIZAÇAÕ
+    posInicial_Normalizado = []
       
 
 #############################################################################################################    
 #Aplicacao de Case Folding
+
     for d in dadosSql:
         dados.append([re.sub('<[^>]*>', '', h.unescape(d[0])).lower(),
                       re.sub('<[^>]*>', '', h.unescape(d[1])).lower()])
@@ -150,7 +152,8 @@ def clusterArgInicial(idtese):
 #############################################################################################################
 ### REMOCAO DE STOPWORDS
 ### Remocao dos termos de acordo com a NLTK
-### Remocao dos termos classificados como artigos, verbos, adjetivos, etc...
+### Remocao dos termos classificados como artigos, verbos, adverbios, etc...
+    
     
     for i in usu:
         aux_usu.append(removeStopWords(i))
@@ -167,13 +170,12 @@ def clusterArgInicial(idtese):
     for i in tag_comAce_posInicial:
         sw_tagcomAce_posInicial.append(limpaCorpus(i))
     
-#     pprint(sw_tagPosInicial)
-#     print len(sw_tagPosInicial)
 
-#############################################################################################################
+####################################################################################################################################
 # Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
 # Retirando afixos dos textos do posInicial e tese
-## FOI NECESSÁRIO RETIRAR OS ACENTOS DOS TERMOS DOS ARQUIVOS COM AS REGRAS DE FORMAÇÃO ## 
+
+    
     stemmer = RSLPStemmer()
  
     for i in range(len(sw_posInicial)):
@@ -216,93 +218,103 @@ def clusterArgInicial(idtese):
             auxST.append(termosST)
         
         st_tagcomAce_posInicial.append(auxST)
+
+
     
-#     pprint(st_tagPosInicial)
-#     print len(st_tagPosInicial)
-#     exit()
+####################################################################################################################################
+### A NORMALIZACAO DE TERMOS REFERE-SE A TECNICA DE TROCAR PALAVRAS SINONIMAS, OU SEJA, QUE TENHAM SIGNIFICADO                    ##
+### SEMELHANTE, POR UM UNICO TERMO REPRESENTATIVO NO CORPUS DE ANALISE. DESSA FORMA, É POSSIVEL AUMENTAR O GRAU                   ##
+### DE SIMILARIDADE ENTRE OS TEXTOS ANALISADOS ATRAVES DO USO DE TECNICAS DE ANALISE ESTATISTICAS, COMO SIMILA                    ##
+### RIDADE DE COSSENOS OU DISTANCIA EUCLIDIANA.                                                                                   ##
+####################################################################################################################################   
+### A NORMALIZACAO FOI DESENVOLVIDA COM BASE NOS DADOS DISPONIBILIZADOS PELO PROJETO TEP 2.0 DO NILC/USP                          ##
+### http://143.107.183.175:21480/tep2/index.htm                                                                                   ##
+###                                                                                                                               ## 
+### FORMATO DO ARQUIVO                                                                                                            ##
+### NUM1. [Tipo] {termos sinonimos} <NUM2>                                                                                        ##
+### 263. [Verbo] {consentir, deixar, permitir} <973>                                                                              ##
+### NUM1 = NUMERO DA LINHA DE REFERENCIA PARA TERMO SINONIMO                                                                      ##
+### NUM2 = NUMERO DA LINHA DE REFERENCIA PARA TERMO ANTONIMO (SENTIDO OPOSTO)                                                     ##
+####################################################################################################################################
     
-#############################################################################################################
-# PROCESSO DE NORMALIZAÇÃO 
-# Troca de termos por seus sinonimos com base na WordNet.BR
-# http://143.107.183.175:21480/tep2/index.htm
-## NORMALIZAÇÃO FEITA COM BASE NOS RADICAIS DE FORMAÇÃO DAS PALAVRAS
-## APLICAÇÃO DO RSPL PRIMEIRO PARA DEPOIS BUSCAR NA BASE OS TERMOS SIMILARES
-## DENTRO DA BASE_TEP OS TERMOS TAMBÉM FORAM REDUZIDOS AOS SEUS RADICIAIS DE FORMAÇÃO
-## O DICIONÁRIO ESTÁ COM A REFERÊNCIA PARA A LINHA AONDE ESTÃO OS TERMOS SINÔNIMOS
-## OS TERMOS SÃO ANALISADOS CONSIDERANDO SUAS ACENTUAÇÕES, PARA APLICAÇÃO CORRETA DO RSLP
-#############################################################################################################   
-    qtdeTermos = 0
-    for i in range(len(st_tagcomAce_posInicial)):
-#         print sw_tagcomAce_posInicial[i]
-        qtdeTermos = 0
-#         print datetime.now()
-        for j in range(len(st_tagcomAce_posInicial[i])):
-            termo = sw_tagcomAce_posInicial[i][j][0] #termo original digitado pelo aluno
-            radical = st_tagcomAce_posInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
-            etiqueta = st_tagcomAce_posInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
-#             print termo, radical, etiqueta
-            normalizacaoWordnet(dicSin, termo, radical, etiqueta)
-            qtdeTermos = qtdeTermos + 1
-#         print qtdeTermos
-#         print datetime.now()
-#         pprint(dicSin)
+    #abre o arquivo com as relacoes de sinonimia (termos linhaWordNet) e antonimia (termos contrarios)
+    #arquivo apenas com termos classificados como substantivos, adjetivos e verbos 
+    base_tep = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
+#     dicionario = open('/home/panceri/git/alpes_v1/base_tep2/dicionarioSinonimos.txt', 'w')
+    
+    #variavel com conteúdo do arquivo em memoria
+    #não imprimir essa variável, MUITO GRANDEE!!!
+    wordNet = base_tep.readlines()
+    
+    #fechar arquivo 
+    base_tep.close()
+    
+####################################################################################################################################
+## NORMALIZAÇÃO FEITA COM BASE NOS RADICAIS DE FORMAÇÃO DAS PALAVRAS                                                              ##
+## APLICAÇÃO DO RSPL PRIMEIRO PARA DEPOIS BUSCAR NA BASE OS TERMOS SIMILARES                                                      ##
+## DENTRO DA BASE_TEP OS TERMOS TAMBÉM FORAM REDUZIDOS AOS SEUS RADICIAIS DE FORMAÇÃO                                             ##
+## O DICIONÁRIO ESTÁ COM A REFERÊNCIA PARA A LINHA AONDE ESTÃO OS TERMOS SINÔNIMOS                                                ##
+## OS TERMOS SÃO ANALISADOS CONSIDERANDO SUAS ACENTUAÇÕES, PARA APLICAÇÃO CORRETA DO RSLP                                         ##
+####################################################################################################################################
+    
+#     yappi.set_clock_type('cpu')
+#     yappi.start(builtins=True)
+#     start = time.time()    
+
+    
+    st_WordNet = [] ##armazena num, tipo, e radical dos sinonimos
+    i = 0
+    for linhaWordnet in wordNet:
+        listaAux = []
+        linha = re.findall(r"([0-9]+). \[(\w+)\] (\{.*\})",linhaWordnet)
+        start = linha[0][2].index('{')
+        end =  linha[0][2].index('}')
+        wordsLine = linha[0][2][(start+1):end]
+        wordsLine = wordsLine.split(', ')
+        listaAux.append(linha[0][0])
+        listaAux.append(linha[0][1])
         
+        for dados in wordsLine:
+            dadosStem = stemmer.stem(dados)
+            listaAux.append(dadosStem)
+        
+        st_WordNet.append(listaAux)
 
+
+#     duration = time.time() - start
+#     stats = yappi.get_func_stats()
+#     stats.save('stemmWordNet.out', type = 'callgrind')
     
-#         pprint(dicSin)
-#     print qtdeTermos
-#     print datetime.now()
-#         exit()
-
-#############################################################################################################
-### IMPLEMENTAÇÃO INICIAL TENDO POR BASE A ANÁLISE DOS TEXTOS SEM ACENTOS
-### SE UTILIZAR A APLICAÇÃO DO RSLP PRIMEIRO, NÃO PRODUZ BONS RESULTADOS
-### SE BUSCAR COM BASE NO TERMO, PODE SER UTILIZADO, POIS A COMPARAÇÃO NÃO É PREJUDICADA
-#     for i in range(len(st_tagPosInicial)):
-#         for j in range(len(st_tagPosInicial[i])):
-#             termo = sw_tagPosInicial[i][j][0] #termo original digitado pelo aluno
-#             radical = st_tagPosInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
-#             etiqueta = st_tagPosInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
-#             normalizacao(dicSin, termo, radical, etiqueta)
-#             normalizacao(dicSin, termo="tempos", radical="temp", etiqueta="N")
-
-#############################################################################################################
-# #LSI
-#     lsi_posInicial = []
-#     for i in range(len(sw_posInicial)):
-#         aux = "posIni(%d): %s" %(i, sw_posInicial[i])
-#         lsi_posInicial.append(aux)
-# 
-# 
-#     lsi = gensim.models.lsimodel.LsiModel(lsi_posInicial)
-# # #     print sw_posInicial
-#     lsi.print_topics(10)
-
-
-#############################################################################################################
-### Semantic Role Labeling model 
-### http://www.nilc.icmc.usp.br/nlpnet/models.html#srl-portuguese
-### Marcacao semantica funcionando. Verificar como usar para melhorar os resultados.
-#     srl_tagger = nlpnet.SRLTagger()
-#     auxSrl_PosIni = [] 
-#     srl_PosIni = [] #posicionamento inicial tagueado com SRL 
-#     
-#     for i in posInicial:
-#         auxSrl_PosIni.append(srl_tagger.tag(i))
-#       
-#     for aux in auxSrl_PosIni:
-#         for j in aux:
-#             srl_PosIni.append(j.arg_structures)
+####################################################################################################################################
+### A ANÁLISE É REALIZADA COM BASE NO TEXTO SEM A EXCLUSÃO DOS ACENTOS                                                            ##
+### POIS AO EXCLUÍ-LOS A REDUÇÃO AO RADICAL DE FORMAÇÃO (APLICAÇÃO DO RSLP) É PREJUDICADA                                         ##
+### OS TESTES REALIZADOS MOSTRARAM QUE ESSA É UMA MELHOR ABORDAGEM, UMA VEZ QUE NOSSOS TEXTOS SÃO PEQUENOS                        ##
+### E PRECISAMOS CHEGAR O MAIS PRÓXIMO POSSÍVEL SEM CONSIDERAR SEUS SENTIDOS E/OU CONTEXTOS                                       ##
+####################################################################################################################################
+    yappi.set_clock_type('cpu')
+    yappi.start(builtins=True)
+    start = time.time()    
+    
+    posInicial_Normalizado = normalizacaoWordnet(st_WordNet, sw_tagcomAce_posInicial, st_tagcomAce_posInicial)
+    
+    
+    print posInicial_Normalizado
+    
+    duration = time.time() - start
+    stats = yappi.get_func_stats()
+    stats.save('normalizacaoWordnet.out', type = 'callgrind')
 
 
 
-#############################################################################################################
+####################################################################################################################################
+
 #retorno da função - usado na views.py para alimentar o template debate.html
 #passar parametros que devem ser apresentados na templates debate.html
-    return [st_tese, posInicial, sw_tese, aux_usu, st_posInicial, tese, dicSin]
+    return [st_tese, posInicial, sw_tese, aux_usu, st_posInicial, tese, posInicial_Normalizado]
 
 
-#############################################################################################################
+####################################################################################################################################
+
 
 
 

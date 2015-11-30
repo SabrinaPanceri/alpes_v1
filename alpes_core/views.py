@@ -19,6 +19,8 @@ from django.db import connection
 from alpes_core.models import Tese
 from alpes_core.clusterArgInicial import clusterArgInicial
 from alpes_core.gruposArgumentacao import gruposArgumentacao
+import yappi
+import time
 
 
 # Create your views here.
@@ -79,7 +81,6 @@ def teses(request, tese_id):
 	return render(request, 'inicio1.html', context)
 
 
-
 def clusterizacao(request, debate_id):
 # TESTE COM CLUSTERIZAÇÃO A PARTIR DO DICIONÁRIO DE SINONIMOS
 # utilizar os número de referência dos sinonimos como base para a análise de similaridade
@@ -87,16 +88,32 @@ def clusterizacao(request, debate_id):
 	inicio = datetime.now()
 	print inicio,"view clusterizacao"
 	
+	yappi.set_clock_type('cpu')
+	yappi.start(builtins=True)
+	start = time.time()
+	
 	auxResult = clusterArgInicial(debate_id)
 	
+	duration = time.time() - start
+	stats = yappi.get_func_stats()
+	stats.save('clusterArgInicial.out', type = 'callgrind')
+	
+	
+	
 	tese = auxResult[5]
-
+	
+	yappi.set_clock_type('cpu')
+	yappi.start(builtins=True)
+	start = time.time()
+	
 	resultado = gruposArgumentacao(auxResult, 3, True)
 # 	resultado = gruposArgumentacao(auxResult, 4, True/None/False)
 # 	resultado = gruposArgumentacao(auxResult, 5, True/None/False)
 # 	resultado = gruposArgumentacao(auxResult, 6, True/None/False)
 	
-	
+	duration = time.time() - start
+	stats = yappi.get_func_stats()
+	stats.save('gruposArgumentacao.out', type = 'callgrind')
 	
 	grupo1 = resultado[0]
 	grupo2 = resultado[1]

@@ -30,11 +30,11 @@
 ### E PRECISAMOS CHEGAR O MAIS PRÓXIMO POSSÍVEL SEM CONSIDERAR SEUS SENTIDOS E/OU CONTEXTOS                                       ##
 ####################################################################################################################################
 
-import codecs
-import re
-from alpes_core.textProcess import removeA, removePontuacao
+
 from pprint import pprint
-from nltk import RSLPStemmer
+
+import yappi
+import time
 
 ##########################################################################
 ### CRIAÇÃO DO DICIONÁRIO COM AS RELAÇÕES DE SINONÍMIA ENCONTRADAS     ###
@@ -47,101 +47,88 @@ from nltk import RSLPStemmer
 ##########################################################################
 
 
-def normalizacaoWordnet(dicSin, termo, radical, etiqueta):
-    #variáveis locais
-    SA_wordnet = [] #armazena a wordnet sem acentos   
-    listaDicion = [] #lista com o número da linha de referência dos termos sinominos e com todos os termos sinonimos encontrados 
+def normalizacaoWordnet(st_WordNet, sw_tagcomAce_posInicial, st_tagcomAce_posInicial):
     
-    #abre o arquivo com as relacoes de sinonimia (termos linhaWordNet) e antonimia (termos contrarios) 
-    base_tep = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
-#     dicionario = open('/home/panceri/git/alpes_v1/base_tep2/dicionarioSinonimos.txt', 'w')
+    norm_posInicial = []
+    dicSin = {}
     
-    #variavel com conteúdo do arquivo em memoria
-    #não imprimir essa variável, MUITO GRANDEE!!!
-    wordNet = base_tep.readlines()
+    qtdeTermosTotal = 0
+    yappi.set_clock_type('cpu')
+    yappi.start(builtins=True)      
+    start = time.time() 
     
-    #fechar arquivo 
-    base_tep.close()
-    
-    #retirar acentos da base
-    for i in wordNet:
-        SA_wordnet.append(removeA(i))
-    
-    #teste com busca pelo radical (stemmer)
-    stemmer = RSLPStemmer()
-    
-#     termoStm = stemmer.stem(termo)
+#########################################################################################
+### BUSCA PELOS TERMOS SINÔNIMOS EM st_WordNet E MONTA O DICIONÁRIO COM AS RELAÇÕES    ##
+#########################################################################################    
 
-    
-#     print termo, radical, etiqueta
+    for i in range(len(st_tagcomAce_posInicial)):
+        qtdeTermos = 0
+#         print datetime.now()
+        for j in range(len(st_tagcomAce_posInicial[i])):
+            termo = sw_tagcomAce_posInicial[i][j][0] #termo original digitado pelo aluno
+            radical = st_tagcomAce_posInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
+            etiqueta = st_tagcomAce_posInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
+            qtdeTermos = qtdeTermos + 1
+            listaAux = []
+            for linhaW in st_WordNet:
+                
+                if etiqueta == 'N' and linhaW[1] == 'Substantivo' and radical in linhaW[2:]:
+                    listaAux.append(linhaW)
 
-    # busca termo dentro de arquivo
-    # armazena termo como chave do dicionario
-    # os linhaWordNet são armazenados como uma lista
-    if etiqueta == "N":
-        for linhaWordNet in wordNet:
-            if(linhaWordNet.find("[Substantivo]")>=0):
-                termosSinonimos = re.findall(r'\{(.*\w)\}', linhaWordNet)
-                for listaSinonimos in termosSinonimos:
-                    sa_listaSinonimos = removePontuacao(listaSinonimos) #lista de linhaWordNet sem as ,
-                    for palavraSinonima in sa_listaSinonimos.split():
-                        st_palavraSinonima = stemmer.stem(palavraSinonima)
-                        if radical == st_palavraSinonima:
-                            numETerm = re.findall(r"([0-9]+). \[\w+\] \{(.*)\}",linhaWordNet)
-                            listaDicion.append(numETerm)
-        dicSin[termo] = listaDicion
-#             pprint(dicSin)
-    elif etiqueta == "ADJ":
-        for linhaWordNet in wordNet:
-            if(linhaWordNet.find("[Adjetivo]")>=0):
-                termosSinonimos = re.findall(r'\{(.*)\}', linhaWordNet)
-                for listaSinonimos in termosSinonimos:
-                    sa_listaSinonimos = removePontuacao(listaSinonimos) #lista de linhaWordNet sem as ,
-                    for palavraSinonima in sa_listaSinonimos.split():
-                        st_palavraSinonima = stemmer.stem(palavraSinonima)
-#                         auxTermos = sa_listaSinonimos.split()
-                        if radical == st_palavraSinonima:
-                            numETerm = re.findall(r"([0-9]+). \[\w+\] \{(.*)\}",linhaWordNet)
-                            listaDicion.append(numETerm)
-        dicSin[termo] = listaDicion
+                elif (etiqueta == 'V' or etiqueta == 'VAUX') and linhaW[1] == 'Verbo' and radical in linhaW[2:]:
+                    listaAux.append(linhaW)
+                
+                elif etiqueta == 'ADJ' and linhaW[1] == 'Adjetivo' and radical in linhaW[2:]:
+                    listaAux.append(linhaW)
+                    
+                    
+            dicSin[termo] = listaAux
 #         pprint(dicSin)
+        print qtdeTermos
+        qtdeTermosTotal = qtdeTermos + qtdeTermosTotal
+#         exit()
+    print qtdeTermosTotal       
+    
+    print "FIM DA NORMALIZAÇAO"
+    
+    duration = time.time() - start
+    stats = yappi.get_func_stats()
+    stats.save('normalizacao.out', type = 'callgrind')
+     
+    
+#########################################################################################
+### REALIZA A TROCA DO TERMOS SINÔNIMOS POR UM ÚNICO TERMO E MONTA OS NOVOS            ##
+### POSICIONAMENTOS INICIAIS PARA ANÁLISE DE SIMILARIDADE NA VARIÁVELS norm_porInicial ##
+#########################################################################################    
+    
+    for i in sw_tagcomAce_posInicial:
+        print i
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    return norm_posInicial
 
-    elif etiqueta == "V" or etiqueta == "VAUX":
-        for linhaWordNet in wordNet:
-            if(linhaWordNet.find("[Verbo]")>=0):
-                termosSinonimos = re.findall(r'\{(.*)\}', linhaWordNet)
-                for listaSinonimos in termosSinonimos:
-                    sa_listaSinonimos = removePontuacao(listaSinonimos) #lista de linhaWordNet sem as ,
-                    for palavraSinonima in sa_listaSinonimos.split():
-                        st_palavraSinonima = stemmer.stem(palavraSinonima)
-#                         auxTermos = sa_listaSinonimos.split()
-                        if radical == st_palavraSinonima:
-                            numETerm = re.findall(r"([0-9]+). \[\w+\] \{(.*)\}",linhaWordNet)
-                            listaDicion.append(numETerm)
-        dicSin[termo] = listaDicion
-#         pprint(dicSin)
 
-    else: #PARA TRATAR OS ADVÉRBIOS
-        for linhaWordNet in wordNet: 
-            termosSinonimos = re.findall(r'\{(.*)\}', linhaWordNet)
-            for listaSinonimos in termosSinonimos:
-                sa_listaSinonimos = removePontuacao(listaSinonimos) #lista de linhaWordNet sem as ,
-                for palavraSinonima in sa_listaSinonimos.split():
-                    st_palavraSinonima = stemmer.stem(palavraSinonima)
-#                     auxTermos = sa_listaSinonimos.split()
-                    if radical == st_palavraSinonima:
-                            numETerm = re.findall(r"([0-9]+). \[\w+\] \{(.*)\}",linhaWordNet)
-                            listaDicion.append(numETerm)
-        dicSin[termo] = listaDicion
-#         pprint(dicSin)
-        
-#     pprint(dicSin)
-#     exit()
 
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

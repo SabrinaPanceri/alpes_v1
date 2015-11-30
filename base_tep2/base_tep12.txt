@@ -1,0 +1,6 @@
+1. [Verbo] {exagerar, exceder, quinta-essenciar, rebuscar, refinar, requintar}
+2. [Verbo] {ababalhar, babar, escumar, espumar}
+4147. [Adjetivo] {atrapalhado, encalacrado, entalado}
+11421. [Substantivo] {abalançamento, balanço, oscilação} <15059>
+11422. [Substantivo] {apreciação, estimativa}
+18751. [Substantivo] {apressuramento, celeridade, ligeireza, pressa, rapidez, velocidade} <17778>

@@ -9,6 +9,7 @@ encoding//alpes_core/lsa_kmeans.py=utf-8
 encoding//alpes_core/models.py=utf-8
 encoding//alpes_core/naoUtilizados/clusterArgInicial1.py=utf-8
 encoding//alpes_core/naoUtilizados/cosineSimilarity.py=utf-8
+encoding//alpes_core/naoUtilizados/normalizacao.py=utf-8
 encoding//alpes_core/naoUtilizados/term_freq_Tese.py=utf-8
 encoding//alpes_core/naoUtilizados/term_frequency.py=utf-8
 encoding//alpes_core/naoUtilizados/text_process.py=utf-8
