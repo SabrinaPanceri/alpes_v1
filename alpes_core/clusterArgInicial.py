@@ -261,29 +261,79 @@ def clusterArgInicial(idtese):
 #     yappi.start(builtins=True)
 #     start = time.time()    
 
-    st_WordNet = [] ##armazena num, tipo, e radical dos sinonimos
+    st_WordNetV = [] ##armazena num, tipo, e radical dos sinonimos - APENAS VERBOS
+    st_WordNetN = [] ##armazena num, tipo, e radical dos sinonimos - APENAS SUBSTANTIVOS
+    st_WordNetA = [] ##armazena num, tipo, e radical dos sinonimos - APENAS ADJETIVOS
+    st_WordNetO = [] ##armazena num, tipo, e radical dos sinonimos - APENAS OUTROS
     
     for linhaWordnet in wordNet:
         listaAux = []
-        termos = re.findall(r"\{(.*)\}", linhaWordnet)        
+        termos = re.findall(r"\{(.*)\}", linhaWordnet)
         num = re.findall(r"([0-9]+)\.", linhaWordnet)
         tipo = re.findall(r"\[(.*)\]", linhaWordnet)
         
-        listaAux.append(num)
-        listaAux.append(tipo)
+        
+        if tipo[0] == "Substantivo":
+            listaAux.append(num)
+            listaAux.append(tipo)
             
-        for T in termos:
-            aux = T.split()
-            auxL = []
-            for i in aux:
-                aux1 = i.replace(",", "")
-                dadosStem = stemmer.stem(aux1)
-                auxL.append(dadosStem)
+            for T in termos:
+                aux = T.split()
+                auxL = []
+                for i in aux:
+                    aux1 = i.replace(",", "")
+                    dadosStem = stemmer.stem(aux1)
+                    auxL.append(dadosStem)
+                listaAux.append(auxL)
+            st_WordNetN.append(listaAux)
             
+        elif tipo[0] == "Verbo":
+            listaAux.append(num)
+            listaAux.append(tipo)
             
-            listaAux.append(auxL)
- 
-        st_WordNet.append(listaAux)
+            for T in termos:
+                aux = T.split()
+                auxL = []
+                for i in aux:
+                    aux1 = i.replace(",", "")
+                    dadosStem = stemmer.stem(aux1)
+                    auxL.append(dadosStem)
+                listaAux.append(auxL)
+            st_WordNetV.append(listaAux)
+        
+        elif tipo[0] == "Adjetivo":
+            listaAux.append(num)
+            listaAux.append(tipo)
+            
+            for T in termos:
+                aux = T.split()
+                auxL = []
+                for i in aux:
+                    aux1 = i.replace(",", "")
+                    dadosStem = stemmer.stem(aux1)
+                    auxL.append(dadosStem)
+                listaAux.append(auxL)
+            st_WordNetA.append(listaAux)
+        else:
+            listaAux.append(num)
+            listaAux.append(tipo)
+            
+            for T in termos:
+                aux = T.split()
+                auxL = []
+                for i in aux:
+                    aux1 = i.replace(",", "")
+                    dadosStem = stemmer.stem(aux1)
+                    auxL.append(dadosStem)
+                listaAux.append(auxL)
+            st_WordNetO.append(listaAux)
+            
+#     print len(st_WordNetA) #6647
+#     print len(st_WordNetN) #8526
+#     print len(st_WordNetV) #4145
+#     print len(st_WordNetO) #566
+#     
+#     exit()
 
 
 #     duration = time.time() - start
@@ -300,7 +350,8 @@ def clusterArgInicial(idtese):
     yappi.start(builtins=True)
     start = time.time()    
     
-    posInicial_Normalizado = normalizacaoWordnet(st_WordNet, sw_tagcomAce_posInicial, st_tagcomAce_posInicial)
+    posInicial_Normalizado = normalizacaoWordnet(st_WordNetA,st_WordNetN, st_WordNetN, st_WordNetO, \
+                                                  sw_tagcomAce_posInicial, st_tagcomAce_posInicial)
     
     
     print posInicial_Normalizado

@@ -47,7 +47,7 @@ import time
 ##########################################################################
 
 
-def normalizacaoWordnet(st_WordNet, sw_tagcomAce_posInicial, st_tagcomAce_posInicial):
+def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutros, sw_tagcomAce_posInicial, st_tagcomAce_posInicial):
 
 ################################################################
 ### MEDIÇÃO DE PROCESSAMENTO / DESEMPENHO / REQUISIÕES #########
@@ -59,100 +59,68 @@ def normalizacaoWordnet(st_WordNet, sw_tagcomAce_posInicial, st_tagcomAce_posIni
 #########################################################################################
 ### BUSCA PELOS TERMOS SINÔNIMOS EM st_WordNet E MONTA O DICIONÁRIO COM AS RELAÇÕES    ##
 #########################################################################################    
-    dicSin = []
+    dicSin = [] ##guarda todas as relações de sinonímia para os termos de cada argumentação
+    
     qtdeTermosTotal = 0 #1163
     
     print "BUSCA PELOS TERMOS SINÔNIMOS EM st_WordNet E MONTA O DICIONÁRIO COM AS RELAÇÕES"
     
     ## pega cada argumento (21 no total)
-    for i in range(len(st_tagcomAce_posInicial)):
+    for iST in range(len(st_tagcomAce_posInicial)):
         qtdeTermos = 0
-        
+        listaAuxDic = []
         ## pega cada palavra do argumento (para argumento 1 = 46 palavras)
-        for j in range(len(st_tagcomAce_posInicial[i])):
+        ## (1183 termos total)
+        
+        for jST in range(len(st_tagcomAce_posInicial[iST])):
             qtdeTermos = qtdeTermos + 1
 #             print st_tagcomAce_posInicial[i][j] 
-            radical = st_tagcomAce_posInicial[i][j][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
+            radical = st_tagcomAce_posInicial[iST][jST][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
+#             radical = 'confes'
+            etiqueta = st_tagcomAce_posInicial[iST][jST][1] #etiqueta morfológica do termo com base no Tagger NPLNet
             
-            etiqueta = st_tagcomAce_posInicial[i][j][1] #etiqueta morfológica do termo com base no Tagger NPLNet
-            
-            
-            #roda dentro da wordnet (19884 linhas)
-            for a in range(len(st_WordNet)):
+            if etiqueta == "N":
+                for i in range(len(listaSubstantivos)):
+                    for aux_radical in listaSubstantivos[i][2]:
+                        if aux_radical == radical: 
+                            listaAuxDic.append(listaSubstantivos[i])
+
+            elif etiqueta == "V" or etiqueta == "VAUX":
+                for i in range(len(listaVerbos)):
+                    for aux_radical in listaVerbos[i][2]:
+                        if aux_radical == radical:
+                            listaAuxDic.append(listaVerbos[i])
+                        
+            elif etiqueta == "ADJ":
+                for i in range(len(listaAdjetivos)):
+                    for aux_radical in listaAdjetivos[i][2]:
+                        if aux_radical == radical:
+                            listaAuxDic.append(listaAdjetivos[i])
+            else:
+                for i in range(len(listaOutros)):
+                    for aux_radical in listaOutros[i][2]:
+                        if aux_radical == radical:
+                            listaAuxDic.append(listaOutros[i])
+        
+        print qtdeTermos
+        dicSin.append(listaAuxDic)    
+        
+        qtdeTermosTotal = qtdeTermosTotal + qtdeTermos
+                            
                 
-                for termos in st_WordNet[a][2]:
-                  
-                    if radical == termos:
-                        if etiqueta == 'N' and st_WordNet[a][1][0] == 'Substantivo':
-                            print 'st_WordNet[a] - N -> ', st_WordNet[a]
-                            dicSin.append(st_WordNet[a])
-                        elif (etiqueta == 'V' or etiqueta == 'VAUX') and st_WordNet[a][1][0] == 'Verbo':
-                            print 'st_WordNet[a] - V -> ', st_WordNet[a]
-                            dicSin.append(st_WordNet[a])
-                        elif etiqueta == 'ADJ' and st_WordNet[a][1][0] == 'Adjetivo':
-                            print 'st_WordNet[a] - ADJ -> ', st_WordNet[a]
-                            dicSin.append(st_WordNet[a])
-                        elif etiqueta == 'PDEN' or etiqueta == 'PCP' and st_WordNet[a][1][0] != 'Adjetivo'\
-                        and st_WordNet[a][1][0] != 'Substantivo' and st_WordNet[a][1][0] != 'Verbo':
-                            print 'st_WordNet[a] - PDEN -> ', st_WordNet[a]
-                            dicSin.append(st_WordNet[a])
-                        else:
-                            print "NÃO ENCONTRADO!!!!"
+    
+    print qtdeTermosTotal
+    print len(dicSin)
+#     pprint(st_tagcomAce_posInicial[0])
+#     pprint(dicSin[0])
+    
+#     pprint(dicSin)
+        
+    exit()
                 
             
-            print qtdeTermos
-        qtdeTermosTotal = qtdeTermos + qtdeTermosTotal
-        print qtdeTermosTotal
-        print len(dicSin) 
-        pprint(dicSin)
-        exit()
-                    
-#                     linhaW = ""
-#                     auxI = auxI + 1
-#                      
-#                     if radical in linhaW[2]:
-#     #                     print 'radical-> ', radical
-#     #                     print 'linha2->', linhaW[2]   
-#                           
-#                         if (etiqueta == 'N' and linhaW[1][0] == 'Substantivo'):
-#     #                         print "IF -> N"
-#     #                         print linhaW
-#                             listaAux.append(linhaW)
-#       
-#                         elif ((etiqueta == 'V' or etiqueta == 'VAUX') and linhaW[1][0] == 'Verbo'):
-#     #                         print "IF -> V"
-#     #                         print linhaW
-#                             listaAux.append(linhaW)
-#                       
-#                         elif (etiqueta == 'ADJ' and linhaW[1][0] == 'Adjetivo'):
-#     #                         print "IF -> adj"
-#     #                         print linhaW
-#                             listaAux.append(linhaW)
-#                       
-#                         elif etiqueta == 'PDEN' or etiqueta == 'PCP': #etiquetas como PDEN, PCP, etc..
-#     #                         print "IF -> outros"
-#     #                         print linhaW 
-#                             listaAux.append(linhaW)
-#                     else:
-#                         print "ELSE"
-#                         break
-#                      
-#                     print 'auxI',auxI
-#                      
-#                 print 'listaAux'
-#                 pprint(listaAux)
-#          
-#          
-#         dicSin.append(listaAux)
-#         print 'dicSin'
-#         pprint(dicSin)
-#          
-#         print qtdeTermos
-#         qtdeTermosTotal = qtdeTermos + qtdeTermosTotal
-#          
-#     print "Total de termos analisados=", qtdeTermosTotal
-#     print    
-#     exit()
+            
+           
 #     
 #########################################################################################
 ### REALIZA A TROCA DO TERMOS SINÔNIMOS POR UM ÚNICO TERMO E MONTA OS NOVOS            ##
