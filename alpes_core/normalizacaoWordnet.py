@@ -60,7 +60,6 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
 ### BUSCA PELOS TERMOS SINÔNIMOS EM st_WordNet E MONTA O DICIONÁRIO COM AS RELAÇÕES    ##
 #########################################################################################    
     dicSin = [] ##guarda todas as relações de sinonímia para os termos de cada argumentação
-    
     qtdeTermosTotal = 0 #1163
     
     print "BUSCA PELOS TERMOS SINÔNIMOS EM st_WordNet E MONTA O DICIONÁRIO COM AS RELAÇÕES"
@@ -69,99 +68,70 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
     for iST in range(len(st_tagcomAce_posInicial)):
         qtdeTermos = 0
         listaAuxDic = []
+        
         ## pega cada palavra do argumento (para argumento 1 = 46 palavras)
         ## (1183 termos total)
-        
         for jST in range(len(st_tagcomAce_posInicial[iST])):
             qtdeTermos = qtdeTermos + 1
-#             print st_tagcomAce_posInicial[i][j] 
             radical = st_tagcomAce_posInicial[iST][jST][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
-#             radical = 'confes'
             etiqueta = st_tagcomAce_posInicial[iST][jST][1] #etiqueta morfológica do termo com base no Tagger NPLNet
-            
+
             if etiqueta == "N":
                 for i in range(len(listaSubstantivos)):
                     for aux_radical in listaSubstantivos[i][2]:
-                        if aux_radical == radical: 
-                            listaAuxDic.append(listaSubstantivos[i])
+                        if aux_radical == radical:
+                            listaAuxDic.append(listaSubstantivos[i][2])
 
             elif etiqueta == "V" or etiqueta == "VAUX":
                 for i in range(len(listaVerbos)):
                     for aux_radical in listaVerbos[i][2]:
                         if aux_radical == radical:
-                            listaAuxDic.append(listaVerbos[i])
+                            listaAuxDic.append(listaVerbos[i][2])
                         
             elif etiqueta == "ADJ":
                 for i in range(len(listaAdjetivos)):
                     for aux_radical in listaAdjetivos[i][2]:
                         if aux_radical == radical:
-                            listaAuxDic.append(listaAdjetivos[i])
+                            listaAuxDic.append(listaAdjetivos[i][2])
             else:
                 for i in range(len(listaOutros)):
                     for aux_radical in listaOutros[i][2]:
                         if aux_radical == radical:
-                            listaAuxDic.append(listaOutros[i])
-        
-        print qtdeTermos
-        dicSin.append(listaAuxDic)    
+                            listaAuxDic.append(listaOutros[i][2])
+
+        dicSin.append(listaAuxDic)
         
         qtdeTermosTotal = qtdeTermosTotal + qtdeTermos
                             
+    print "Dicionário de sinônimos pronto!!"
+    print "Total de termos analisados: ", qtdeTermosTotal
                 
-    
-    print qtdeTermosTotal
-    print len(dicSin)
-#     pprint(st_tagcomAce_posInicial[0])
-#     pprint(dicSin[0])
-    
-#     pprint(dicSin)
-        
-    exit()
-                
-            
-            
-           
-#     
 #########################################################################################
 ### REALIZA A TROCA DO TERMOS SINÔNIMOS POR UM ÚNICO TERMO E MONTA OS NOVOS            ##
 ### POSICIONAMENTOS INICIAIS PARA ANÁLISE DE SIMILARIDADE NA VARIÁVELS norm_porInicial ##
 #########################################################################################
     norm_posInicial = []    
     
-#     pprint(dicSin)
-# termo = sw_tagcomAce_posInicial[i][j][0] #termo original digitado pelo aluno
-#                 ind  = linhaW[0][0]
-#                 ind = int(ind)
-#                 dicSin.insert(ind, termo)
-    
-    print "troca de termos"
+    print "TROCA DE TERMOS"
     
     print len(dicSin)
-    print len(dicSin[0])
-    print len(dicSin[1])
     
     for i in range(len(sw_tagcomAce_posInicial)):
         for j in sw_tagcomAce_posInicial[i]:
-            auxS = ""
-            auxNorm = []
-            auxS = j[0]
-#             for k, v in dicSin.iteritems(): 
-                
-                
-                
-#                 auxStr = auxS + j[1] 
-#                 auxNorm.append(auxStr)
+            
+            
+
         
         
         
-        norm_posInicial.append(auxNorm)
+
     
 
         
             
         
         
-#         exit()
+            exit()
         
         
 #         for i in range(len(sw_tagcomAce_posInicial)):
