@@ -113,34 +113,51 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
     norm_posInicial = []    
     
     print "TROCA DE TERMOS"
+    aux = ""
+    listAux = []
     
-    print len(dicSin)
+    for iSw in range(len(st_tagcomAce_posInicial)):
+#         print st_tagcomAce_posInicial[iSw]
+#         print
+        
+        for tupla in st_tagcomAce_posInicial[iSw]:
+            print tupla
+            strAux = tupla[0]        
+            for linha in range(len(dicSin[iSw])):
+              # print len(dicSin[iSw][linha])
+              
+              
+              
+                for id in range(len(dicSin[iSw][linha])):
+                    #print "id->",id
+                    if strAux in dicSin[iSw][linha]:
+                        aux = dicSin[iSw][linha][0]
+                        listAux.append(aux)
+                        print "aux == ", aux
+                    
+                    
+                #print "aux ->", aux
+                break
+                    
+                
+        #print "len"
+        #print len(listAux) # 46
+        #print listAux
+        norm_posInicial.append(listAux)
+
+        #exit()
+        
+    #norm_posInicial.append(listAux)
+            
+    print "normalizado"
+    #print norm_posInicial
+    print len(norm_posInicial)
     
-    for i in range(len(sw_tagcomAce_posInicial)):
-        for j in sw_tagcomAce_posInicial[i]:
-            
-            
-
+    for i in range(len(norm_posInicial)):
+        print len(norm_posInicial[i])
         
+    exit()
         
-        
-
-    
-
-        
-            
-        
-        
-            exit()
-        
-        
-#         for i in range(len(sw_tagcomAce_posInicial)):
-#             for j in sw_tagcomAce_posInicial[i]:
-#                 print ""
-#                                 
-#             
-#             
-#         exit()
     
     
     
