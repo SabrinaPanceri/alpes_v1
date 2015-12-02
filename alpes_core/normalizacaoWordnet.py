@@ -59,15 +59,14 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
 #########################################################################################
 ### BUSCA PELOS TERMOS SINÔNIMOS EM st_WordNet E MONTA O DICIONÁRIO COM AS RELAÇÕES    ##
 #########################################################################################    
-    dicSin = [] ##guarda todas as relações de sinonímia para os termos de cada argumentação
     qtdeTermosTotal = 0 #1163
+    dicionario = {} ##guarda todas as relações de sinonímia para os termos de cada argumentação
     
     print "BUSCA PELOS TERMOS SINÔNIMOS EM st_WordNet E MONTA O DICIONÁRIO COM AS RELAÇÕES"
     
     ## pega cada argumento (21 no total)
     for iST in range(len(st_tagcomAce_posInicial)):
         qtdeTermos = 0
-        listaAuxDic = []
         
         ## pega cada palavra do argumento (para argumento 1 = 46 palavras)
         ## (1183 termos total)
@@ -77,34 +76,44 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
             etiqueta = st_tagcomAce_posInicial[iST][jST][1] #etiqueta morfológica do termo com base no Tagger NPLNet
 
             if etiqueta == "N":
+                listSub = []
                 for i in range(len(listaSubstantivos)):
                     for aux_radical in listaSubstantivos[i][2]:
                         if aux_radical == radical:
-                            listaAuxDic.append(listaSubstantivos[i][2])
+                            listSub.append(listaSubstantivos[i][2])
+                    dicionario[radical] = listSub
 
             elif etiqueta == "V" or etiqueta == "VAUX":
+                listVerb = []
                 for i in range(len(listaVerbos)):
                     for aux_radical in listaVerbos[i][2]:
                         if aux_radical == radical:
-                            listaAuxDic.append(listaVerbos[i][2])
+                            listVerb.append(listaVerbos[i][2])
+                    dicionario[radical] = listVerb
+                            
                         
             elif etiqueta == "ADJ":
+                listAdj = []
                 for i in range(len(listaAdjetivos)):
                     for aux_radical in listaAdjetivos[i][2]:
                         if aux_radical == radical:
-                            listaAuxDic.append(listaAdjetivos[i][2])
+                            listAdj.append(listaAdjetivos[i][2])
+                    dicionario[radical] = listAdj
+                            
             else:
+                listOutros = []
                 for i in range(len(listaOutros)):
                     for aux_radical in listaOutros[i][2]:
                         if aux_radical == radical:
-                            listaAuxDic.append(listaOutros[i][2])
+                            listOutros.append(listaOutros[i][2])
+                    dicionario[radical] = listOutros
+                            
 
-        dicSin.append(listaAuxDic)
-        
         qtdeTermosTotal = qtdeTermosTotal + qtdeTermos
                             
     print "Dicionário de sinônimos pronto!!"
     print "Total de termos analisados: ", qtdeTermosTotal
+    
                 
 #########################################################################################
 ### REALIZA A TROCA DO TERMOS SINÔNIMOS POR UM ÚNICO TERMO E MONTA OS NOVOS            ##
@@ -124,20 +133,30 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
             print tupla
             strAux = tupla[0]        
             for linha in range(len(dicSin[iSw])):
-              # print len(dicSin[iSw][linha])
-              
-              
-              
-                for id in range(len(dicSin[iSw][linha])):
-                    #print "id->",id
-                    if strAux in dicSin[iSw][linha]:
+                # print len(dicSin[iSw][linha])
+                if strAux in dicSin[iSw][linha]:
+                    for id in range(len(dicSin[iSw][linha])):
                         aux = dicSin[iSw][linha][0]
-                        listAux.append(aux)
-                        print "aux == ", aux
+                        break
+                    listAux.append(aux)
+                    print "aux == ", aux
+            print listAux
+        exit()
+                    
+              
+              
+              
+              
+#                 for id in range(len(dicSin[iSw][linha])):
+#                     #print "id->",id
+#                     if strAux in dicSin[iSw][linha]:
+#                         aux = dicSin[iSw][linha][0]
+#                         listAux.append(aux)
+#                         print "aux == ", aux
                     
                     
                 #print "aux ->", aux
-                break
+                #break
                     
                 
         #print "len"
