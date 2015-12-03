@@ -350,8 +350,8 @@ def clusterArgInicial(idtese):
     yappi.start(builtins=True)
     start = time.time()    
     
-    posInicial_Normalizado = normalizacaoWordnet(st_WordNetA,st_WordNetN, st_WordNetN, st_WordNetO, \
-                                                  sw_tagcomAce_posInicial, st_tagcomAce_posInicial)
+    #def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutros, st_tagcomAce_posInicial):
+    posInicial_Normalizado = normalizacaoWordnet(st_WordNetA, st_WordNetN, st_WordNetV, st_WordNetO, st_tagcomAce_posInicial)
     
     
     print posInicial_Normalizado
