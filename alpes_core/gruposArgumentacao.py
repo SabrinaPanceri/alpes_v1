@@ -32,14 +32,14 @@ import time
 ##                                                                                                             ###
 ##################################################################################################################
 ## EXPLICAÇÃO DOS PARÂMETROS:                                                                                   ##
-## K = quantidade de grupos em que os alunos deverão ser divididos                                              ##
+## qtdeGrupos = quantidade de grupos em que os alunos deverão ser divididos                                     ##
 ## LSA = utiliza LSA=True com base nos argumentos por PADRÃO; SE LSA=False, utiliza o materiais didático enviado##
 # pelo professor como base para criação dos dicionários para análise                                            ##
 ## auxResult = Passa todos os resultados encontrados com a aplicação da função clusterArgInicial + idTese       ##
 ##                                                                                                              ##
 ##################################################################################################################
 
-def gruposArgumentacao(auxResult, K=3, LSA=None):
+def gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=None, Normalizacao=True):
     inicio = datetime.now()
     print inicio,"gruposArgumentacao"
     yappi.set_clock_type('cpu')
@@ -49,11 +49,9 @@ def gruposArgumentacao(auxResult, K=3, LSA=None):
 
     grupos = []
     tese = auxResult[5]
-# FALTA FAZER: 
-# SUBSTITUIR OS TERMOS POR UM NÚMERO DE REFERÊNCIA PARA FAZER A COMPARAÇÃO COM BASE NOS NÚMEROS E NÃO NAS STRINGS
+
     posInicial_Normalizado = auxResult[6]
     
-#     pprint(dicSin)
     
 ## dicSin = contém o dicionario com os termos sinonimos já relacionados (relaciona as palavras digitadas pelos alunos com
 ## o arquivo da wordnet, destaca as relações de sinonimias e apresenta o radical do termo (stemm aplicado) vinculado aos
@@ -64,6 +62,15 @@ def gruposArgumentacao(auxResult, K=3, LSA=None):
     sw_tese = auxResult[2] 
     aux_usu = auxResult[3]
     st_posInicial = auxResult[4]
+    
+    
+    base_treinamento = codecs.open('/home/panceri/git/alpes_v1/arquivos/baseTreinamento.txt', 'r', 'UTF8')
+        
+    treinamento = [removeA(removePontuacao(i)) for i in base_treinamento] 
+    # ALTERAR PARA PEGAR DADOS DA INTERFACE (CAIXA DE TEXTO)
+    # OU COLOCAR OPÇÃO DE ENVIO DE ARQUIVO .TXT E ABRIR ESSES PARA USAR COMO BASE
+    
+    base_treinamento.close()
 
     
 ##########################################################################################
@@ -71,40 +78,32 @@ def gruposArgumentacao(auxResult, K=3, LSA=None):
 ##########################################################################################
 
 #BASE DE TREINAMENTO COMPOSTA PELAS ARGUMENTAÇÕES DOS ALUNOS
-    if LSA == True:
-        if K == 3:
+    if LSA == True and Normalizacao == True:
+        if qtdeGrupos == 3:
             grupos = LSA_Kmeans(clusters=3, textoTreinamento=posIni, nomeUsuarios=aux_usu, textoComparacao=posIni)
-        elif K == 4:
+        elif qtdeGrupos == 4:
             grupos = LSA_Kmeans(clusters=4, textoTreinamento=posIni, nomeUsuarios=aux_usu, textoComparacao=posIni)
-        elif K == 5:
+        elif qtdeGrupos == 5:
             grupos = LSA_Kmeans(clusters=5, textoTreinamento=posIni, nomeUsuarios=aux_usu, textoComparacao=posIni)
-        elif K==6:
+        elif qtdeGrupos==6:
             grupos = LSA_Kmeans(clusters=6, textoTreinamento=posIni, nomeUsuarios=aux_usu, textoComparacao=posIni)
         else:
             print "ERRO"
-            exit()
 
 ###########################################################################################
 ### ABORDAGEM (2): UTILIZAR OUTROS TEXTOS COMO BASE PARA CRIAÇÃO DOS DICIONÁRIOS DO LSA ###
 ###########################################################################################
 
 #BASE DE TREINAMENTO COMPOSTA DE MATERIAIS DIDÁTICOS INDICADOS PELO PROFESSOR         
-    elif LSA == False:
-        base_treinamento = codecs.open('/home/panceri/git/alpes_v1/arquivos/baseTreinamento.txt', 'r', 'UTF8')
+    elif LSA == False and Normalizacao == True:
         
-        treinamento = [removeA(removePontuacao(i)) for i in base_treinamento] 
-        # ALTERAR PARA PEGAR DADOS DA INTERFACE (CAIXA DE TEXTO)
-        # OU COLOCAR OPÇÃO DE ENVIO DE ARQUIVO .TXT E ABRIR ESSES PARA USAR COMO BASE
-        
-        base_treinamento.close()
-        
-        if K == 3:
+        if qtdeGrupos == 3:
             grupos = LSA_Kmeans(clusters=3, textoTreinamento=treinamento, nomeUsuarios=aux_usu, textoComparacao=posIni)
-        elif K == 4:
+        elif qtdeGrupos == 4:
             grupos = LSA_Kmeans(clusters=4, textoTreinamento=treinamento, nomeUsuarios=aux_usu, textoComparacao=posIni)
-        elif K == 5:
+        elif qtdeGrupos == 5:
             grupos = LSA_Kmeans(clusters=5, textoTreinamento=treinamento, nomeUsuarios=aux_usu, textoComparacao=posIni)
-        elif K == 6:
+        elif qtdeGrupos == 6:
             grupos = LSA_Kmeans(clusters=6, textoTreinamento=treinamento, nomeUsuarios=aux_usu, textoComparacao=posIni)
         else:
             print "ERRO"
@@ -131,13 +130,13 @@ def gruposArgumentacao(auxResult, K=3, LSA=None):
         tf_idf_matrix = tfidf.transform(freq_term_matrix)
        
         
-        if K == 3:
+        if qtdeGrupos == 3:
             grupos = tfIdf_Kmeans(st_posInicial, 3)
-        elif K == 4:
+        elif qtdeGrupos == 4:
             grupos = tfIdf_Kmeans(st_posInicial, 4)
-        elif K == 5:
+        elif qtdeGrupos == 5:
             grupos = tfIdf_Kmeans(st_posInicial, 5)
-        elif K == 6:
+        elif qtdeGrupos == 6:
             grupos = tfIdf_Kmeans(st_posInicial, 6)
         else:
             print "ERRO"
@@ -196,19 +195,19 @@ def gruposArgumentacao(auxResult, K=3, LSA=None):
                 grupo6.append(texto)
                 indices.append(grupos[i][j])
     
-    if K == 3:
+    if qtdeGrupos == 3:
         ind_aux = indices[:len(grupo1)]
         ind_aux2 = indices[len(ind_aux):len(ind_aux)+len(grupo2)]
         ind_aux3 = indices[len(ind_aux)+len(grupo2):]
         
-    elif K == 4:
+    elif qtdeGrupos == 4:
         ind_aux = indices[:len(grupo1)]
         ind_aux2 = indices[len(grupo1):len(grupo1)+len(grupo2)]
         ind_aux3 = indices[len(grupo1)+len(grupo2):(len(grupo1)+len(grupo2))+len(grupo3)]
         ind_aux4 = indices[(len(grupo1)+len(grupo2))+len(grupo3):]
         print "GRUPOS", grupos
         print "INDICES", indices
-    elif K == 5:        
+    elif qtdeGrupos == 5:        
         ind_aux = indices[:len(grupo1)]
         print "ind_aux", ind_aux
         print "len_g1", len(grupo1)
@@ -224,7 +223,7 @@ def gruposArgumentacao(auxResult, K=3, LSA=None):
         ind_aux5 = indices[(len(grupo1)+len(grupo2)+len(grupo3))+len(grupo4):]
         print "ind_aux", ind_aux5
         print "len_g5", len(grupo5)
-    elif K == 6:
+    elif qtdeGrupos == 6:
         ind_aux = indices[:len(grupo1)]
         print "ind_aux", ind_aux
         print "len_g1", len(grupo1)
@@ -382,116 +381,116 @@ def gruposArgumentacao(auxResult, K=3, LSA=None):
         print "sem média"
  
 #########################################################################################
-    print "grupo 4", len(grupo4)
-    cos4 = []
-    lsaPosIni = []
-    lsaUsu =[]
-    print lsaPosIni
-    print lsaUsu
-    for y in range(len(ind_aux4)):
-        lsaPosIni.append(posIni[ind_aux4[y]])
-        lsaUsu.append(aux_usu[ind_aux4[y]])
-        for x in range(y+1, len(ind_aux4)):
-            num1 = ind_aux4[y]
-            num2 = ind_aux4[x]
-            cos4.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-            euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-            print aux_usu[num1],aux_usu[num2]
-            print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-            print "euc", euc
-  
-    print "cos",cos4
-    print "len_cos",len(cos4)
-    simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
-    print "simLSA"
-    pprint(sorted(simLSA, reverse=True))
-  
-    simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
-    print "simLSA1"
-    pprint(sorted(simLSA1, reverse=True))
-  
-    sum_cos = 0
-    if len(cos4) != 0:
-        for i in cos4:
-            sum_cos = i + sum_cos
-        print "media = ", sum_cos / len(cos4)
-    else:
-        print "sem média"
- 
- 
-#########################################################################################    
-    print "grupo 5", len(grupo5)
-    cos5 = []
-    lsaPosIni = []
-    lsaUsu =[]
-    print lsaPosIni
-    print lsaUsu
-  
-    for y in range(len(ind_aux5)):
-        lsaPosIni.append(posIni[ind_aux5[y]])
-        lsaUsu.append(aux_usu[ind_aux5[y]])
-        for x in range(y+1, len(ind_aux5)):
-            num1 = ind_aux5[y]
-            num2 = ind_aux5[x]
-            cos5.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-            euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-            print aux_usu[num1],aux_usu[num2]
-            print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-            print "euc", euc
-  
-    print "cos",cos5
-    print "len_cos", len(cos5)
-    simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
-    print "simLSA"
-    pprint(sorted(simLSA, reverse=True))
-  
-    simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
-    print "simLSA1"
-    pprint(sorted(simLSA1, reverse=True))
-  
-    sum_cos = 0
-    if len(cos5) != 0:
-        for i in cos5:
-            sum_cos = i + sum_cos
-        print "media = ", sum_cos / len(cos5)
-    else:
-        print "sem média"
- 
-#########################################################################################
-    print "grupo 6", len(grupo6)
-    cos6 = []
-    lsaPosIni = []
-    lsaUsu =[]
-  
-    for y in range(len(ind_aux6)):
-        lsaPosIni.append(posIni[ind_aux6[y]])
-        lsaUsu.append(aux_usu[ind_aux6[y]])
-        for x in range(y+1, len(ind_aux6)):
-            num1 = ind_aux6[y]
-            num2 = ind_aux6[x]
-            cos6.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
-            euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
-            print aux_usu[num1],aux_usu[num2]
-            print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
-            print "euc", euc
-  
-    print "cos",cos6
-    print "len_cos",len(cos6)
-    simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
-    print "simLSA"
-    pprint(sorted(simLSA, reverse=True))
-  
-    simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
-    print "simLSA1"
-    pprint(sorted(simLSA1, reverse=True))
-  
-    sum_cos = 0
-    if len(cos6) != 0:
-        for i in cos6:
-            sum_cos = i + sum_cos
-        print "media = ", sum_cos / len(cos6)
-    else:
-        print "sem média"
+#     print "grupo 4", len(grupo4)
+#     cos4 = []
+#     lsaPosIni = []
+#     lsaUsu =[]
+#     print lsaPosIni
+#     print lsaUsu
+#     for y in range(len(ind_aux4)):
+#         lsaPosIni.append(posIni[ind_aux4[y]])
+#         lsaUsu.append(aux_usu[ind_aux4[y]])
+#         for x in range(y+1, len(ind_aux4)):
+#             num1 = ind_aux4[y]
+#             num2 = ind_aux4[x]
+#             cos4.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
+#             euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#             print aux_usu[num1],aux_usu[num2]
+#             print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#             print "euc", euc
+#   
+#     print "cos",cos4
+#     print "len_cos",len(cos4)
+#     simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
+#     print "simLSA"
+#     pprint(sorted(simLSA, reverse=True))
+#   
+#     simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
+#     print "simLSA1"
+#     pprint(sorted(simLSA1, reverse=True))
+#   
+#     sum_cos = 0
+#     if len(cos4) != 0:
+#         for i in cos4:
+#             sum_cos = i + sum_cos
+#         print "media = ", sum_cos / len(cos4)
+#     else:
+#         print "sem média"
+#  
+#  
+# #########################################################################################    
+#     print "grupo 5", len(grupo5)
+#     cos5 = []
+#     lsaPosIni = []
+#     lsaUsu =[]
+#     print lsaPosIni
+#     print lsaUsu
+#   
+#     for y in range(len(ind_aux5)):
+#         lsaPosIni.append(posIni[ind_aux5[y]])
+#         lsaUsu.append(aux_usu[ind_aux5[y]])
+#         for x in range(y+1, len(ind_aux5)):
+#             num1 = ind_aux5[y]
+#             num2 = ind_aux5[x]
+#             cos5.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
+#             euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#             print aux_usu[num1],aux_usu[num2]
+#             print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#             print "euc", euc
+#   
+#     print "cos",cos5
+#     print "len_cos", len(cos5)
+#     simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
+#     print "simLSA"
+#     pprint(sorted(simLSA, reverse=True))
+#   
+#     simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
+#     print "simLSA1"
+#     pprint(sorted(simLSA1, reverse=True))
+#   
+#     sum_cos = 0
+#     if len(cos5) != 0:
+#         for i in cos5:
+#             sum_cos = i + sum_cos
+#         print "media = ", sum_cos / len(cos5)
+#     else:
+#         print "sem média"
+#  
+# #########################################################################################
+#     print "grupo 6", len(grupo6)
+#     cos6 = []
+#     lsaPosIni = []
+#     lsaUsu =[]
+#   
+#     for y in range(len(ind_aux6)):
+#         lsaPosIni.append(posIni[ind_aux6[y]])
+#         lsaUsu.append(aux_usu[ind_aux6[y]])
+#         for x in range(y+1, len(ind_aux6)):
+#             num1 = ind_aux6[y]
+#             num2 = ind_aux6[x]
+#             cos6.append(cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2]))
+#             euc = euclidean_distances(tf_idf_matrix[num1], tf_idf_matrix[num2],squared=True)
+#             print aux_usu[num1],aux_usu[num2]
+#             print "cosine", cosine_similarity(tf_idf_matrix[num1], tf_idf_matrix[num2])
+#             print "euc", euc
+#   
+#     print "cos",cos6
+#     print "len_cos",len(cos6)
+#     simLSA = similaridade_lsa(treinamento, lsaUsu, lsaPosIni)
+#     print "simLSA"
+#     pprint(sorted(simLSA, reverse=True))
+#   
+#     simLSA1 = similaridade_lsa(posIni, lsaUsu, lsaPosIni)
+#     print "simLSA1"
+#     pprint(sorted(simLSA1, reverse=True))
+#   
+#     sum_cos = 0
+#     if len(cos6) != 0:
+#         for i in cos6:
+#             sum_cos = i + sum_cos
+#         print "media = ", sum_cos / len(cos6)
+#     else:
+#         print "sem média"
  
      
 ##########################################################################################

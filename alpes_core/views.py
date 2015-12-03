@@ -106,7 +106,7 @@ def clusterizacao(request, debate_id):
 	yappi.start(builtins=True)
 	start = time.time()
 	
-	resultado = gruposArgumentacao(auxResult, 3, True)
+	resultado = gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=True, Normalizacao=True)
 # 	resultado = gruposArgumentacao(auxResult, 4, True/None/False)
 # 	resultado = gruposArgumentacao(auxResult, 5, True/None/False)
 # 	resultado = gruposArgumentacao(auxResult, 6, True/None/False)

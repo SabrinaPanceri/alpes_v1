@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#encoding =utf8
 ##################################################################
 ### CÓDIGO DESENVOLVIDO POR SABRINA SIQUEIRA PANCERI            ##
 ### PROTÓTIPO DE SUA  DISSERTAÇÃO DE MESTRADO                   ##
@@ -62,9 +61,8 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
     qtdeTermosTotal = 0
     dicionario = {} ##guarda todas as relações de sinonímia para os termos de cada argumentação
     
-    print "BUSCA PELOS TERMOS SINÔNIMOS EM st_WordNet E MONTA O DICIONÁRIO COM AS RELAÇÕES"
+    #print "BUSCA PELOS TERMOS SINÔNIMOS EM st_WordNet E MONTA O DICIONÁRIO COM AS RELAÇÕES"
     
-    ## pega cada argumento (21 no total)
     for iST in range(len(st_tagcomAce_posInicial)):
         qtdeTermos = 0
         
@@ -88,7 +86,6 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
                         if aux_radical == radical:
                             listVerb.append(listaVerbos[i][2])
                     dicionario[radical] = listVerb
-                            
                         
             elif etiqueta == "ADJ":
                 listAdj = []
@@ -109,11 +106,9 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
 
         qtdeTermosTotal = qtdeTermosTotal + qtdeTermos
                             
-    print "Dicionário de sinônimos pronto!!"
-    print "Total de termos analisados: ", qtdeTermosTotal
+#     print "Dicionário de sinônimos pronto!!"
+#     print "Total de termos analisados: ", qtdeTermosTotal
     
-#     pprint(dicionario)
-#     exit()
                 
 #########################################################################################
 ### REALIZA A TROCA DO TERMOS SINÔNIMOS POR UM ÚNICO TERMO E MONTA OS NOVOS            ##
@@ -121,71 +116,25 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
 #########################################################################################
     norm_posInicial = []    
     
-    print "TROCA DE TERMOS"
-    aux = ""
-    listAux = []
-    
-    
-    print len(dicionario['exclud'])
-    print "exclud"
-    print dicionario['exclud']
-    
+    #print "TROCA DE TERMOS"
     
     for idST in range(len(st_tagcomAce_posInicial)):
-        
+        listAux = []
         for tupla in st_tagcomAce_posInicial[idST]:
-            print "segundo for"
-             
-            print tupla
             termoStr = tupla[0]
-            
-            print "buscar termo dentro do dicionário"
-            
-            ## tratar casos aonde não são encontrados sinônimos para o termo
-            ## exemplo dicionario['exclud']
-            ## colocar numa condicional 
-            
-            
             for valores in dicionario.itervalues():
-#                 print valores
-                
-                for valor in valores:
-                    
-                    for pal in valor:
-                        
-                        if pal not in listAux:
-                    
-                            if termoStr == pal:
-                                print "valor", valor
-                                listAux.append(termoStr)
-            
-            
-            print st_tagcomAce_posInicial[0]    
-            print len(listAux)
-            print listAux
-         
-            exit()
-            
-            
-        #norm_posInicial.append(listAux)
+                if len(valores) != 0:
+                    for valor in valores:
+                        for pal in valor:
+                            if pal not in listAux:
+                                if termoStr == pal:
+                                    listAux.append(termoStr)
+                else:
+                    if termoStr not in listAux:
+                        listAux.append(termoStr)
 
-        #exit()
-        
-    #norm_posInicial.append(listAux)
-            
-#     print "normalizado"
-#     #print norm_posInicial
-#     print len(norm_posInicial)
-    
-#     for i in range(len(norm_posInicial)):
-#         print len(norm_posInicial[i])
-        
-    exit()
-        
-    
-    
-    
-    
+
+        norm_posInicial.append(listAux)
 
 ################################################################
 ### MEDIÇÃO DE PROCESSAMENTO / DESEMPENHO / REQUISIÕES #########
@@ -194,8 +143,6 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
     stats = yappi.get_func_stats()
     stats.save('normalizacaoWordnet.out', type = 'callgrind')
     
-
-
 #########################################################################################   
     return norm_posInicial
 
