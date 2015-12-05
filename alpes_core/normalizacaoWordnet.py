@@ -117,7 +117,7 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
     norm_posInicial = []    
     
     #print "TROCA DE TERMOS"
-    
+
     for idST in range(len(st_tagcomAce_posInicial)):
         listAux = []
         for tupla in st_tagcomAce_posInicial[idST]:
@@ -128,12 +128,16 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
                         for pal in valor:
                             if pal not in listAux:
                                 if termoStr == pal:
-                                    listAux.append(termoStr)
+                                    #adiciona o primeiro elemento da lista de sinônimos
+                                    #dessa forma, todos os termos que estiverem nessa lista
+                                    #serão representados pelo 1º
+                                    listAux.append(valores[0][0])
                 else:
                     if termoStr not in listAux:
+                        #adiciona o termo de busca, pois não há relação de sinônimos
                         listAux.append(termoStr)
-
-
+ 
+ 
         norm_posInicial.append(listAux)
 
 ################################################################
