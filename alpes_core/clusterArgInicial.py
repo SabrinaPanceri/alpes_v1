@@ -352,6 +352,12 @@ def clusterArgInicial(idtese):
     
     posInicial_Normalizado = normalizacaoWordnet(st_WordNetA, st_WordNetN, st_WordNetV, st_WordNetO, st_tagcomAce_posInicial)
     
+    print len(st_tagcomAce_posInicial)
+    pprint(st_tagcomAce_posInicial)
+    print     
+    print len(posInicial_Normalizado)
+    pprint(posInicial_Normalizado)
+    exit()
     duration = time.time() - start
     stats = yappi.get_func_stats()
     stats.save('normalizacaoWordnet.out', type = 'callgrind')

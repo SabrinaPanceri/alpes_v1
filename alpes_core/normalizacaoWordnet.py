@@ -65,11 +65,13 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
     
     for iST in range(len(st_tagcomAce_posInicial)):
         qtdeTermos = 0
-        
+
         for jST in range(len(st_tagcomAce_posInicial[iST])):
             qtdeTermos = qtdeTermos + 1
             radical = st_tagcomAce_posInicial[iST][jST][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
             etiqueta = st_tagcomAce_posInicial[iST][jST][1] #etiqueta morfológica do termo com base no Tagger NPLNet
+            chave = st_tagcomAce_posInicial[iST][jST]
+#             print chave
 
             if etiqueta == "N":
                 listSub = []
@@ -77,7 +79,7 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
                     for aux_radical in listaSubstantivos[i][2]:
                         if aux_radical == radical:
                             listSub.append(listaSubstantivos[i][2])
-                    dicionario[radical] = listSub
+                    dicionario[chave] = listSub
 
             elif etiqueta == "V" or etiqueta == "VAUX":
                 listVerb = []
@@ -85,15 +87,15 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
                     for aux_radical in listaVerbos[i][2]:
                         if aux_radical == radical:
                             listVerb.append(listaVerbos[i][2])
-                    dicionario[radical] = listVerb
-                        
+                    dicionario[chave] = listVerb
+                    
             elif etiqueta == "ADJ":
                 listAdj = []
                 for i in range(len(listaAdjetivos)):
                     for aux_radical in listaAdjetivos[i][2]:
                         if aux_radical == radical:
                             listAdj.append(listaAdjetivos[i][2])
-                    dicionario[radical] = listAdj
+                    dicionario[chave] = listAdj
                             
             else:
                 listOutros = []
@@ -101,45 +103,71 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
                     for aux_radical in listaOutros[i][2]:
                         if aux_radical == radical:
                             listOutros.append(listaOutros[i][2])
-                    dicionario[radical] = listOutros
+                    dicionario[chave] = listOutros
                             
-
+        
         qtdeTermosTotal = qtdeTermosTotal + qtdeTermos
                             
 #     print "Dicionário de sinônimos pronto!!"
 #     print "Total de termos analisados: ", qtdeTermosTotal
+#     print len(dicionario)
+#     print dicionario.items()
+#     
+#     exit()
+
+
+### COLOCANDO TODOS OS SINONIMOS ENCONTRADOS NUMA UNICA LISTA!
+### EXCLUINDO TERMOS SINONIMOS REPETIDOS DO DICIONARIO
+
+    for chave, val in dicionario.iteritems():
+        auxDic = []
+        for iV in range(len(val)):
+            for iVa in val[iV]:
+                if iVa not in auxDic:
+                    auxDic.append(iVa)
+                
+        dicionario[chave] = auxDic
+    
+#     print len(dicionario)
     
                 
 #########################################################################################
 ### REALIZA A TROCA DO TERMOS SINÔNIMOS POR UM ÚNICO TERMO E MONTA OS NOVOS            ##
 ### POSICIONAMENTOS INICIAIS PARA ANÁLISE DE SIMILARIDADE NA VARIÁVELS norm_porInicial ##
 #########################################################################################
-    norm_posInicial = []    
+    norm_posInicial = []
+    listaTermos = []
+    listAux = []
     
-    #print "TROCA DE TERMOS"
-
+    cont = 0
+    
     for idST in range(len(st_tagcomAce_posInicial)):
-        listAux = []
+        
         for tupla in st_tagcomAce_posInicial[idST]:
             termoStr = tupla[0]
-            for valores in dicionario.itervalues():
-                if len(valores) != 0:
-                    for valor in valores:
-                        for pal in valor:
-                            if pal not in listAux:
-                                if termoStr == pal:
-                                    #adiciona o primeiro elemento da lista de sinônimos
-                                    #dessa forma, todos os termos que estiverem nessa lista
-                                    #serão representados pelo 1º
-                                    listAux.append(valores[0][0])
+            
+            if cont == 0:
+                inicializarLista(tupla, listaTermos)
+                inicializarLista(termoStr, listAux)
+                cont = cont + 1
+            
+            else:
+                elemento = verificarDicionario(tupla, listaTermos, dicionario)  
+                
+                if elemento == False:
+                    inserir(tupla, listaTermos)
+                    inserir(termoStr, listAux)
+                    
                 else:
-                    if termoStr not in listAux:
-                        #adiciona o termo de busca, pois não há relação de sinônimos
-                        listAux.append(termoStr)
- 
- 
+                    inserir(elemento, listAux)
+        
         norm_posInicial.append(listAux)
 
+        
+        listAux = limparLista(listAux)
+        
+        
+                
 ################################################################
 ### MEDIÇÃO DE PROCESSAMENTO / DESEMPENHO / REQUISIÕES #########
 ################################################################    
@@ -151,8 +179,39 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
     return norm_posInicial
 
 
+def inicializarLista(Termo, Lista):
+    
+    inserir(Termo, Lista)
+        
+    return Lista
 
 
+def inserir(Termo, Lista):
+    
+    Lista.append(Termo) 
+    
+    return Lista
+
+def verificarDicionario(Tupla, Lista, Dicionario):
+    
+    radical = Tupla[0]
+    tipo = Tupla[1]
+    
+    contido = False
+    
+    for elemento in Lista:
+#         print "elemento", elemento, 'Dicionario', Dicionario[elemento]
+        if tipo == elemento[1]:  
+            if radical in Dicionario[elemento]:
+                return  elemento
+        
+    return contido
+
+def limparLista(Lista):
+    
+    Lista = []
+    
+    return Lista
 
 
 
