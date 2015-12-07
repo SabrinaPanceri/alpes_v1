@@ -1,0 +1,15 @@
+ gabriel 0.323767% similar carlos pedro
+ gabriel 0.216424% similar garson
+ gabriel 0.292775% similar luis
+ gabriel 0.163916% similar rita
+ gabriel 0.312563% similar fatima
+ carlos pedro 0.151812% similar garson
+ carlos pedro 0.234656% similar luis
+ carlos pedro 0.341908% similar rita
+ carlos pedro 0.206462% similar fatima
+ garson 0.330754% similar luis
+ garson 0.329451% similar rita
+ garson 0.33542% similar fatima
+ luis 0.128389% similar rita
+ luis 0.190561% similar fatima
+ rita 0.283038% similar fatima

@@ -1,0 +1,3 @@
+ loren 0.271789% similar guilherme
+ loren 0.00022915% similar carolina
+ guilherme 0.189385% similar carolina

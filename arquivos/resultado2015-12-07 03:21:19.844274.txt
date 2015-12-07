@@ -1,0 +1,6 @@
+ caroline 0.180848% similar ariane
+ caroline 0.153571% similar natalia
+ caroline 0.0874346% similar sheila
+ ariane 0.421248% similar natalia
+ ariane 0.389192% similar sheila
+ natalia 0.396068% similar sheila

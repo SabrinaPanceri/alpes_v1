@@ -138,7 +138,6 @@ def clusterArgInicial(idtese):
     
     for i in posInicial:
         semAce_posInicial.append(removePontuacao(removeA(removeNum(removeSE((i))))))
-#     pprint(semAce_posInicial)
     
     for i in semAce_posInicial:
         tag_posInicial.append(tagger.tag(i))
@@ -196,7 +195,6 @@ def clusterArgInicial(idtese):
         st_tese.append(string_aux)
         
     for i in range(len(sw_tagPosInicial)):
-#         pprint(sw_tagPosInicial[i])
         termosST = ""
         auxST = []
         for j in range(len(sw_tagPosInicial[i])):
@@ -208,7 +206,6 @@ def clusterArgInicial(idtese):
         st_tagPosInicial.append(auxST)
         
     for i in range(len(sw_tagcomAce_posInicial)):
-#         pprint(sw_tagPosInicial[i])
         termosST = ""
         auxST = []
         for j in range(len(sw_tagcomAce_posInicial[i])):
@@ -257,9 +254,9 @@ def clusterArgInicial(idtese):
 ## OS TERMOS SÃO ANALISADOS CONSIDERANDO SUAS ACENTUAÇÕES, PARA APLICAÇÃO CORRETA DO RSLP                                         ##
 ####################################################################################################################################
     
-#     yappi.set_clock_type('cpu')
-#     yappi.start(builtins=True)
-#     start = time.time()    
+    yappi.set_clock_type('cpu')
+    yappi.start(builtins=True)
+    start = time.time()    
 
     st_WordNetV = [] ##armazena num, tipo, e radical dos sinonimos - APENAS VERBOS
     st_WordNetN = [] ##armazena num, tipo, e radical dos sinonimos - APENAS SUBSTANTIVOS
@@ -328,17 +325,11 @@ def clusterArgInicial(idtese):
                 listaAux.append(auxL)
             st_WordNetO.append(listaAux)
             
-#     print len(st_WordNetA) #6647
-#     print len(st_WordNetN) #8526
-#     print len(st_WordNetV) #4145
-#     print len(st_WordNetO) #566
-#     
-#     exit()
 
-
-#     duration = time.time() - start
-#     stats = yappi.get_func_stats()
-#     stats.save('stemmWordNet.out', type = 'callgrind')
+ 
+    duration = time.time() - start
+    stats = yappi.get_func_stats()
+    stats.save('stemmWordNet.out', type = 'callgrind')
     
 ####################################################################################################################################
 ### A ANÁLISE É REALIZADA COM BASE NO TEXTO SEM A EXCLUSÃO DOS ACENTOS                                                            ##
@@ -352,12 +343,6 @@ def clusterArgInicial(idtese):
     
     posInicial_Normalizado = normalizacaoWordnet(st_WordNetA, st_WordNetN, st_WordNetV, st_WordNetO, st_tagcomAce_posInicial)
     
-    print len(st_tagcomAce_posInicial)
-    pprint(st_tagcomAce_posInicial)
-    print     
-    print len(posInicial_Normalizado)
-    pprint(posInicial_Normalizado)
-    exit()
     duration = time.time() - start
     stats = yappi.get_func_stats()
     stats.save('normalizacaoWordnet.out', type = 'callgrind')
