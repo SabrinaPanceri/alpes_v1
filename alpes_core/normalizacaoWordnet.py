@@ -108,13 +108,6 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
         
         qtdeTermosTotal = qtdeTermosTotal + qtdeTermos
                             
-#     print "Dicionário de sinônimos pronto!!"
-#     print "Total de termos analisados: ", qtdeTermosTotal
-#     print len(dicionario)
-#     print dicionario.items()
-#     
-#     exit()
-
 
 ### COLOCANDO TODOS OS SINONIMOS ENCONTRADOS NUMA UNICA LISTA!
 ### EXCLUINDO TERMOS SINONIMOS REPETIDOS DO DICIONARIO
@@ -128,8 +121,6 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
                 
         dicionario[chave] = auxDic
     
-#     print len(dicionario)
-    
                 
 #########################################################################################
 ### REALIZA A TROCA DO TERMOS SINÔNIMOS POR UM ÚNICO TERMO E MONTA OS NOVOS            ##
@@ -138,7 +129,6 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
     norm_posInicial = []
     listaTermos = []
     listAux = []
-    
     cont = 0
     
     for idST in range(len(st_tagcomAce_posInicial)):
@@ -165,7 +155,6 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
 
         
         listAux = limparLista(listAux)
-        
         
                 
 ################################################################
@@ -200,7 +189,6 @@ def verificarDicionario(Tupla, Lista, Dicionario):
     contido = False
     
     for elemento in Lista:
-#         print "elemento", elemento, 'Dicionario', Dicionario[elemento]
         if tipo == elemento[1]:  
             if radical in Dicionario[elemento]:
                 return  elemento
