@@ -90,6 +90,7 @@ def clusterArgInicial(idtese):
     tag_posInicial = []
     tag_comAce_posInicial = []
     
+    
     #lista com dados após a remoção das stopwords
     sw_tese = []
     sw_posInicial = []
@@ -124,7 +125,7 @@ def clusterArgInicial(idtese):
     for i in dados:
         x = 0
         usu.append(i[x].upper())
-        posInicial.append(i[x+1].lower()) #lista com o posicionamento Inicial
+        posInicial.append(i[x+1].lower()) #lista com o posicionamento Inicial com todas as letras em minusculo
 
 #############################################################################################################
 ### Classificacao das palavras de acordo com sua classe gramatical
@@ -144,9 +145,23 @@ def clusterArgInicial(idtese):
         
     for i in posInicial:
         comAce_posInicial.append(removePontuacao(removeNum(removeSE((i)))))
-        
+    
     for i in comAce_posInicial:
         tag_comAce_posInicial.append(tagger.tag(i))
+    
+ #############################################################################################################
+    #APENAS PARA REALIZAR TESTE E COLOCAR NA DISSERTACAO
+    tagg_posInicial = []
+    for texto in posInicial:
+        tagg_posInicial.append(tagger.tag(texto))
+    
+    print "posInicial"
+    pprint(posInicial)
+    
+    print "tagg_posInicial"
+    pprint(tagg_posInicial)
+    
+ #############################################################################################################
 
 #############################################################################################################
 ### REMOCAO DE STOPWORDS
