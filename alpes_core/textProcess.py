@@ -85,7 +85,8 @@ def removeStopWords(texto):
 def limpaCorpus(texto):
     aux = []
     
-    etiquetas = ["PDEN","N","V","ADJ","PCP","VAUX"]
+    
+    etiquetas = ["N","V","ADJ","PCP","VAUX"]
                    
     for i in range(len(texto)):
         for j in range(len(texto[i])):

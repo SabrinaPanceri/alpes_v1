@@ -81,7 +81,7 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
                             listSub.append(listaSubstantivos[i][2])
                     dicionario[chave] = listSub
 
-            elif etiqueta == "V" or etiqueta == "VAUX":
+            elif etiqueta == "V" or etiqueta == "VAUX" or etiqueta == "PCP":
                 listVerb = []
                 for i in range(len(listaVerbos)):
                     for aux_radical in listaVerbos[i][2]:
@@ -145,15 +145,16 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
                 elemento = verificarDicionario(tupla, listaTermos, dicionario)  
                 
                 if elemento == False:
+                    
                     inserir(tupla, listaTermos)
                     inserir(termoStr, listAux)
                     
                 else:
                     inserir(elemento, listAux)
-        
+            
         norm_posInicial.append(listAux)
-
         
+
         listAux = limparLista(listAux)
         
                 
@@ -172,14 +173,12 @@ def inicializarLista(Termo, Lista):
     
     inserir(Termo, Lista)
         
-    return Lista
 
 
 def inserir(Termo, Lista):
     
     Lista.append(Termo) 
     
-    return Lista
 
 def verificarDicionario(Tupla, Lista, Dicionario):
     
@@ -189,10 +188,11 @@ def verificarDicionario(Tupla, Lista, Dicionario):
     contido = False
     
     for elemento in Lista:
+        
         if tipo == elemento[1]:  
             if radical in Dicionario[elemento]:
-                return  elemento
-        
+                return elemento[0]
+            
     return contido
 
 def limparLista(Lista):

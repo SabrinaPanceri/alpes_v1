@@ -148,18 +148,20 @@ def clusterArgInicial(idtese):
     
     for i in comAce_posInicial:
         tag_comAce_posInicial.append(tagger.tag(i))
+        
+    
     
  #############################################################################################################
     #APENAS PARA REALIZAR TESTE E COLOCAR NA DISSERTACAO
-    tagg_posInicial = []
-    for texto in posInicial:
-        tagg_posInicial.append(tagger.tag(texto))
-    
-    print "posInicial"
-    pprint(posInicial)
-    
-    print "tagg_posInicial"
-    pprint(tagg_posInicial)
+#     tagg_posInicial = []
+#     for texto in posInicial:
+#         tagg_posInicial.append(tagger.tag(texto))
+#     
+#     print "posInicial"
+#     pprint(posInicial)
+#     
+#     print "tagg_posInicial"
+#     pprint(tagg_posInicial)
     
  #############################################################################################################
 
@@ -184,7 +186,8 @@ def clusterArgInicial(idtese):
     for i in tag_comAce_posInicial:
         sw_tagcomAce_posInicial.append(limpaCorpus(i))
     
-
+    
+    
 ####################################################################################################################################
 # Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
 # Retirando afixos dos textos do posInicial e tese
@@ -358,12 +361,34 @@ def clusterArgInicial(idtese):
     
     posInicial_Normalizado = normalizacaoWordnet(st_WordNetA, st_WordNetN, st_WordNetV, st_WordNetO, st_tagcomAce_posInicial)
     
+    
     duration = time.time() - start
     stats = yappi.get_func_stats()
     stats.save('normalizacaoWordnet.out', type = 'callgrind')
 
 
 ####################################################################################################################################
+
+#     print "posInicial"
+#     pprint(posInicial)
+#     
+#     print "comAce_posInicial"
+#     pprint(comAce_posInicial)
+#     
+#     print "tag_comAce_posInicial"
+#     pprint(tag_comAce_posInicial)
+#         
+#     print "sw_tagcomAce_posInicial"
+#     pprint(sw_tagcomAce_posInicial)
+#     
+#     print "st_tagcomAce_posInicial"
+#     pprint(st_tagcomAce_posInicial)
+    
+#     print "posInicial_Normalizado"
+#     pprint(posInicial_Normalizado)
+#     
+#     exit()
+####################################################################################################################################    
 
 #retorno da função - usado na views.py para alimentar o template debate.html
 #passar parametros que devem ser apresentados na templates debate.html
