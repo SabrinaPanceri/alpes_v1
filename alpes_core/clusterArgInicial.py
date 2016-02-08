@@ -18,7 +18,7 @@ import re
 import nlpnet
 from django.db import connection
 from alpes_core.textProcess import removeStopWords, removePontuacao, limpaCorpus,\
-    removeA, removeNum, removeSE
+    removeA, removeNum, removeSE, removeEndWeb
 from nltk.stem import RSLPStemmer
 from pprint import pprint
 from alpes_core.normalizacaoWordnet import normalizacaoWordnet
@@ -138,21 +138,25 @@ def clusterArgInicial(idtese):
     comAce_posInicial = [] #armazena o posInicial apenas COM acentos, sem pontuações, sem endereço web e sem numeros
     
     for i in posInicial:
-        semAce_posInicial.append(removePontuacao(removeA(removeNum(removeSE((i))))))
+        semAce_posInicial.append(removePontuacao(removeA(removeNum(removeSE(removeEndWeb((i)))))))
     
     for i in semAce_posInicial:
         tag_posInicial.append(tagger.tag(i))
         
     for i in posInicial:
-        comAce_posInicial.append(removePontuacao(removeNum(removeSE((i)))))
+        comAce_posInicial.append(removePontuacao(removeNum(removeSE(removeEndWeb((i))))))
     
     for i in comAce_posInicial:
         tag_comAce_posInicial.append(tagger.tag(i))
         
-    
-    
- #############################################################################################################
-    #APENAS PARA REALIZAR TESTE E COLOCAR NA DISSERTACAO
+ 
+ #############################################################################################################   
+ #APENAS PARA REALIZAR TESTE E COLOCAR NA DISSERTACAO
+
+#     pprint(semAce_posInicial)
+#     pprint(comAce_posInicial)
+#     exit()
+
 #     tagg_posInicial = []
 #     for texto in posInicial:
 #         tagg_posInicial.append(tagger.tag(texto))

@@ -32,7 +32,7 @@ def removePontuacao(texto):
     aux = aux.replace('\r','').replace('\n','').replace('\t','')
     aux = aux.replace('=',' ').replace('"',' ').replace('{','').replace('}','')
     aux = aux.replace("'",' ').replace('`',' ')
-    aux = aux.replace(':','').replace('/','').replace('http','')
+    aux = aux.replace(':','').replace('/','')
     return aux
 
 def removeNum(texto):
@@ -99,9 +99,10 @@ def limpaCorpus(texto):
     return aux
 
 
-# def removeEndWeb(textoHttp):
-#     auxHttp = re.sub(r'(?i)\b((?:http[s]?|www\d{0,3}|[a-z0-9.\-]|[a-z0-9.\-]+[a-z]{2,4}\/))', '', textoHttp)
-#     return auxHttp
+def removeEndWeb(textoHttp):
+    auxHttp = re.sub(r"(?:\@|https?\://)\S+", '', textoHttp)
+    return auxHttp
+
 
   
 def vetores(texto):

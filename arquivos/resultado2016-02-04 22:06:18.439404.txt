@@ -1,0 +1,10 @@
+ gabriel 0.535428% similar carlos pedro
+ gabriel 0.312346% similar garson
+ gabriel 0.195233% similar barbara
+ gabriel 0.43976% similar carolina
+ carlos pedro 0.365423% similar garson
+ carlos pedro 0.482333% similar barbara
+ carlos pedro 0.518241% similar carolina
+ garson 0.385478% similar barbara
+ garson 0.208006% similar carolina
+ barbara 0.38547% similar carolina
