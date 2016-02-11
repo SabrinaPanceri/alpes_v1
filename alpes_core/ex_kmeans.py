@@ -7,6 +7,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 def tfIdf_Kmeans(texts, clusters):
     """ Transform texts to Tf-Idf coordinates and cluster texts using K-Means """
+    
+    print "def tfIdf_Kmeans(texts, clusters):"
 #     vectorizer = TfidfVectorizer(tokenizer=process_text,
 #                                  stop_words=stopwords.words('portuguese'),
 #                                  max_df=0.5,
@@ -25,11 +27,11 @@ def tfIdf_Kmeans(texts, clusters):
  
     tfidf_model = vectorizer.fit_transform(texts)
 #     km_model = MiniBatchKMeans(n_clusters=clusters)
-    #Valor ideal, após experimentos = 100000    
-    
+
+#Valor ideal, após experimentos = 100000        
     km_model = KMeans(n_clusters=clusters, n_init=100000)
     #VALOR PARA TESTE!
-    #km_model = KMeans(n_clusters=clusters, n_init=10)
+#     km_model = KMeans(n_clusters=clusters, n_init=10)
     
     km_model.fit_transform(tfidf_model)
     

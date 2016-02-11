@@ -102,6 +102,7 @@ def clusterizacao(request, debate_id):
 	
 	tese = auxResult[5]
 	
+	
 	yappi.set_clock_type('cpu')
 	yappi.start(builtins=True)
 	start = time.time()
@@ -111,7 +112,7 @@ def clusterizacao(request, debate_id):
 # 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=5, LSA=True, Normalizacao=True)
 # 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=6, LSA=True, Normalizacao=True)
 	
-	resultado = gruposArgumentacao(auxResult, qtdeGrupos=6, LSA=None, Normalizacao=True)
+	resultado = gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=False, Normalizacao=False)
 	
 	duration = time.time() - start
 	stats = yappi.get_func_stats()

@@ -10,6 +10,7 @@
 # import codecs
 # from pprint import pprint
 # from alpes_core.lsa_kmeans import LSA_Kmeans
+# import os
 #  
 # def clusters(auxResult, numCluster=6, lsa_km=True, tfIdf_km=False, treino_externo=True):
 #  
@@ -41,7 +42,7 @@
 #     if lsa_km == True:
 #         #BASE DE TREINAMENTO COMPOSTA POR TEXTOS EXTERNOS - MATERIAL DIDÁTICO
 #         if treino_externo == True:
-#             base_treinamento = codecs.open('/home/panceri/git/alpes_v1/arquivos/baseTreinamento.txt', 'r', 'UTF8')
+#             base_treinamento = codecs.open(os.path.dirname(__file__),'../arquivos/baseTreinamento.txt'), 'r', 'UTF8')
 #             treinamento = [removeA(removePontuacao(i)) for i in base_treinamento]
 #             base_treinamento.close()
 #              
