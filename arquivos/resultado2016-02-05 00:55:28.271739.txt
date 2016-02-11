@@ -1,0 +1,6 @@
+ leonardo 0.441958% similar loren
+ leonardo 0.420833% similar bruno
+ leonardo 0.261583% similar cauaa
+ loren 0.204991% similar bruno
+ loren 0.302195% similar cauaa
+ bruno 0.301338% similar cauaa

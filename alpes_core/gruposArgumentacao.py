@@ -121,7 +121,7 @@ def gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=None, Normalizacao=True):
 ### Utilização das funções para calculo do TF-IDF com a tese e o posInicial
 ### Funções implementadas com base na SkLearn
         vectorizer = CountVectorizer()
-        vectorizer.fit_transform(train_set)
+        vectorizer.fit_transform(test_set)
         count_vectorizer = CountVectorizer()
         count_vectorizer.fit_transform(train_set) 
         count_vectorizer.vocabulary_

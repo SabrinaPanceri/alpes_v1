@@ -1,0 +1,3 @@
+ rita 0.338393% similar karen
+ rita 0.370545% similar natalia
+ karen 0.252301% similar natalia

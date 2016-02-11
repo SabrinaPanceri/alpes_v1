@@ -71,7 +71,15 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
             qtdeTermos = qtdeTermos + 1
             radical = st_tagcomAce_posInicial[iST][jST][0] #termo reduzido ao seu radical de formação (aplicação de stemmer - RSLP)
             etiqueta = st_tagcomAce_posInicial[iST][jST][1] #etiqueta morfológica do termo com base no Tagger NPLNet
-            chave = st_tagcomAce_posInicial[iST][jST]
+            
+#             print "etiqueta", etiqueta
+            
+            if etiqueta == "VAUX" or etiqueta == "PCP":
+                etiqueta = "V"
+            
+#             print "etiqueta", etiqueta
+            
+            chave = radical, etiqueta
 #             print chave
 
             if etiqueta == "N":
@@ -82,7 +90,7 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
                             listSub.append(listaSubstantivos[i][2])
                     dicionario[chave] = listSub
 
-            elif etiqueta == "V" or etiqueta == "VAUX":
+            elif etiqueta == "V":
                 listVerb = []
                 for i in range(len(listaVerbos)):
                     for aux_radical in listaVerbos[i][2]:
@@ -109,7 +117,9 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
         
         qtdeTermosTotal = qtdeTermosTotal + qtdeTermos
                             
-
+#     print "dicionario"
+#     pprint(dicionario)
+    
 ### COLOCANDO TODOS OS SINONIMOS ENCONTRADOS NUMA UNICA LISTA!
 ### EXCLUINDO TERMOS SINONIMOS REPETIDOS DO DICIONARIO
 
@@ -125,7 +135,7 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
                 
 #########################################################################################
 ### REALIZA A TROCA DO TERMOS SINÔNIMOS POR UM ÚNICO TERMO E MONTA OS NOVOS            ##
-### POSICIONAMENTOS INICIAIS PARA ANÁLISE DE SIMILARIDADE NA VARIÁVELS norm_porInicial ##
+### POSICIONAMENTOS INICIAIS PARA ANÁLISE DE SIMILARIDADE NA VARIÁVEL norm_porInicial  ##
 #########################################################################################
     norm_posInicial = []
     listaTermos = []
@@ -136,6 +146,12 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
         
         for tupla in st_tagcomAce_posInicial[idST]:
             termoStr = tupla[0]
+            etiquetaStr = tupla[1]
+            
+            if etiquetaStr == "PCP" or etiquetaStr == "VAUX":
+                etiquetaStr = "V"
+            
+            tupla = termoStr, etiquetaStr
             
             if cont == 0:
                 inicializarLista(tupla, listaTermos)
@@ -146,15 +162,16 @@ def normalizacaoWordnet(listaAdjetivos, listaSubstantivos, listaVerbos,listaOutr
                 elemento = verificarDicionario(tupla, listaTermos, dicionario)  
                 
                 if elemento == False:
+                    
                     inserir(tupla, listaTermos)
                     inserir(termoStr, listAux)
                     
                 else:
                     inserir(elemento, listAux)
-        
+            
         norm_posInicial.append(listAux)
-
         
+
         listAux = limparLista(listAux)
         
                 
@@ -173,14 +190,12 @@ def inicializarLista(Termo, Lista):
     
     inserir(Termo, Lista)
         
-    return Lista
 
 
 def inserir(Termo, Lista):
     
     Lista.append(Termo) 
     
-    return Lista
 
 def verificarDicionario(Tupla, Lista, Dicionario):
     
@@ -190,10 +205,11 @@ def verificarDicionario(Tupla, Lista, Dicionario):
     contido = False
     
     for elemento in Lista:
+        
         if tipo == elemento[1]:  
             if radical in Dicionario[elemento]:
-                return  elemento
-        
+                return elemento[0]
+            
     return contido
 
 def limparLista(Lista):

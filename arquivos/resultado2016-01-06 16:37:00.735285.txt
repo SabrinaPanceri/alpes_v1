@@ -1,0 +1,10 @@
+ caroline 0.411958% similar leonardo
+ caroline 0.310179% similar adriano
+ caroline 0.0892139% similar bruno
+ caroline 0.222281% similar sheila
+ leonardo 0.195248% similar adriano
+ leonardo 0.425338% similar bruno
+ leonardo 0.286317% similar sheila
+ adriano 0.0560454% similar bruno
+ adriano 0.217913% similar sheila
+ bruno 0.131057% similar sheila

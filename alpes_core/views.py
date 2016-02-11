@@ -82,8 +82,8 @@ def teses(request, tese_id):
 
 
 def clusterizacao(request, debate_id):
-# TESTE COM CLUSTERIZAÇÃO A PARTIR DO DICIONÁRIO DE SINONIMOS
-# utilizar os número de referência dos sinonimos como base para a análise de similaridade
+## COLOCAR COMO OPÇÃO PARA O USUÁRIO SE ELE QUER AGRUPAR 
+## PELO POSICIONAMENTO INICIAL OU FINAL 
 	print "view-clusterização em funcionamento!!!"
 	inicio = datetime.now()
 	print inicio,"view clusterizacao"
@@ -106,10 +106,12 @@ def clusterizacao(request, debate_id):
 	yappi.start(builtins=True)
 	start = time.time()
 	
-# 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=True, Normalizacao=True)
-# 	resultado = gruposArgumentacao(auxResult, 4, True/None/False)
-# 	resultado = gruposArgumentacao(auxResult, 5, True/None/False)
-	resultado = gruposArgumentacao(auxResult, qtdeGrupos=6, LSA=True, Normalizacao=True)
+#	resultado = gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=True, Normalizacao=True)
+# 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=4, LSA=True, Normalizacao=True)
+# 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=5, LSA=True, Normalizacao=True)
+# 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=6, LSA=True, Normalizacao=True)
+	
+	resultado = gruposArgumentacao(auxResult, qtdeGrupos=6, LSA=None, Normalizacao=True)
 	
 	duration = time.time() - start
 	stats = yappi.get_func_stats()

@@ -275,7 +275,7 @@ def posInicial(request, debate_id):
 #    grupos = tfIdf_Kmeans(st_posInicial, 5)
 
 # Para n_cluster = 6
-     grupos = tfIdf_Kmeans(st_posInicial, 6)
+    grupos = tfIdf_Kmeans(st_posInicial, 6)
 #     print grupos
 
     grupo1 = []

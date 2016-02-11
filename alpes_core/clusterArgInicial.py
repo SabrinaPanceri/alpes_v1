@@ -18,7 +18,7 @@ import re
 import nlpnet
 from django.db import connection
 from alpes_core.textProcess import removeStopWords, removePontuacao, limpaCorpus,\
-    removeA, removeNum, removeSE
+    removeA, removeNum, removeSE, removeEndWeb
 from nltk.stem import RSLPStemmer
 from pprint import pprint
 from alpes_core.normalizacaoWordnet import normalizacaoWordnet
@@ -91,6 +91,7 @@ def clusterArgInicial(idtese):
     tag_posInicial = []
     tag_comAce_posInicial = []
     
+    
     #lista com dados após a remoção das stopwords
     sw_tese = []
     sw_posInicial = []
@@ -125,7 +126,7 @@ def clusterArgInicial(idtese):
     for i in dados:
         x = 0
         usu.append(i[x].upper())
-        posInicial.append(i[x+1].lower()) #lista com o posicionamento Inicial
+        posInicial.append(i[x+1].lower()) #lista com o posicionamento Inicial com todas as letras em minusculo
 
 #############################################################################################################
 ### Classificacao das palavras de acordo com sua classe gramatical
@@ -138,16 +139,36 @@ def clusterArgInicial(idtese):
     comAce_posInicial = [] #armazena o posInicial apenas COM acentos, sem pontuações, sem endereço web e sem numeros
     
     for i in posInicial:
-        semAce_posInicial.append(removePontuacao(removeA(removeNum(removeSE((i))))))
+        semAce_posInicial.append(removePontuacao(removeA(removeNum(removeSE(removeEndWeb((i)))))))
     
     for i in semAce_posInicial:
         tag_posInicial.append(tagger.tag(i))
         
     for i in posInicial:
-        comAce_posInicial.append(removePontuacao(removeNum(removeSE((i)))))
-        
+        comAce_posInicial.append(removePontuacao(removeNum(removeSE(removeEndWeb((i))))))
+    
     for i in comAce_posInicial:
         tag_comAce_posInicial.append(tagger.tag(i))
+        
+ 
+ #############################################################################################################   
+ #APENAS PARA REALIZAR TESTE E COLOCAR NA DISSERTACAO
+
+#     pprint(semAce_posInicial)
+#     pprint(comAce_posInicial)
+#     exit()
+
+#     tagg_posInicial = []
+#     for texto in posInicial:
+#         tagg_posInicial.append(tagger.tag(texto))
+#     
+#     print "posInicial"
+#     pprint(posInicial)
+#     
+#     print "tagg_posInicial"
+#     pprint(tagg_posInicial)
+    
+ #############################################################################################################
 
 #############################################################################################################
 ### REMOCAO DE STOPWORDS
@@ -170,7 +191,8 @@ def clusterArgInicial(idtese):
     for i in tag_comAce_posInicial:
         sw_tagcomAce_posInicial.append(limpaCorpus(i))
     
-
+    
+    
 ####################################################################################################################################
 # Aplicação do RSPL Stemmer para remoção dos afixos das palavras da lingua portuguesa
 # Retirando afixos dos textos do posInicial e tese
@@ -344,12 +366,34 @@ def clusterArgInicial(idtese):
     
     posInicial_Normalizado = normalizacaoWordnet(st_WordNetA, st_WordNetN, st_WordNetV, st_WordNetO, st_tagcomAce_posInicial)
     
+    
     duration = time.time() - start
     stats = yappi.get_func_stats()
     stats.save('normalizacaoWordnet.out', type = 'callgrind')
 
 
 ####################################################################################################################################
+
+#     print "posInicial"
+#     pprint(posInicial)
+#     
+#     print "comAce_posInicial"
+#     pprint(comAce_posInicial)
+#     
+#     print "tag_comAce_posInicial"
+#     pprint(tag_comAce_posInicial)
+#         
+#     print "sw_tagcomAce_posInicial"
+#     pprint(sw_tagcomAce_posInicial)
+#     
+#     print "st_tagcomAce_posInicial"
+#     pprint(st_tagcomAce_posInicial)
+    
+#     print "posInicial_Normalizado"
+#     pprint(posInicial_Normalizado)
+#     
+#     exit()
+####################################################################################################################################    
 
 #retorno da função - usado na views.py para alimentar o template debate.html
 #passar parametros que devem ser apresentados na templates debate.html
