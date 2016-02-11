@@ -34,6 +34,7 @@ from pprint import pprint
 
 import yappi
 import time
+import os
 
 ##########################################################################
 ### CRIAÇÃO DO DICIONÁRIO COM AS RELAÇÕES DE SINONÍMIA ENCONTRADAS     ###

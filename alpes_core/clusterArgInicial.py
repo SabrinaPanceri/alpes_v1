@@ -25,6 +25,7 @@ from alpes_core.normalizacaoWordnet import normalizacaoWordnet
 
 import yappi
 import time
+import os
 
 # import nltk, sys
 # from alpes_core.textProcess import stemming
@@ -39,7 +40,7 @@ import time
 ### COPIAR PARA O SERVIDOR A PASTA NLPNET-DATA
 ### COLOCAR CAMINHO CORRETO DENTRO DO SERVIDOR!!!
 #nlpnet.set_data_dir('/home/panceri/nlpnet-data/pos-pt')
-nlpnet.set_data_dir('/home/panceri/nlpnet-data/')
+nlpnet.set_data_dir(os.path.join(os.path.dirname(__file__),'../../../nlpnet-data'))
 
 #############################################################################################################
 
@@ -236,7 +237,7 @@ def clusterArgInicial(idtese):
     
     #abre o arquivo com as relacoes de sinonimia (termos linhaWordNet) e antonimia (termos contrarios)
     #arquivo apenas com termos classificados como substantivos, adjetivos e verbos 
-    base_tep = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
+    base_tep = codecs.open('/home/caiovdpvb/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
 #     dicionario = open('/home/panceri/git/alpes_v1/base_tep2/dicionarioSinonimos.txt', 'w')
     
     #variavel com conteúdo do arquivo em memoria

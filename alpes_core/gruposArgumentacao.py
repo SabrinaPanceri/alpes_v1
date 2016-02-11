@@ -22,6 +22,7 @@ from datetime import datetime
 
 import yappi
 import time
+import os
 
 ##################################################################################################################
 ## 1- COLOCAR NA INTERFACE A OPÇÃO DE DIVIDIR EM QUANTOS GRUPOS O PROFESSOR QUER DIVIDIR OS ALUNOS             ###
@@ -64,7 +65,7 @@ def gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=None, Normalizacao=True):
     st_posInicial = auxResult[4]
     
     
-    base_treinamento = codecs.open('/home/panceri/git/alpes_v1/arquivos/baseTreinamento.txt', 'r', 'UTF8')
+    base_treinamento = codecs.open(os.path.join(os.path.dirname(__file__),'../arquivos/baseTreinamento.txt'), 'r', 'UTF8')
         
     treinamento = [removeA(removePontuacao(i)) for i in base_treinamento] 
     # ALTERAR PARA PEGAR DADOS DA INTERFACE (CAIXA DE TEXTO)

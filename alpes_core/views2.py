@@ -12,6 +12,7 @@
 from datetime import datetime
 import HTMLParser
 import re
+import os
 from django.shortcuts import render
 from django.template import RequestContext
 from django.db import connection
@@ -218,7 +219,7 @@ def posInicial(request, debate_id):
 ##########################################################################################
     #Utilizando LSA
     
-    base_treinamento = codecs.open('/home/panceri/git/alpes_v1/arquivos/baseTreinamento.txt', 'r', 'UTF8')
+    base_treinamento = codecs.open(os.path.join(os.path.dirname(__file__),'../arquivos/baseTreinamento.txt'), 'r', 'UTF8')
     ##trocar caminho quando colocar no servidor!!!
     
     treinamento = [removeA(removePontuacao(i)) for i in base_treinamento]

@@ -22,6 +22,7 @@ from alpes_core.textProcess import removeA, removePontuacao
 from nltk.corpus import stopwords
 from gensim.models import lsimodel
 from gensim.models.rpmodel import RpModel
+import os
 
 
 def similaridade_lsa(textoTreinamento, nomeUsuarios, textoComparacao=None):
@@ -145,7 +146,7 @@ def similaridade_lsa(textoTreinamento, nomeUsuarios, textoComparacao=None):
 
     
     now = datetime.now()
-    resultado = open("/home/panceri/git/alpes_v1/arquivos/resultado"+now.__str__()+".txt", "w")
+    resultado = open(os.path.join(os.path.dirname(__file__),"../arquivos/resultado"+now.__str__()+".txt"), "w")
     resultados = []
     
     for i in range(0, len(sims)):
