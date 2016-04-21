@@ -131,7 +131,7 @@ def clusterizacao(request, debate_id, qtdGrupos=3):
 # 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=5, LSA=True, Normalizacao=True)
 # 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=6, LSA=True, Normalizacao=True)
 	
-	resultado = gruposArgumentacao(auxResult, qtdeGrupos=int(qtdeGrupos), LSA=None, Normalizacao=True)
+	resultado = gruposArgumentacao(auxResult, qtdeGrupos=int(qtdGrupos), LSA=None, Normalizacao=True)
 	
 	duration = time.time() - start
 	stats = yappi.get_func_stats()
@@ -154,3 +154,6 @@ def clusterizacao(request, debate_id, qtdGrupos=3):
 	
 	return render(request, 'clusterizacao.html',context)
 
+
+def summary(request, debate_id, qtdGrupos=3):
+	pass

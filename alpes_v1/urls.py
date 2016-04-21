@@ -36,7 +36,7 @@ urlpatterns = patterns('',
     
     #URL DOS AGRUPAMENTOS - PARA REALIZAR A CLUSTERIZAÇÃO
     url(r'posInicial/(?P<debate_id>\d+)/(?P<qtdGrupos>\d+)$', 'alpes_core.views.clusterizacao', name='clusterizacao'),
-    
+    url(r'summary/(?P<debate_id>\d+)/(?P<qtdGrupos>\d+)$', 'alpes_core.views.summary', name='Síntese das Autorias'),
     
     #navegação entre as páginas
 #     url(r'^index', 'alpes_core.views.index', name='index'),

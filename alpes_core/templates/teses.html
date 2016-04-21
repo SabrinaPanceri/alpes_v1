@@ -25,14 +25,14 @@
                         <h2 class="page-header"><small>Debate em análise : </small>{{grupo.titulo}}</h2>
                         <h4>Quantidade de Grupos 
                             <small>
-                            <select id="el2">
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                            </select>
-                            <button type="submit" class="btn btn-primary btn-label-left">
+                                <select id="el2">
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-label-left" onclick="window.location = '/posInicial/' + window.location.pathname.split('/')[2] + '/' + el2.value;">
                                     Submit
                                 </button>
                             </small>
