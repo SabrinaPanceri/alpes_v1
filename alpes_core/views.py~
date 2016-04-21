@@ -99,7 +99,7 @@ def teses(request, tese_id):
 	return render(request, 'teses.html', context)
 
 
-def clusterizacao(request, debate_id, qtdGrupos=3):
+def clusterizacao(request, debate_id, qtdeGrupos=3):
 	
 ## COLOCAR COMO OPÇÃO PARA O USUÁRIO SE ELE QUER AGRUPAR 
 ## PELO POSICIONAMENTO INICIAL OU FINAL 
@@ -131,7 +131,11 @@ def clusterizacao(request, debate_id, qtdGrupos=3):
 # 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=5, LSA=True, Normalizacao=True)
 # 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=6, LSA=True, Normalizacao=True)
 	
-	resultado = gruposArgumentacao(auxResult, qtdeGrupos=qtdGrupos, LSA=None, Normalizacao=True)
+<<<<<<< HEAD
+	resultado = gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=False, Normalizacao=False)
+=======
+	resultado = gruposArgumentacao(auxResult, qtdeGrupos, LSA=None, Normalizacao=True)
+>>>>>>> 32a5b98b4ce30a3a182271dfee3e13f46659ab08
 	
 	duration = time.time() - start
 	stats = yappi.get_func_stats()

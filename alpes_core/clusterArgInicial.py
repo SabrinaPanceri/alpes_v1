@@ -260,7 +260,7 @@ def clusterArgInicial(idtese):
     
     #abre o arquivo com as relacoes de sinonimia (termos linhaWordNet) e antonimia (termos contrarios)
     #arquivo apenas com termos classificados como substantivos, adjetivos e verbos 
-    base_tep = codecs.open('/home/caiovdpvb/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
+    base_tep = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
 #     dicionario = open('/home/panceri/git/alpes_v1/base_tep2/dicionarioSinonimos.txt', 'w')
     
     #variavel com conteúdo do arquivo em memoria
