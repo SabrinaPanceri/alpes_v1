@@ -26,7 +26,8 @@ urlpatterns = patterns('',
     
     #abre o projeto com a página inicio1.html
     url(r'^$', 'alpes_core.views.home', name='home'),
-    url(r'^(?P<tese_id>\d+)/$', 'alpes_core.views.teses', name='teses'),
+    url(r'^similarityGroups/$', 'alpes_core.views.similarityGroups', name='Grupos de Similaridade'),
+    url(r'^teses/(?P<tese_id>\d+)/$', 'alpes_core.views.teses', name='teses'),
     
     url(r'^debate/(?P<debate_id>\d+)/$', 'alpes_core.views.debate', name='debate'),
     
@@ -34,7 +35,7 @@ urlpatterns = patterns('',
 #     url(r'^posInicial/(?P<debate_id>\d+)/$', 'alpes_core.views.posInicial', name='posInicial'), 
     
     #URL DOS AGRUPAMENTOS - PARA REALIZAR A CLUSTERIZAÇÃO
-    url(r'posInicial/(?P<debate_id>\d+)/$', 'alpes_core.views.clusterizacao', name='clusterizacao'),
+    url(r'posInicial/(?P<debate_id>\d+)/(?P<qtdeGrupos>\d+)$', 'alpes_core.views.clusterizacao', name='clusterizacao'),
     
     
     #navegação entre as páginas

@@ -1,6 +1,12 @@
 #coding: utf-8
 from django.db import models
 
+class Grupo(models.Model):
+    idgrupo = models.AutoField(primary_key=True)
+    titulo = models.TextField()
+    class Meta:
+        db_table = 'grupo'
+
 class Tese(models.Model):
     idtese = models.AutoField(primary_key=True)
     grupo_idgrupo = models.TextField()

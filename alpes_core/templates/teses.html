@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div id="breadcrumb" class="col-xs-12">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="/similarityGroups/">Grupos de Similaridade</a></li>
+            <li><a href="#">Teses</a></li>
+        </ol>
+    </div>
+</div>
+<div class="col-xs-12">
+
+</div>
+<h4 class="page-header">
+    Grupos de Similaridade
+</h4>
+
+<div class="col-xs-12">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="box">
+                    <div class="box-content">
+                        <h2 class="page-header"><small>Debate em análise : </small>{{grupo.titulo}}</h2>
+                        <h4>Quantidade de Grupos 
+                            <small>
+                            <select id="el2">
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-label-left">
+                                    Submit
+                                </button>
+                            </small>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xs-12">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="box">
+                    <div class="box-content">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="alert-warning">Usuario</th>
+                                        <th class="alert-warning">Posicionamento Inicial</th>
+                                        <th class="alert-warning">Argumentação Inicial</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   {% for tabela in dados %}
+                                        <tr onclick="console.log('oi')">
+                                            <td> {{ tabela.0 }} </td> 
+                                            <td> {{ tabela.1 }} </td> 
+                                            <td> {{ tabela.2 }} </td>
+                                            <!--td> {{ tabela.3 }} </td>
+                                            <td> {{ tabela.4 }} </td>
+                                            <td> {{ tabela.5 }} </td>
+                                            <td> {{ tabela.6 }} </td>
+                                            <td> {{ tabela.7 }} </td-->
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

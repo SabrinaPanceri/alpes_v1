@@ -16,7 +16,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.db import connection
 
-from alpes_core.models import Tese
+from alpes_core.models import Tese, Grupo
 from alpes_core.clusterArgInicial import clusterArgInicial
 from alpes_core.gruposArgumentacao import gruposArgumentacao
 import yappi
@@ -31,20 +31,23 @@ def home(request):
 ####################################################################################	
 	dados = []	
 	
-	context = RequestContext(request,{'teses' : Tese.objects.filter(grupo_idgrupo=1064), 'dados': dados})
+	#context = RequestContext(request,{'teses' : Tese.objects.filter(grupo_idgrupo=1064), 'dados': dados})
 	
-	
-	
-	return render(request, 'inicio1.html', context)
+	return render(request, 'index.html')
 
-def inicial(request):
-	
+def similarityGroups(request):
 	dados = []	
-	
-	context = RequestContext(request,{'teses' : Tese.objects.filter(), 'dados': dados})
-	
-	
-	return render(request, 'inicio.html', context)
+
+	teses = Tese.objects.filter(grupo_idgrupo=1064)
+	for t in teses:	
+		h = HTMLParser.HTMLParser()
+
+		t.tese = re.sub('<[^>]*>', '', h.unescape(t.tese))
+
+	context = RequestContext(request,{'teses' : teses, 'dados': dados, 'grupo' : Grupo.objects.filter(idgrupo=1064)[0]})
+
+	return render(request, 'similarityGroups.html', context)
+
 
 def teses(request, tese_id):
 	if tese_id:
@@ -54,11 +57,26 @@ def teses(request, tese_id):
 		dadosSql = cursor.fetchall()	
 	
 		h = HTMLParser.HTMLParser()
-		dados = []
+		allDados = []
 
 		for d in dadosSql:
-		
-			dados.append([re.sub('<[^>]*>', '', h.unescape(d[0])),re.sub('<[^>]*>', '', h.unescape(d[1])),re.sub('<[^>]*>', '', h.unescape(d[2])),re.sub('<[^>]*>', '', h.unescape(d[3])),re.sub('<[^>]*>', '', h.unescape(d[4])),re.sub('<[^>]*>', '', h.unescape(d[5]))])
+			allDados.append([re.sub('<[^>]*>', '', h.unescape(d[0])),re.sub('<[^>]*>', '', h.unescape(d[1])),re.sub('<[^>]*>', '', h.unescape(d[2])),re.sub('<[^>]*>', '', h.unescape(d[3])),re.sub('<[^>]*>', '', h.unescape(d[4])),re.sub('<[^>]*>', '', h.unescape(d[5]))])
+
+
+		dados = []
+		for al in allDados:
+			valid  = True
+			for dd in dados:
+
+				if al[0] == dd[0] and al[1] == dd[1] and al[2] == dd[2]:
+					valid = False
+					break
+				
+
+			if valid:
+				dados.append(al)
+
+
 	else:
 		dados = []
 
@@ -76,12 +94,13 @@ def teses(request, tese_id):
 		i=i+1
 
 
-	context = RequestContext(request,{'teses' : teses, 'dados': dados, 'idteseIndex':index, 'idtese':tese_id})
+	context = RequestContext(request,{'teses' : teses, 'dados': dados, 'idteseIndex':index, 'idtese':tese_id, 'grupo' : Grupo.objects.filter(idgrupo=1064)[0]})
 	
-	return render(request, 'inicio1.html', context)
+	return render(request, 'teses.html', context)
 
 
-def clusterizacao(request, debate_id):
+def clusterizacao(request, debate_id, qtdeGrupos=3):
+	
 ## COLOCAR COMO OPÇÃO PARA O USUÁRIO SE ELE QUER AGRUPAR 
 ## PELO POSICIONAMENTO INICIAL OU FINAL 
 	print "view-clusterização em funcionamento!!!"
@@ -112,7 +131,7 @@ def clusterizacao(request, debate_id):
 # 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=5, LSA=True, Normalizacao=True)
 # 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=6, LSA=True, Normalizacao=True)
 	
-	resultado = gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=False, Normalizacao=False)
+	resultado = gruposArgumentacao(auxResult, qtdeGrupos, LSA=None, Normalizacao=True)
 	
 	duration = time.time() - start
 	stats = yappi.get_func_stats()
