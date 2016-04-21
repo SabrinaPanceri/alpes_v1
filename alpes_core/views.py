@@ -19,6 +19,11 @@ from django.db import connection
 from alpes_core.models import Tese, Grupo
 from alpes_core.clusterArgInicial import clusterArgInicial
 from alpes_core.gruposArgumentacao import gruposArgumentacao
+
+from pytagcloud import create_tag_image, make_tags
+from pytagcloud.lang.counter import get_tag_counts
+
+
 import yappi
 import time
 
@@ -216,5 +221,31 @@ def clusterizacao(request, debate_id, qtdGrupos=3):
 	return render(request, 'clusterizacao.html',context)
 
 
+
+
 def summary(request, debate_id, qtdGrupos=3):
-	pass
+	
+	auxResult = clusterArgInicial(debate_id)
+	
+	tese = auxResult[5]
+	
+	resultado = gruposArgumentacao(auxResult, qtdeGrupos=int(qtdGrupos), LSA=None, Normalizacao=True)
+	
+	grupo1 = resultado[0]
+	grupo2 = resultado[1]
+	grupo3 = resultado[2]
+	grupo4 = resultado[3]
+	grupo5 = resultado[4]
+	grupo6 = resultado[5]
+	
+	tags = make_tags(get_tag_counts(grupo1), maxsize=120)
+	
+	create_tag_image(tags, 'cloud_large.png', size=(900, 600), fontname='Lobster')
+	
+	
+	
+	
+	
+	context = RequestContext(request,{'results' : []})
+	
+	return render(request, 'summary.html', context)
