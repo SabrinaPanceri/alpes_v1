@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+import os
 
 def findWordInLines(word,linesCopy):
     finded = []
@@ -28,8 +29,8 @@ def findWordInLines(word,linesCopy):
     return linesCopy,finded
 
 def main():
-    f = open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r')
-    novaWordNet = open('/home/panceri/git/alpes_v1/base_tep2/novaWordNet.txt', 'w')
+    f = open(os.path.join(os.path.dirname(__file__).'../base_tep2/base_tep.txt'), 'r')
+    novaWordNet = open(os.path.join(os.path.dirname(__file__),'../base_tep2/novaWordNet.txt'), 'w')
 
     lines = f.readlines()
 

@@ -14,6 +14,7 @@ import re
 from alpes_core.textProcess import removeA, removePontuacao
 from pprint import pprint
 from nltk import RSLPStemmer
+import os
 
 
 ##############################################################################################################
@@ -39,8 +40,8 @@ def normalizacao(dicSin, termo, radical, etiqueta):
     listaNumRef = [] #lista com o número da linha de referência dos termos sinominos 
     
     #abre o arquivo com as relacoes de sinonimia (termos linhaWordNet) e antonimia (termos contrarios) 
-    base_tep = codecs.open('/home/panceri/git/alpes_v1/base_tep2/base_tep.txt', 'r', 'UTF8')
-    dicionario = open('/home/panceri/git/alpes_v1/base_tep2/dicionarioSinonimos.txt', 'w')
+    base_tep = codecs.open(os.path.join(os.path.dirname(__file__),'../../base_tep2/base_tep.txt'), 'r', 'UTF8')
+    dicionario = open(os.path.join(os.path.dirname(__file__),'../../base_tep2/dicionarioSinonimos.txt'), 'w')
     
     #variavel com conteúdo do arquivo em memoria
     #não imprimir essa variável, MUITO GRANDEE!!!
