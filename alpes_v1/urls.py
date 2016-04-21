@@ -27,7 +27,9 @@ urlpatterns = patterns('',
     #abre o projeto com a página inicio1.html
     url(r'^$', 'alpes_core.views.home', name='home'),
     url(r'^similarityGroups/$', 'alpes_core.views.similarityGroups', name='Grupos de Similaridade'),
+    url(r'^summaryGroups/$', 'alpes_core.views.summaryGroups', name='Síntese das Autorias'),
     url(r'^teses/(?P<tese_id>\d+)/$', 'alpes_core.views.teses', name='teses'),
+    url(r'^summaryTeses/(?P<tese_id>\d+)/$', 'alpes_core.views.summaryTeses', name='teses'),
     
     url(r'^debate/(?P<debate_id>\d+)/$', 'alpes_core.views.debate', name='debate'),
     
@@ -41,8 +43,6 @@ urlpatterns = patterns('',
     #navegação entre as páginas
 #     url(r'^index', 'alpes_core.views.index', name='index'),
 #     url(r'^charts', 'alpes_core.views.charts', name='charts'),
-    
-       
     
     #pagina de administração do sistema
     url(r'^admin/', include(admin.site.urls)),  
