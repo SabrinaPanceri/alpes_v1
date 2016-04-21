@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+
+#tableResult span{
+    text-transform: capitalize;
+}
+</style>
+<div class="row">
+    <div id="breadcrumb" class="col-xs-12">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="/similarityGroups/">Grupos de Similaridade</a></li>
+            <li><a href="#">Teses</a></li>
+        </ol>
+    </div>
+</div>
+<div class="col-xs-12">
+
+</div>
+<h4 class="page-header">
+    Grupos de Similaridade
+</h4>
+
+<div class="col-xs-12">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="box">
+                    <div class="box-content">
+                        <h2 class="page-header"><small>Debate em análise : </small>{{grupo.titulo}}</h2>
+                        {% for tese in results.8 %}
+                            <strong>Tese: {{tese}}</strong>
+                         {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xs-12">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="box">
+                    <div class="box-content" id="tableResult">
+{% autoescape off %}
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="alert-info">Grupo 1 - Tamanho: {{results.4}} </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>       
+                                            {% for data in results.0 %}
+                                            <tr onclick="console.log('oi')">
+                                                <td> {{ data }} </td> 
+                                            </tr>
+                                            {% endfor %}
+                                    </tbody>
+                                </table>
+                        
+                                <table class="table table-bordered table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th class="alert-info">Grupo 2 - Tamanho: {{results.5}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>       
+                                            {% for data in results.1 %}
+                                            <tr onclick="console.log('oi')">
+                                                <td> {{ data }} </td> 
+                                            </tr>
+                                            {% endfor %}
+                                    </tbody>
+                                </table>
+                        
+                        
+                                <table class="table table-bordered table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th class="alert-info">Grupo 3 - Tamanho: {{results.6}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>       
+                                            {% for data in results.2 %}
+                                            <tr onclick="console.log('oi')">
+                                                <td> {{ data }} </td> 
+                                            </tr>
+                                            {% endfor %}
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th class="alert-info">Grupo 4 - Tamanho: {{results.7}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>       
+                                            {% for data in results.3 %}
+                                            <tr onclick="console.log('oi')">
+                                                <td> {{ data }} </td> 
+                                            </tr>
+                                            {% endfor %}
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th class="alert-info">Grupo 5 - Tamanho: {{results.10}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>       
+                                            {% for data in results.9 %}
+                                            <tr onclick="console.log('oi')">
+                                                <td> {{ data }} </td> 
+                                            </tr>
+                                            {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% if idteseIndex > 0 %}
+                                    <table class="table table-bordered table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th class="alert-info">Grupo 6 - Tamanho: {{results.12}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>       
+                                                {% for data in results.11 %}
+                                                <tr onclick="console.log('oi')">
+                                                    <td> {{ data }} </td> 
+                                                </tr>
+                                                {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {%endif%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endautoescape %}
+                    
+{% endblock %}
