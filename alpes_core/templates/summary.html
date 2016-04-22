@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style type="text/css">
+		.tagsCloud_grupo{
+			background-color: black;		
+		}
+	
+		.tagsCloud_grupo a.tag{
+			font-family: 'PTSans';
+			text-decoration: none;			
+		}
+		
+		.tagsCloud_grupo li.cnt{
+			overflow: hidden;
+		    position: absolute;
+			display: block;	
+		}
+		
+		.tagsCloud_grupo ul.cloud{
+			position: relative;
+			display: block;
+			width: 800px;
+			height: 800px;
+			overflow: hidden;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+</style>
+
+{% autoescape off %}
+<div class="tagsCloud_grupo">
+<ul class="cloud">	
+{{results}}
+</ul>
+</div>
+{% endautoescape %}
+{% endblock %}

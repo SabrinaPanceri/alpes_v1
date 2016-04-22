@@ -20,7 +20,8 @@ from alpes_core.models import Tese, Grupo
 from alpes_core.clusterArgInicial import clusterArgInicial
 from alpes_core.gruposArgumentacao import gruposArgumentacao
 
-from pytagcloud import create_tag_image, make_tags
+from pytagcloud import create_tag_image, make_tags, create_html_data, LAYOUT_HORIZONTAL
+from pytagcloud.colors import COLOR_SCHEMES
 from pytagcloud.lang.counter import get_tag_counts
 
 
@@ -232,20 +233,25 @@ def summary(request, debate_id, qtdGrupos=3):
 	resultado = gruposArgumentacao(auxResult, qtdeGrupos=int(qtdGrupos), LSA=None, Normalizacao=True)
 	
 	grupo1 = resultado[0]
+	grupo1str = ""
+	for g in grupo1:
+		grupo1str += g
 	grupo2 = resultado[1]
 	grupo3 = resultado[2]
 	grupo4 = resultado[3]
 	grupo5 = resultado[4]
 	grupo6 = resultado[5]
 	
-	tags = make_tags(get_tag_counts(grupo1), maxsize=120)
+	tags = make_tags(get_tag_counts(grupo1str)[:30], maxsize=120, colors=COLOR_SCHEMES['audacity'])
+
 	
-	create_tag_image(tags, 'cloud_large.png', size=(900, 600), fontname='Lobster')
-	
-	
-	
-	
-	
-	context = RequestContext(request,{'results' : []})
+	data = create_html_data(tags, (1600,1600), layout=LAYOUT_HORIZONTAL, fontname='PT Sans Regular')
+
+	tags_template = '<li class="cnt" style="top: %(top)dpx; left: %(left)dpx; height: %(height)dpx;"><a class="tag %(cls)s" href="#%(tag)s" style="top: %(top)dpx;\
+	    left: %(left)dpx; font-size: %(size)dpx; height: %(height)dpx; line-height:%(lh)dpx;">%(tag)s</a></li>'
+        
+	htmltags = ''.join([tags_template % link for link in data['links']])
+
+	context = RequestContext(request,{'results' : htmltags})
 	
 	return render(request, 'summary.html', context)
