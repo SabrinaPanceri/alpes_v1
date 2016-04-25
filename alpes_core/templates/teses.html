@@ -42,11 +42,11 @@
                                 </select>
                                 {%if summary%}
                                     <button type="submit" class="btn btn-primary btn-label-left" onclick="window.location = '/summary/' + window.location.pathname.split('/')[2] + '/' + el2.value;">
-                                        Submit
+                                        Criar
                                     </button>
                                 {%else%}
                                     <button type="submit" class="btn btn-primary btn-label-left" onclick="window.location = '/posInicial/' + window.location.pathname.split('/')[2] + '/' + el2.value;">
-                                        Submit
+                                        Criar Grupos
                                     </button>
                                 {%endif%}
                             </small>
@@ -57,6 +57,8 @@
         </div>
     </div>
 </div>
+
+<!--
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-12">
@@ -66,25 +68,26 @@
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                                 <thead>
+                                   
                                     <tr>
-                                        <th class="alert-warning">Usuario</th>
+                                        <th class="alert-warning">Participante</th>
                                         <th class="alert-warning">Posicionamento Inicial</th>
-                                        <th class="alert-warning">Argumentação Final</th>
+                                        <th class="alert-warning">Argumentação Inicial</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   {% for tabela in dados %}
+                                     {% for tabela in dados %}
                                         <tr onclick="console.log('oi')">
                                             <td> {{ tabela.0 }} </td> 
                                             <td> {{ tabela.1 }} </td> 
-                                            <!--td> {{ tabela.2 }} </td>
+                                            <td> {{ tabela.2 }} </td>
                                             <td> {{ tabela.3 }} </td>
                                             <td> {{ tabela.4 }} </td>
                                             <td> {{ tabela.5 }} </td>
-                                            <td> {{ tabela.6 }} </td-->
+                                            <td> {{ tabela.6 }} </td>
                                             <td> {{ tabela.7 }} </td>
                                         </tr>
-                                    {% endfor %}
+                                    {% endfor %} -->
                                 </tbody>
                             </table>
                         </div>
