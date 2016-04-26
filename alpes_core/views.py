@@ -281,7 +281,7 @@ def createHtmlData(wors):
 	tags = make_tags(get_tag_counts(wors)[:30], maxsize=90, colors=COLOR_SCHEMES['audacity'])
 
 	
-	data = create_html_data(tags, (600,600), layout=LAYOUT_HORIZONTAL, fontname='PT Sans Regular')
+	data = create_html_data(tags, (600,800), layout=LAYOUT_HORIZONTAL, fontname='PT Sans Regular')
 
 	tags_template = '<li class="cnt" style="top: %(top)dpx; left: %(left)dpx; height: %(height)dpx;"><a class="tag %(cls)s" href="#%(tag)s" style="top: %(top)dpx;\
 	    left: %(left)dpx; font-size: %(size)dpx; height: %(height)dpx; line-height:%(lh)dpx;">%(tag)s</a></li>'
