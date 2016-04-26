@@ -4,7 +4,7 @@
 
 <style type="text/css">
 		.tagsCloud_grupo{
-			background-color: black;		
+			float:left;
 		}
 	
 		.tagsCloud_grupo a.tag{
@@ -21,21 +21,116 @@
 		.tagsCloud_grupo ul.cloud{
 			position: relative;
 			display: block;
-			width: 800px;
-			height: 800px;
+			width: 600px;
+			height: 600px;
 			overflow: hidden;
 			margin: 0;
 			padding: 0;
 			list-style: none;
 		}
+
+		.tagCloud_cnt {
+		  clear: left;
+		}
+
+		.tagCloud_user {
+		  float: left;
+		  width: 200px;
+		}
 		
 </style>
 
 {% autoescape off %}
-<div class="tagsCloud_grupo">
-<ul class="cloud">	
-{{results}}
-</ul>
+<div class="tagCloud_cnt">
+	<div class="tagCloud_title">	
+		<h2>Grupo 1<h2>
+	</div>
+	<div class="tagCloud_user">
+		{{grupo1usr}}
+	</div>
+	<div class="tagsCloud_grupo">
+		<ul class="cloud">	
+			{{grupo1str}}
+		</ul>
+	</div>
 </div>
+
+<div class="tagCloud_cnt">
+	<div class="tagCloud_title">	
+		<h2>Grupo 2<h2>
+	</div>
+	<div class="tagCloud_user">
+		{{grupo2usr}}
+	</div>
+	<div class="tagsCloud_grupo">
+		<ul class="cloud">	
+			{{grupo2str}}
+		</ul>
+	</div>
+</div>
+
+{%if grupo3usr != ""%}
+<div class="tagCloud_cnt">
+	<div class="tagCloud_title">	
+		<h2>Grupo 3<h2>
+	</div>
+	<div class="tagCloud_user">
+		{{grupo3usr}}
+	</div>
+	<div class="tagsCloud_grupo">
+		<ul class="cloud">	
+			{{grupo3str}}
+		</ul>
+	</div>
+</div>
+{%endif%}
+
+{%if grupo4usr != ""%}
+<div class="tagCloud_cnt">
+	<div class="tagCloud_title">	
+		<h2>Grupo 4<h2>
+	</div>
+	<div class="tagCloud_user">
+		{{grupo4usr}}
+	</div>
+	<div class="tagsCloud_grupo">
+		<ul class="cloud">	
+			{{grupo4str}}
+		</ul>
+	</div>
+</div>
+{%endif%}
+
+{%if grupo5usr != ""%}
+<div class="tagCloud_cnt">
+	<div class="tagCloud_title">	
+		<h2>Grupo 5<h2>
+	</div>
+	<div class="tagCloud_user">
+		{{grupo5usr}}
+	</div>
+	<div class="tagsCloud_grupo">
+		<ul class="cloud">	
+			{{grupo5str}}
+		</ul>
+	</div>
+</div>
+{%endif%}
+
+{%if grupo6usr != ""%}
+<div class="tagCloud_cnt">
+	<div class="tagCloud_title">	
+		<h2>Grupo 6<h2>
+	</div>
+	<div class="tagCloud_user">
+		{{grupo6usr}}
+	</div>
+	<div class="tagsCloud_grupo">
+		<ul class="cloud">	
+			{{grupo6str}}
+		</ul>
+	</div>
+</div>
+{%endif%}
 {% endautoescape %}
 {% endblock %}

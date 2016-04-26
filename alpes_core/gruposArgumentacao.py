@@ -40,7 +40,7 @@ import os
 ##                                                                                                              ##
 ##################################################################################################################
 
-def gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=None, Normalizacao=True):
+def gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=None, Normalizacao=True, TAGs=True):
     inicio = datetime.now()
     print inicio,"gruposArgumentacao"
     yappi.set_clock_type('cpu')
@@ -233,35 +233,53 @@ def gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=None, Normalizacao=True):
         for j in range(len(grupos[i])):
             if i == 0:
                 aux = grupos[i][j]
-                texto = "Aluno: <span>"+ aux_usu[aux] + "</span> <br/> Posicionamento Inicial: " +  posIni[aux]
+                if TAGs:
+                    texto = "Aluno: <span>"+ aux_usu[aux] + "</span> <br/> Posicionamento Inicial: " +  posIni[aux]
+                else:
+                    texto = aux_usu[aux] + "#$#" + posIni[aux]
                 grupo1.append(texto)
                 indices.append(grupos[i][j])                
             elif i == 1:
                 aux = grupos[i][j]
-                texto = "Aluno: <span>"+ aux_usu[aux] + "</span> <br/> Posicionamento Inicial: " +  posIni[aux]
+                if TAGs:
+                    texto = "Aluno: <span>"+ aux_usu[aux] + "</span> <br/> Posicionamento Inicial: " +  posIni[aux]
+                else:
+                    texto = aux_usu[aux] + "#$#" + posIni[aux]
                 grupo2.append(texto)        
                 indices.append(grupos[i][j])    
             elif i == 2:
                 aux = grupos[i][j]
-                texto = "Aluno: <span>"+ aux_usu[aux] + "</span> <br/> Posicionamento Inicial: " +  posIni[aux]
+                if TAGs:
+                    texto = "Aluno: <span>"+ aux_usu[aux] + "</span> <br/> Posicionamento Inicial: " +  posIni[aux]
+                else:
+                    texto = aux_usu[aux] + "#$#" + posIni[aux]
                 grupo3.append(texto)
                 indices.append(grupos[i][j])
             #para n_clusters = 4
             elif i == 3:
                 aux = grupos[i][j]
-                texto = "Aluno: <span>"+ aux_usu[aux] + "</span> <br/> Posicionamento Inicial: " +  posIni[aux]
+                if TAGs:
+                    texto = "Aluno: <span>"+ aux_usu[aux] + "</span> <br/> Posicionamento Inicial: " +  posIni[aux]
+                else:
+                    texto = aux_usu[aux] + "#$#" + posIni[aux]
                 grupo4.append(texto)
                 indices.append(grupos[i][j])
             #para n_clusters = 5
             elif i == 4:
                 aux = grupos[i][j]
-                texto = "Aluno: <span>"+ aux_usu[aux] + "</span> <br/> Posicionamento Inicial: " +  posIni[aux]
+                if TAGs:
+                    texto = "Aluno: <span>"+ aux_usu[aux] + "</span> <br/> Posicionamento Inicial: " +  posIni[aux]
+                else:
+                    texto = aux_usu[aux] + "#$#" + posIni[aux]
                 grupo5.append(texto)
                 indices.append(grupos[i][j])
             #para n_clusters = 6
             elif i == 5:
                 aux = grupos[i][j]
-                texto = "Aluno: <span>"+ aux_usu[aux] + "</span> <br/> Posicionamento Inicial: " +  posIni[aux]
+                if TAGs:
+                    texto = "Aluno: <span>"+ aux_usu[aux] + "</span> <br/> Posicionamento Inicial: " +  posIni[aux]
+                else:
+                    texto = aux_usu[aux] + "#$#" + posIni[aux]
                 grupo6.append(texto)
                 indices.append(grupos[i][j])
     
