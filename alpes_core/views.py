@@ -18,6 +18,7 @@ from django.db import connection
 
 from alpes_core.models import Tese, Grupo
 from alpes_core.clusterArgInicial import clusterArgInicial
+from alpes_core.clusterFinal import clusterFinal
 from alpes_core.gruposArgumentacao import gruposArgumentacao
 
 from pytagcloud import create_tag_image, make_tags, create_html_data, LAYOUT_HORIZONTAL
@@ -69,38 +70,7 @@ def summaryGroups(request):
 
 
 def teses(request, tese_id):
-	if tese_id:
-		cursor = connection.cursor()
-		#cursor.execute("select `arg`.`posicionamentoinicial` AS `posicionamentoinicial`, `arg`.`argumento` AS `argumento`, `rev`.`revisao` AS `revisao`, `rep`.`replica` AS `replica`, `pos`.`posicionamentofinal` AS `posicionamentofinal` from (((`argumento` `arg` join `revisao` `rev`) join `replica` `rep`) join `posicionamento` `pos`) where ((`arg`.`tese_idtese` = " + idtese + " ) and (`rev`.`argumento_idargumento` = `arg`.`idargumento`) and (`rep`.`revisao_idrevisao` = `rev`.`idrevisao`) and (`arg`.`argumentador_idargumentador` = `pos`.`argumentador_idargumentador`) and (`arg`.`tese_idtese` = `pos`.`tese_idtese`) and (`arg`.`posicionamentoinicial` is not null) and (`arg`.`argumento` is not null) and (`rev`.`revisao` is not null) and (`rep`.`replica` is not null) and (`pos`.`posicionamentofinal` is not null))")
-		cursor.execute("select `usr`.`primeironome` as `name`, `posicionamentoinicial` AS `posicionamentoinicial`, `arg`.`argumento` AS `argumento`, `rev`.`revisao` AS `revisao`, `rep`.`replica` AS `replica`, `pos`.`posicionamentofinal` AS `posicionamentofinal` from ((((`argumento` `arg` join `revisao` `rev`) join `replica` `rep`) join `posicionamento` `pos`) join `argumentador` `urg`)join `usuario` `usr`  where ((`arg`.`tese_idtese` = " + tese_id + "  ) and (`rev`.`argumento_idargumento` = `arg`.`idargumento`) and (`rep`.`revisao_idrevisao` = `rev`.`idrevisao`) and (`arg`.`argumentador_idargumentador` = `pos`.`argumentador_idargumentador`) and (`arg`.`tese_idtese` = `pos`.`tese_idtese`) and (`arg`.`posicionamentoinicial` is not null) and (`arg`.`argumentador_idargumentador` = `urg`.`idargumentador`) and(`urg`.`usuario_idusuario` = `usr`.`idusuario`) and(`arg`.`argumento` is not null) and (`rev`.`revisao` is not null) and (`rep`.`replica` is not null) and (`pos`.`posicionamentofinal` is not null))")
-		dadosSql = cursor.fetchall()	
 	
-		h = HTMLParser.HTMLParser()
-		allDados = []
-
-		for d in dadosSql:
-			allDados.append([re.sub('<[^>]*>', '', h.unescape(d[0])),re.sub('<[^>]*>', '', h.unescape(d[1])),re.sub('<[^>]*>', '', h.unescape(d[2])),re.sub('<[^>]*>', '', h.unescape(d[3])),re.sub('<[^>]*>', '', h.unescape(d[4])),re.sub('<[^>]*>', '', h.unescape(d[5]))])
-
-
-		dados = []
-		for al in allDados:
-			valid  = True
-			for dd in dados:
-
-				if al[0] == dd[0] and al[1] == dd[1] and al[2] == dd[2]:
-					valid = False
-					break
-				
-
-			if valid:
-				dados.append(al)
-
-
-	else:
-		dados = []
-
-
-	index = -1
 	teses = Tese.objects.filter(grupo_idgrupo=1064)
 	
 	i = 0
@@ -113,41 +83,11 @@ def teses(request, tese_id):
 		i=i+1
 
 
-	context = RequestContext(request,{'teses' : teses, 'dados': dados, 'idteseIndex':index, 'idtese':tese_id, 'grupo' : Grupo.objects.filter(idgrupo=1064)[0]})
+	context = RequestContext(request,{'teses' : teses, 'idteseIndex':index, 'idtese':tese_id, 'grupo' : Grupo.objects.filter(idgrupo=1064)[0]})
 	
 	return render(request, 'teses.html', context)
 
 def summaryTeses(request, tese_id):
-	if tese_id:
-		cursor = connection.cursor()
-		#cursor.execute("select `arg`.`posicionamentoinicial` AS `posicionamentoinicial`, `arg`.`argumento` AS `argumento`, `rev`.`revisao` AS `revisao`, `rep`.`replica` AS `replica`, `pos`.`posicionamentofinal` AS `posicionamentofinal` from (((`argumento` `arg` join `revisao` `rev`) join `replica` `rep`) join `posicionamento` `pos`) where ((`arg`.`tese_idtese` = " + idtese + " ) and (`rev`.`argumento_idargumento` = `arg`.`idargumento`) and (`rep`.`revisao_idrevisao` = `rev`.`idrevisao`) and (`arg`.`argumentador_idargumentador` = `pos`.`argumentador_idargumentador`) and (`arg`.`tese_idtese` = `pos`.`tese_idtese`) and (`arg`.`posicionamentoinicial` is not null) and (`arg`.`argumento` is not null) and (`rev`.`revisao` is not null) and (`rep`.`replica` is not null) and (`pos`.`posicionamentofinal` is not null))")
-		cursor.execute("select `usr`.`primeironome` as `name`, `posicionamentoinicial` AS `posicionamentoinicial`, `arg`.`argumento` AS `argumento`, `rev`.`revisao` AS `revisao`, `rep`.`replica` AS `replica`, `pos`.`posicionamentofinal` AS `posicionamentofinal` from ((((`argumento` `arg` join `revisao` `rev`) join `replica` `rep`) join `posicionamento` `pos`) join `argumentador` `urg`)join `usuario` `usr`  where ((`arg`.`tese_idtese` = " + tese_id + "  ) and (`rev`.`argumento_idargumento` = `arg`.`idargumento`) and (`rep`.`revisao_idrevisao` = `rev`.`idrevisao`) and (`arg`.`argumentador_idargumentador` = `pos`.`argumentador_idargumentador`) and (`arg`.`tese_idtese` = `pos`.`tese_idtese`) and (`arg`.`posicionamentoinicial` is not null) and (`arg`.`argumentador_idargumentador` = `urg`.`idargumentador`) and(`urg`.`usuario_idusuario` = `usr`.`idusuario`) and(`arg`.`argumento` is not null) and (`rev`.`revisao` is not null) and (`rep`.`replica` is not null) and (`pos`.`posicionamentofinal` is not null))")
-		dadosSql = cursor.fetchall()	
-	
-		h = HTMLParser.HTMLParser()
-		allDados = []
-
-		for d in dadosSql:
-			allDados.append([re.sub('<[^>]*>', '', h.unescape(d[0])),re.sub('<[^>]*>', '', h.unescape(d[1])),re.sub('<[^>]*>', '', h.unescape(d[2])),re.sub('<[^>]*>', '', h.unescape(d[3])),re.sub('<[^>]*>', '', h.unescape(d[4])),re.sub('<[^>]*>', '', h.unescape(d[5]))])
-
-
-		dados = []
-		for al in allDados:
-			valid  = True
-			for dd in dados:
-
-				if al[0] == dd[0] and al[1] == dd[1] and al[2] == dd[2]:
-					valid = False
-					break
-				
-
-			if valid:
-				dados.append(al)
-
-
-	else:
-		dados = []
-
 
 	index = -1
 	teses = Tese.objects.filter(grupo_idgrupo=1064)
@@ -162,7 +102,7 @@ def summaryTeses(request, tese_id):
 		i=i+1
 
 
-	context = RequestContext(request,{'teses' : teses, 'dados': dados, 'idteseIndex':index, 'idtese':tese_id, 'grupo' : Grupo.objects.filter(idgrupo=1064)[0],'summary' : True})
+	context = RequestContext(request,{'teses' : teses, 'idteseIndex':index, 'idtese':tese_id, 'grupo' : Grupo.objects.filter(idgrupo=1064)[0],'summary' : True})
 	
 	return render(request, 'teses.html', context)
 
@@ -226,23 +166,119 @@ def clusterizacao(request, debate_id, qtdGrupos=3):
 
 def summary(request, debate_id, qtdGrupos=3):
 	
-	auxResult = clusterArgInicial(debate_id)
+	auxResult = clusterFinal(debate_id)
 	
 	tese = auxResult[5]
 	
-	resultado = gruposArgumentacao(auxResult, qtdeGrupos=int(qtdGrupos), LSA=None, Normalizacao=True)
+	resultado = gruposArgumentacao(auxResult, qtdeGrupos=int(qtdGrupos), LSA=None, Normalizacao=True, TAGs=False)
 	
 	grupo1 = resultado[0]
-	grupo1str = ""
-	for g in grupo1:
-		grupo1str += g
-	grupo2 = resultado[1]
+	grupo2 = resultado[1] 
 	grupo3 = resultado[2]
 	grupo4 = resultado[3]
 	grupo5 = resultado[4]
 	grupo6 = resultado[5]
+
+	grupo1str = ""
+	grupo1usr = ""
+	for g in grupo1:
+		aux = g.split("#$#")
+		grupo1str += aux[1]
+		grupo1usr += aux[0] + "<br/>"
+
+	grupo2str = ""
+	grupo2usr = ""
+	for g in grupo2:
+		aux = g.split("#$#")
+		grupo2str += aux[1]
+		grupo2usr += aux[0] + "<br/>"
+
+	grupo3str = ""
+	grupo3usr = ""
+	for g in grupo3:
+		aux = g.split("#$#")
+		grupo3str += aux[1]
+		grupo3usr += aux[0] + "<br/>"
+
+	grupo4str = ""
+	grupo4usr = ""
+	for g in grupo4:
+		aux = g.split("#$#")
+		grupo4str += aux[1]
+		grupo4usr += aux[0] + "<br/>"
+
+	grupo5str = ""
+	grupo5usr = ""
+	for g in grupo5:
+		aux = g.split("#$#")
+		grupo5str += aux[1]
+		grupo5usr += aux[0] + "<br/>"
+
+	grupo6str = ""
+	grupo6usr = ""
+	for g in grupo6:
+		aux = g.split("#$#")
+		grupo6str += aux[1]
+		grupo6usr += aux[0] + "<br/>"
+
+	if int(qtdGrupos) > 2:
+		grupo1str = createHtmlData(grupo1str)
+	else:
+		grupo1str = ""
+
+	if int(qtdGrupos) > 2:
+		grupo2str = createHtmlData(grupo2str)
+	else:
+		grupo2str = ""
+
+	if int(qtdGrupos) > 2:
+		grupo3str = createHtmlData(grupo3str)
+	else:
+		grupo3str = ""
+
+	if int(qtdGrupos) > 3:
+		grupo4str = createHtmlData(grupo4str)
+	else:
+		grupo4str = ""
+
+	if int(qtdGrupos) > 4:
+		grupo5str = createHtmlData(grupo5str)
+	else:
+		grupo5str = ""
+
+	if int(qtdGrupos) > 5:
+		grupo6str = createHtmlData(grupo6str)
+	else:
+		grupo6str = ""
+
+
+
+	context = RequestContext(request,{
+		'grupo1str' : grupo1str,
+		'grupo1usr' : grupo1usr,
+
+		'grupo2str' : grupo2str,
+		'grupo2usr' : grupo2usr,
+
+		'grupo3str' : grupo3str,
+		'grupo3usr' : grupo3usr,
+
+		'grupo4str' : grupo4str,
+		'grupo4usr' : grupo4usr,
+
+		'grupo5str' : grupo5str,
+		'grupo5usr' : grupo5usr,
+
+		'grupo6str' : grupo6str,
+		'grupo6usr' : grupo6usr,
+
+		})
 	
-	tags = make_tags(get_tag_counts(grupo1str)[:30], maxsize=90, colors=COLOR_SCHEMES['audacity'])
+	return render(request, 'summary.html', context)
+
+
+def createHtmlData(wors):
+	tags = make_tags(get_tag_counts(wors)[:30], maxsize=90, colors=COLOR_SCHEMES['audacity'])
 
 	
 	data = create_html_data(tags, (600,600), layout=LAYOUT_HORIZONTAL, fontname='PT Sans Regular')
@@ -250,8 +286,4 @@ def summary(request, debate_id, qtdGrupos=3):
 	tags_template = '<li class="cnt" style="top: %(top)dpx; left: %(left)dpx; height: %(height)dpx;"><a class="tag %(cls)s" href="#%(tag)s" style="top: %(top)dpx;\
 	    left: %(left)dpx; font-size: %(size)dpx; height: %(height)dpx; line-height:%(lh)dpx;">%(tag)s</a></li>'
 
-	htmltags = ''.join([tags_template % link for link in data['links']])
-
-	context = RequestContext(request,{'results' : htmltags})
-	
-	return render(request, 'summary.html', context)
+	return ''.join([tags_template % link for link in data['links']])
