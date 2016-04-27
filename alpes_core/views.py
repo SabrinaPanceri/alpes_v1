@@ -25,9 +25,11 @@ from pytagcloud import create_tag_image, make_tags, create_html_data, LAYOUT_HOR
 from pytagcloud.colors import COLOR_SCHEMES
 from pytagcloud.lang.counter import get_tag_counts
 
+from pprint import pprint
 
 import yappi
 import time
+from alpes_core.textProcess import removeWords
 
 
 # Create your views here.
@@ -178,6 +180,7 @@ def summary(request, debate_id, qtdGrupos=3):
 	grupo4 = resultado[3]
 	grupo5 = resultado[4]
 	grupo6 = resultado[5]
+	
 
 	grupo1str = ""
 	grupo1usr = ""
@@ -278,10 +281,14 @@ def summary(request, debate_id, qtdGrupos=3):
 
 
 def createHtmlData(wors):
-	tags = make_tags(get_tag_counts(wors)[:30], maxsize=90, colors=COLOR_SCHEMES['audacity'])
+	
+	auxwords = removeWords(wors)
+	
+		
+	tags = make_tags(get_tag_counts(auxwords)[:20], maxsize=80, colors=COLOR_SCHEMES['oldschool'])
 
 	
-	data = create_html_data(tags, (600,800), layout=LAYOUT_HORIZONTAL, fontname='PT Sans Regular')
+	data = create_html_data(tags, (800,600), layout=LAYOUT_HORIZONTAL, fontname='PT Sans Regular')
 
 	tags_template = '<li class="cnt" style="top: %(top)dpx; left: %(left)dpx; height: %(height)dpx;"><a class="tag %(cls)s" href="#%(tag)s" style="top: %(top)dpx;\
 	    left: %(left)dpx; font-size: %(size)dpx; height: %(height)dpx; line-height:%(lh)dpx;">%(tag)s</a></li>'

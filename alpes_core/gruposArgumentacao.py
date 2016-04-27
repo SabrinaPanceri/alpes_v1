@@ -589,4 +589,5 @@ def gruposArgumentacao(auxResult, qtdeGrupos=3, LSA=None, Normalizacao=True, TAG
     stats = yappi.get_func_stats()
     stats.save('gruposArgumentacao.out', type = 'callgrind')
     
+    
     return grupo1, grupo2, grupo3, grupo4, grupo5, grupo6, tese

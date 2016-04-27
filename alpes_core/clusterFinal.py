@@ -412,8 +412,7 @@ def clusterFinal(idtese):
 #     exit()
 ####################################################################################################################################    
 
-#retorno da função - usado na views.py para alimentar o template debate.html
-#passar parametros que devem ser apresentados na templates debate.html
+
     return [st_tese, posInicial, sw_tese, aux_usu, st_posInicial, tese, posInicial_Normalizado]
 
 

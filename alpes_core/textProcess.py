@@ -77,6 +77,33 @@ def removeStopWords(texto):
     return aux
 
 
+def removeWords(texto):
+    aux = ""
+    # função da NLTK que retorna as stopwords na lingua portuguesa
+    stop = stopwords.words('portuguese')
+    stopP = []
+    for s in stop:
+        stopP.append(s)
+#     print stopP
+
+    #remove acentuação
+    textoaux = removePontuacao(texto)
+
+    # divide o texto em palavras    
+#     words = palavras.findall(textoaux)
+    words = palavras.tokenize(textoaux)
+#     print words
+    
+    #retira pontuações do texto e divide o texto em palavras
+    for i in words:
+        #retira as stopwords da lingua portuguesa do texto do artigo que está sendo apresentado
+        if i not in stopP:
+            #ignora palavras com menos de 3 caracteres
+            if len(i) > 4:
+                aux = aux + " " + i
+    return aux
+
+
 
 #### REMOÇÃO DAS PALAVRAS CLASSIFICADAS
 #### COMO ARTIGOS, PREPOSIÇÕES, ETC...

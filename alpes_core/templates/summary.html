@@ -21,8 +21,8 @@
 		.tagsCloud_grupo ul.cloud{
 			position: relative;
 			display: block;
-			width: 600px;
-			height: 800px;
+			width: 800px;
+			height: 600px;
 			overflow: hidden;
 			margin: 0;
 			padding: 0;
@@ -40,7 +40,44 @@
 		
 </style>
 
+
+
+
+<div class="row">
+    <div id="breadcrumb" class="col-xs-12">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="/summary/">Síntese das Autorias</a></li>
+        </ol>
+    </div>
+</div>
+<div class="col-xs-12">
+
+</div>
+
+<h4 class="page-header">
+    Síntese das Autorias
+</h4>
+
+<div class="col-xs-12">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="box">
+                    <div class="box-content">
+                        <h2 class="page-header"><small>Debate em análise : </small>XIV Maratona de Empreendedorismo da UFRGS</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                        
 {% autoescape off %}
+
+
 <div class="tagCloud_cnt">
 	<div class="tagCloud_title">	
 		<h2>Grupo 1<h2>
@@ -131,6 +168,8 @@
 		</ul>
 	</div>
 </div>
+
 {%endif%}
 {% endautoescape %}
+
 {% endblock %}
