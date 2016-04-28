@@ -3,10 +3,6 @@
 {% block content %}
 
 <style type="text/css">
-		.tagsCloud_grupo{
-			float:left;
-		}
-	
 		.tagsCloud_grupo a.tag{
 			font-family: 'PTSans';
 			text-decoration: none;			
@@ -27,15 +23,6 @@
 			margin: 0;
 			padding: 0;
 			list-style: none;
-		}
-
-		.tagCloud_cnt {
-		  clear: left;
-		}
-
-		.tagCloud_user {
-		  float: left;
-		  width: 200px;
 		}
 		
 </style>
@@ -74,102 +61,175 @@
 </div>
 
 
-                        
+<div class="col-xs-12">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="box">
+                    <div class="box-content" id="tableResult">
 {% autoescape off %}
+						<table class="table table-bordered table-hover ">
+						    <thead>
+						        <tr>
+						            <th class="alert-info">Grupo 1</th>
+						        </tr>
+						    </thead>
+						    <tbody>       
+						    	<tr>
+									<td>
+										<div class="tagsCloud_grupo"> 
+							    			<ul class="cloud">	
+												{{grupo1str}}
+											</ul>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td> 		
+					    				{{grupo1usr}}
+									</td>
+								</tr>
+					            
+						    </tbody>
+						</table>
 
+						<table class="table table-bordered table-hover ">
+						    <thead>
+						        <tr>
+						            <th class="alert-info">Grupo 2</th>
+						        </tr>
+						    </thead>
+						    <tbody>       
+						    	<tr>
+									<td>
+										<div class="tagsCloud_grupo"> 
+							    			<ul class="cloud">	
+												{{grupo2str}}
+											</ul>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td> 		
+										{{grupo2usr}}
+									</td>
+								</tr>
+					            
+						    </tbody>
+						</table>
 
-<div class="tagCloud_cnt">
-	<div class="tagCloud_title">	
-		<h2>Grupo 1<h2>
-	</div>
-	<div class="tagCloud_user">
-		{{grupo1usr}}
-	</div>
-	<div class="tagsCloud_grupo">
-		<ul class="cloud">	
-			{{grupo1str}}
-		</ul>
-	</div>
+						{%if grupo3usr != ""%}
+						<table class="table table-bordered table-hover ">
+						    <thead>
+						        <tr>
+						            <th class="alert-info">Grupo 3</th>
+						        </tr>
+						    </thead>
+						    <tbody>       
+						    	<tr>
+									<td> 
+										<div class="tagsCloud_grupo"> 
+							    			<ul class="cloud">	
+												{{grupo3str}}
+											</ul>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td> 
+					    				{{grupo3usr}}	
+									</td>
+								</tr>
+						    </tbody>
+						</table>
+						{%endif%}
+
+						{%if grupo4usr != ""%}
+						<table class="table table-bordered table-hover ">
+						    <thead>
+						        <tr>
+						            <th class="alert-info">Grupo 4</th>
+						        </tr>
+						    </thead>
+						    <tbody>       
+						    	<tr>
+									<td> 
+										<div class="tagsCloud_grupo"> 
+							    			<ul class="cloud">	
+												{{grupo4str}}
+											</ul>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td> 
+					    				{{grupo4usr}}
+									</td>
+								</tr>
+					            
+						    </tbody>
+						</table>
+						{%endif%}
+
+						{%if grupo5usr != ""%}
+						<table class="table table-bordered table-hover ">
+						    <thead>
+						        <tr>
+						            <th class="alert-info">Grupo 5</th>
+						        </tr>
+						    </thead>
+						    <tbody>       
+						    	<tr>
+									<td> 
+										<div class="tagsCloud_grupo"> 
+							    			<ul class="cloud">	
+												{{grupo5str}}
+											</ul>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td> 
+										{{grupo5usr}}
+									</td>
+								</tr>
+					            
+						    </tbody>
+						</table>
+						{%endif%}
+
+						{%if grupo6usr != ""%}
+						<table class="table table-bordered table-hover ">
+						    <thead>
+						        <tr>
+						            <th class="alert-info">Grupo 6</th>
+						        </tr>
+						    </thead>
+						    <tbody>       
+						    	<tr>
+									<td>
+										<div class="tagsCloud_grupo">  
+							    			<ul class="cloud">	
+												{{grupo6str}}
+											</ul>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td> 
+					    				{{grupo6usr}}
+									</td>
+								</tr>
+					            
+						    </tbody>
+						</table>
+						{%endif%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div class="tagCloud_cnt">
-	<div class="tagCloud_title">	
-		<h2>Grupo 2<h2>
-	</div>
-	<div class="tagCloud_user">
-		{{grupo2usr}}
-	</div>
-	<div class="tagsCloud_grupo">
-		<ul class="cloud">	
-			{{grupo2str}}
-		</ul>
-	</div>
-</div>
-
-{%if grupo3usr != ""%}
-<div class="tagCloud_cnt">
-	<div class="tagCloud_title">	
-		<h2>Grupo 3<h2>
-	</div>
-	<div class="tagCloud_user">
-		{{grupo3usr}}
-	</div>
-	<div class="tagsCloud_grupo">
-		<ul class="cloud">	
-			{{grupo3str}}
-		</ul>
-	</div>
-</div>
-{%endif%}
-
-{%if grupo4usr != ""%}
-<div class="tagCloud_cnt">
-	<div class="tagCloud_title">	
-		<h2>Grupo 4<h2>
-	</div>
-	<div class="tagCloud_user">
-		{{grupo4usr}}
-	</div>
-	<div class="tagsCloud_grupo">
-		<ul class="cloud">	
-			{{grupo4str}}
-		</ul>
-	</div>
-</div>
-{%endif%}
-
-{%if grupo5usr != ""%}
-<div class="tagCloud_cnt">
-	<div class="tagCloud_title">	
-		<h2>Grupo 5<h2>
-	</div>
-	<div class="tagCloud_user">
-		{{grupo5usr}}
-	</div>
-	<div class="tagsCloud_grupo">
-		<ul class="cloud">	
-			{{grupo5str}}
-		</ul>
-	</div>
-</div>
-{%endif%}
-
-{%if grupo6usr != ""%}
-<div class="tagCloud_cnt">
-	<div class="tagCloud_title">	
-		<h2>Grupo 6<h2>
-	</div>
-	<div class="tagCloud_user">
-		{{grupo6usr}}
-	</div>
-	<div class="tagsCloud_grupo">
-		<ul class="cloud">	
-			{{grupo6str}}
-		</ul>
-	</div>
-</div>
-
-{%endif%}
 {% endautoescape %}
 
 {% endblock %}

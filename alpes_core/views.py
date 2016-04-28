@@ -187,42 +187,42 @@ def summary(request, debate_id, qtdGrupos=3):
 	for g in grupo1:
 		aux = g.split("#$#")
 		grupo1str += aux[1]
-		grupo1usr += aux[0] + "<br/>"
+		grupo1usr += "<tr><td>Aluno: <span>" + aux[0] + "</span> <br/>" + aux[1] + "</td></tr>"
 
 	grupo2str = ""
 	grupo2usr = ""
 	for g in grupo2:
 		aux = g.split("#$#")
 		grupo2str += aux[1]
-		grupo2usr += aux[0] + "<br/>"
+		grupo2usr += "<tr><td>Aluno: <span>" + aux[0] + "<br/>" + aux[1] + "</td></tr>"
 
 	grupo3str = ""
 	grupo3usr = ""
 	for g in grupo3:
 		aux = g.split("#$#")
 		grupo3str += aux[1]
-		grupo3usr += aux[0] + "<br/>"
+		grupo3usr += "<tr><td>Aluno: <span>" + aux[0] + "<br/>" + aux[1] + "</td></tr>"
 
 	grupo4str = ""
 	grupo4usr = ""
 	for g in grupo4:
 		aux = g.split("#$#")
 		grupo4str += aux[1]
-		grupo4usr += aux[0] + "<br/>"
+		grupo4usr += "<tr><td>Aluno: <span>" + aux[0] + "<br/>" + aux[1] + "</td></tr>"
 
 	grupo5str = ""
 	grupo5usr = ""
 	for g in grupo5:
 		aux = g.split("#$#")
 		grupo5str += aux[1]
-		grupo5usr += aux[0] + "<br/>"
+		grupo5usr += "<tr><td>Aluno: <span>" + aux[0] + "<br/>" + aux[1] + "</td></tr>"
 
 	grupo6str = ""
 	grupo6usr = ""
 	for g in grupo6:
 		aux = g.split("#$#")
 		grupo6str += aux[1]
-		grupo6usr += aux[0] + "<br/>"
+		grupo6usr += "<tr><td>Aluno: <span>" + aux[0] + "<br/>" + aux[1] + "</td></tr>"
 
 	if int(qtdGrupos) > 2:
 		grupo1str = createHtmlData(grupo1str)
